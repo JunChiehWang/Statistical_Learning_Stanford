@@ -25,5 +25,6 @@ First courses in statistics, linear algebra, and computing.
 - [HumanitiesSciences: StatLearning - SELF PACED Statistical Learning](https://lagunita.stanford.edu/courses/HumanitiesSciences/StatLearning/Winter2016/course/)
 - [An Introduction to Statistical Learning, with Applications in R](http://www-bcf.usc.edu/~gareth/ISL/)
 - [The Elements of Statistical Learning: Data Mining, Inference, and Prediction](https://web.stanford.edu/~hastie/ElemStatLearn/)
+- [ISLR-python](https://github.com/JWarmenhoven/ISLR-python)
 - [Online Markdown Editor - Dillinger, the Last Markdown Editor ever.](https://dillinger.io/) 
 - [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
