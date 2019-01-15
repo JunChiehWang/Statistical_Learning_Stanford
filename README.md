@@ -21,8 +21,12 @@ First courses in statistics, linear algebra, and computing.
 [Robert Tibshirani](https://profiles.stanford.edu/robert-tibshirani), Professor in the Departments Health Research and Policy and Statistics, Stanford University
 
 ## Referecne
+
+##### course
 - [Statistical Learning (Self-Paced)](https://online.stanford.edu/courses/sohs-ystatslearning-statistical-learning-self-paced)
 - [HumanitiesSciences: StatLearning - SELF PACED Statistical Learning](https://lagunita.stanford.edu/courses/HumanitiesSciences/StatLearning/Winter2016/course/)
+
+##### R
 - [An Introduction to Statistical Learning, with Applications in R](http://www-bcf.usc.edu/~gareth/ISL/)
 - [Notes and exercise attempts for "An Introduction to Statistical Learning](https://github.com/asadoughi/stat-learning/)
 - [The Elements of Statistical Learning: Data Mining, Inference, and Prediction](https://web.stanford.edu/~hastie/ElemStatLearn/)
@@ -37,6 +41,11 @@ First courses in statistics, linear algebra, and computing.
 - [R Reference Card](https://cran.r-project.org/doc/contrib/Short-refcard.pdf)
 - [R Manuals](https://cran.r-project.org/manuals.html)
 - [R Wiki](https://en.wikibooks.org/wiki/R_Programming)
+
+##### Code
+- [Work on Introduction to Statistical Learning](https://github.com/jstjohn/IntroToStatisticalLearningR-)
 - [ISLR-python](https://github.com/JWarmenhoven/ISLR-python)
+
+##### Markdown
 - [Online Markdown Editor - Dillinger, the Last Markdown Editor ever.](https://dillinger.io/) 
 - [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
