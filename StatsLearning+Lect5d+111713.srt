@@ -1,0 +1,1160 @@
+0
+00:00:00,790 --> 00:00:01,530
+Welcome back.
+
+1
+00:00:01,530 --> 00:00:03,140
+We&#39;re now going to talk about some important questions that
+
+2
+00:00:03,140 --> 00:00:07,410
+arise when you use aggression in real problems.
+
+3
+00:00:07,410 --> 00:00:10,750
+So is at least one of the predictors useful in
+
+4
+00:00:10,750 --> 00:00:11,700
+predicting the response?
+
+5
+00:00:11,700 --> 00:00:14,080
+That&#39;s the first order question.
+
+6
+00:00:14,080 --> 00:00:16,680
+Do the predictors on the whole have anything to
+
+7
+00:00:16,680 --> 00:00:18,840
+say about the outcome?
+
+8
+00:00:18,840 --> 00:00:23,130
+If not, we probably want to stop there.
+
+9
+00:00:23,130 --> 00:00:27,380
+But given that there is some effect overall, which of the
+
+10
+00:00:27,380 --> 00:00:28,340
+predictors are important?
+
+11
+00:00:28,340 --> 00:00:31,570
+Are they all important, or only some subset?
+
+12
+00:00:31,570 --> 00:00:33,080
+How well does the model fit the data?
+
+13
+00:00:37,060 --> 00:00:39,280
+And also, given a set of predictor values, what
+
+14
+00:00:39,280 --> 00:00:41,200
+response value should we predict?
+
+15
+00:00:41,200 --> 00:00:47,290
+So what&#39;s our prediction of sales given a certain level of
+
+16
+00:00:47,290 --> 00:00:49,270
+advertising in the three modes?
+
+17
+00:00:49,270 --> 00:00:50,910
+And how accurate is that prediction?
+
+18
+00:00:50,910 --> 00:00:53,970
+So these are all things we can answer from the model.
+
+19
+00:00:53,970 --> 00:00:56,290
+Well, at least 1, 2, and 4.
+
+20
+00:00:56,290 --> 00:00:58,800
+3 we&#39;ll examine by looking at some alternative models.
+
+21
+00:01:02,250 --> 00:01:05,160
+So the answer to the first question-- is at least one
+
+22
+00:01:05,160 --> 00:01:07,190
+predictor useful?-- does a model overall have any
+
+23
+00:01:07,190 --> 00:01:08,440
+predictive value.
+
+24
+00:01:11,860 --> 00:01:14,130
+We look at the drop in training error.
+
+25
+00:01:14,130 --> 00:01:15,790
+So this is the total sum of squares.
+
+26
+00:01:15,790 --> 00:01:18,380
+Remember, if we just used the mean to predict, that&#39;s the no
+
+27
+00:01:18,380 --> 00:01:19,840
+predictor model.
+
+28
+00:01:19,840 --> 00:01:22,560
+This is the residual sum of squares achieved using all
+
+29
+00:01:22,560 --> 00:01:23,810
+three predictors.
+
+30
+00:01:25,740 --> 00:01:29,520
+And we can look at the drop, the present variance
+
+31
+00:01:29,520 --> 00:01:31,040
+explained--
+
+32
+00:01:31,040 --> 00:01:34,020
+which I actually have that here for that.
+
+33
+00:01:34,020 --> 00:01:35,540
+We defined this earlier.
+
+34
+00:01:35,540 --> 00:01:37,680
+Now it&#39;s 0.897.
+
+35
+00:01:37,680 --> 00:01:40,600
+So it was about 0.6 something before.
+
+36
+00:01:40,600 --> 00:01:42,780
+Now by adding the two more predictors, we&#39;ve increase
+
+37
+00:01:42,780 --> 00:01:44,040
+that to 0.897.
+
+38
+00:01:44,040 --> 00:01:47,020
+So this says that we reduced the variance of sales around
+
+39
+00:01:47,020 --> 00:01:51,370
+its mean by almost 90% by using these three predictors.
+
+40
+00:01:51,370 --> 00:01:53,910
+That seems pretty impressive.
+
+41
+00:01:53,910 --> 00:01:58,010
+To quantify that in a more statistical way, we can form
+
+42
+00:01:58,010 --> 00:02:01,470
+the f ratio, which is defined as follows.
+
+43
+00:02:01,470 --> 00:02:05,872
+It&#39;s the drop in training error divided by p--
+
+44
+00:02:05,872 --> 00:02:07,390
+p is number of parameters we fit.
+
+45
+00:02:07,390 --> 00:02:08,702
+Here, it&#39;s three, right?
+
+46
+00:02:08,702 --> 00:02:11,990
+The three kinds of advertising budgets, divided by the mean
+
+47
+00:02:11,990 --> 00:02:12,830
+squared residual.
+
+48
+00:02:12,830 --> 00:02:16,970
+So n is the sample size, and we subtract off the number of
+
+49
+00:02:16,970 --> 00:02:21,310
+parameters we fit, which is p plus 1 for the intercept.
+
+50
+00:02:21,310 --> 00:02:24,130
+So statistical theory tells us that we can compute the
+
+51
+00:02:24,130 --> 00:02:26,720
+statistic and under the null hypothesis, that there&#39;s no
+
+52
+00:02:26,720 --> 00:02:31,570
+effective of any of predictors, this will have an
+
+53
+00:02:31,570 --> 00:02:33,830
+f distribution with p and n minus p minus
+
+54
+00:02:33,830 --> 00:02:36,660
+1 degrees of freedom.
+
+55
+00:02:36,660 --> 00:02:38,080
+And again, there are tables of this.
+
+56
+00:02:38,080 --> 00:02:41,500
+Or your computer program will compute this for you.
+
+57
+00:02:41,500 --> 00:02:43,420
+This f statistic here is huge.
+
+58
+00:02:43,420 --> 00:02:46,660
+And its p value I haven&#39;t recorded here, but it&#39;s less
+
+59
+00:02:46,660 --> 00:02:48,530
+than 0.0001.
+
+60
+00:02:48,530 --> 00:02:53,250
+So this says what we believe already, looking at this
+
+61
+00:02:53,250 --> 00:02:55,310
+previous tables and the graphs, that there&#39;s a strong
+
+62
+00:02:55,310 --> 00:02:57,170
+effect here of the predictors on the outcome.
+
+63
+00:02:57,170 --> 00:03:02,790
+They have something to say about the outcome.
+
+64
+00:03:02,790 --> 00:03:05,510
+OK, when we fit linear regression models, one of the
+
+65
+00:03:05,510 --> 00:03:08,370
+things we have to do is decide on what are the important
+
+66
+00:03:08,370 --> 00:03:10,890
+variables to include in the model.
+
+67
+00:03:10,890 --> 00:03:14,360
+By the way, this is not Rob anymore.
+
+68
+00:03:14,360 --> 00:03:16,090
+Rob asked me to do this section because it&#39;s a little
+
+69
+00:03:16,090 --> 00:03:17,050
+hard for him.
+
+70
+00:03:17,050 --> 00:03:19,130
+Kidding.
+
+71
+00:03:19,130 --> 00:03:23,430
+So the most direct approach is called all subsets or best
+
+72
+00:03:23,430 --> 00:03:25,140
+subsets regression.
+
+73
+00:03:25,140 --> 00:03:27,650
+So basically, what you&#39;re going to do is you&#39;re going to
+
+74
+00:03:27,650 --> 00:03:30,510
+compute the least squares fit for all the possible subsets
+
+75
+00:03:30,510 --> 00:03:33,210
+of the variables and then choose between them based on
+
+76
+00:03:33,210 --> 00:03:36,830
+some criterion that balances the train error
+
+77
+00:03:36,830 --> 00:03:38,080
+with the model size.
+
+78
+00:03:40,890 --> 00:03:45,270
+Now, this might seem like a reasonable thing to do if you
+
+79
+00:03:45,270 --> 00:03:47,310
+have a small number of variables.
+
+80
+00:03:47,310 --> 00:03:50,030
+But it gets really hard when the number of
+
+81
+00:03:50,030 --> 00:03:52,100
+variables gets large.
+
+82
+00:03:52,100 --> 00:03:57,140
+So if you&#39;ve got p variables, there are 2 to the p subsets.
+
+83
+00:03:57,140 --> 00:04:01,480
+And you know, that 2 to the p grows exponentially with the
+
+84
+00:04:01,480 --> 00:04:02,380
+number of variables.
+
+85
+00:04:02,380 --> 00:04:04,320
+So for example, when p is 40, there are
+
+86
+00:04:04,320 --> 00:04:07,020
+over a billion models.
+
+87
+00:04:07,020 --> 00:04:10,080
+So we&#39;re talking about subsets like the model might have
+
+88
+00:04:10,080 --> 00:04:12,040
+variable 1, 3, and 5 in it.
+
+89
+00:04:12,040 --> 00:04:14,270
+That&#39;s a subset of size 3.
+
+90
+00:04:14,270 --> 00:04:18,040
+And then another model might have a subset of size four.
+
+91
+00:04:18,040 --> 00:04:23,140
+And with 40 variables, there&#39;s over a billion such models.
+
+92
+00:04:23,140 --> 00:04:26,320
+So that clearly becomes cumbersome, searching through
+
+93
+00:04:26,320 --> 00:04:28,870
+such a big model space.
+
+94
+00:04:28,870 --> 00:04:31,630
+And so what we need instead is an automated approach that
+
+95
+00:04:31,630 --> 00:04:36,190
+searches through for us, and that finds a subset of them.
+
+96
+00:04:36,190 --> 00:04:39,980
+And so we&#39;ll describe two commonly used approaches next.
+
+97
+00:04:42,490 --> 00:04:46,710
+Forward selection is a very attractive approach, because
+
+98
+00:04:46,710 --> 00:04:49,610
+it&#39;s both tractable and it gives a
+
+99
+00:04:49,610 --> 00:04:51,470
+good sequence of models.
+
+100
+00:04:51,470 --> 00:04:53,370
+So this is how it works.
+
+101
+00:04:53,370 --> 00:04:55,170
+You start with a null model.
+
+102
+00:04:55,170 --> 00:04:57,760
+And the null model has no predictors in it, but it&#39;ll
+
+103
+00:04:57,760 --> 00:04:59,600
+just have the intercept in it.
+
+104
+00:04:59,600 --> 00:05:03,340
+And the intercept is the mean of y with no other variables
+
+105
+00:05:03,340 --> 00:05:05,690
+in the model.
+
+106
+00:05:05,690 --> 00:05:09,510
+And now what you do is you add variables one at a time.
+
+107
+00:05:09,510 --> 00:05:13,150
+So the first variable you add, you do it as follows.
+
+108
+00:05:13,150 --> 00:05:16,900
+You fit p simple linear regression models, each with
+
+109
+00:05:16,900 --> 00:05:19,590
+one of the variables in and the intercept.
+
+110
+00:05:19,590 --> 00:05:21,150
+And you look at each of them.
+
+111
+00:05:21,150 --> 00:05:24,000
+And you add to the null model the variable that results in
+
+112
+00:05:24,000 --> 00:05:26,320
+the lowest residual sum of squares.
+
+113
+00:05:26,320 --> 00:05:27,800
+So basically, you just search through all the
+
+114
+00:05:27,800 --> 00:05:31,210
+single-variable models and pick the best one.
+
+115
+00:05:31,210 --> 00:05:33,320
+Now having picked that, you fix that
+
+116
+00:05:33,320 --> 00:05:34,670
+variable in the model.
+
+117
+00:05:34,670 --> 00:05:38,360
+And now you search through the remaining p minus 1 variables
+
+118
+00:05:38,360 --> 00:05:42,930
+again and find out which variable should be added to
+
+119
+00:05:42,930 --> 00:05:45,320
+the variable you&#39;ve already picked to best improve the
+
+120
+00:05:45,320 --> 00:05:47,690
+residual sum of squares.
+
+121
+00:05:47,690 --> 00:05:50,930
+And you continue in this fashion, adding one variable
+
+122
+00:05:50,930 --> 00:05:54,650
+at a time, until some stopping rule is satisfied--
+
+123
+00:05:54,650 --> 00:05:57,542
+for example, when all the remaining variables have a p
+
+124
+00:05:57,542 --> 00:06:00,490
+value above some threshold.
+
+125
+00:06:00,490 --> 00:06:03,190
+Now, this sounds like it might be computationally quite
+
+126
+00:06:03,190 --> 00:06:05,600
+difficult as well, but it turns out it&#39;s not.
+
+127
+00:06:05,600 --> 00:06:09,250
+There are some clever tricks you can use to do all these
+
+128
+00:06:09,250 --> 00:06:11,425
+evaluations very efficiently.
+
+129
+00:06:14,120 --> 00:06:18,790
+So in a similar fashion, and this is if p is not too large,
+
+130
+00:06:18,790 --> 00:06:20,940
+you can start from the other end.
+
+131
+00:06:20,940 --> 00:06:22,480
+So you start with a model with all the
+
+132
+00:06:22,480 --> 00:06:24,310
+variables in the model.
+
+133
+00:06:24,310 --> 00:06:27,040
+And now you&#39;re going to remove them one at a time.
+
+134
+00:06:27,040 --> 00:06:31,200
+And this time, at each step you&#39;re going to remove the
+
+135
+00:06:31,200 --> 00:06:33,900
+variable that does the least damage to the model.
+
+136
+00:06:33,900 --> 00:06:37,120
+In other words, you want to remove the variable that&#39;s got
+
+137
+00:06:37,120 --> 00:06:39,390
+the significance.
+
+138
+00:06:39,390 --> 00:06:43,080
+And that you can actually find from looking at the t
+
+139
+00:06:43,080 --> 00:06:46,700
+statistics for each of the variables.
+
+140
+00:06:46,700 --> 00:06:50,576
+And remove the one with the least significant t statistic.
+
+141
+00:06:50,576 --> 00:06:53,920
+But now you&#39;ve got a model with p minus 1 variables, and
+
+142
+00:06:53,920 --> 00:06:54,830
+you just repeat.
+
+143
+00:06:54,830 --> 00:06:59,080
+And you keep going in that fashion again until you reach
+
+144
+00:06:59,080 --> 00:07:01,320
+some threshold that you&#39;ve defined, perhaps in
+
+145
+00:07:01,320 --> 00:07:05,090
+terms of a p value.
+
+146
+00:07:05,090 --> 00:07:06,270
+So these are two approaches.
+
+147
+00:07:06,270 --> 00:07:08,270
+They might seem somewhat ad hoc.
+
+148
+00:07:08,270 --> 00:07:09,850
+But they&#39;re very effective.
+
+149
+00:07:09,850 --> 00:07:12,430
+And later, we&#39;ll discuss more systematic criteria for
+
+150
+00:07:12,430 --> 00:07:15,750
+choosing an optimal member in the path of models produced by
+
+151
+00:07:15,750 --> 00:07:19,690
+the either forward or stepwise model selection.
+
+152
+00:07:19,690 --> 00:07:22,100
+Some of these criteria include something known as well
+
+153
+00:07:22,100 --> 00:07:27,750
+Mallow&#39;s Cp, Akaike Information Criterion, AIC--
+
+154
+00:07:27,750 --> 00:07:28,800
+that&#39;s the abbreviation--
+
+155
+00:07:28,800 --> 00:07:30,520
+and then BIC, which is
+
+156
+00:07:30,520 --> 00:07:33,000
+Bayesian Information Criterion.
+
+157
+00:07:33,000 --> 00:07:34,770
+These all sound like very important methods.
+
+158
+00:07:34,770 --> 00:07:36,710
+They&#39;re named often important people.
+
+159
+00:07:36,710 --> 00:07:38,540
+And they&#39;re very popular.
+
+160
+00:07:38,540 --> 00:07:41,380
+And then there&#39;s something called adjusted R squared.
+
+161
+00:07:41,380 --> 00:07:44,430
+And one of our favorites is this cross-validation, which
+
+162
+00:07:44,430 --> 00:07:47,590
+you&#39;ll be learning about.
+
+163
+00:07:47,590 --> 00:07:52,830
+We&#39;ll talk more about model selection in later sessions.
+
+164
+00:07:56,020 --> 00:07:58,190
+Now there are some other considerations in regression
+
+165
+00:07:58,190 --> 00:08:01,740
+models that we haven&#39;t really touched on yet.
+
+166
+00:08:01,740 --> 00:08:04,900
+And the one is qualitative predictors.
+
+167
+00:08:04,900 --> 00:08:08,870
+So some variables are not quantitative, but qualitative.
+
+168
+00:08:08,870 --> 00:08:10,770
+In other words, they don&#39;t take values on
+
+169
+00:08:10,770 --> 00:08:11,710
+a continuous scale.
+
+170
+00:08:11,710 --> 00:08:15,800
+But they take values in a discrete set.
+
+171
+00:08:15,800 --> 00:08:17,280
+So we call them categorical
+
+172
+00:08:17,280 --> 00:08:18,660
+predictors, or factor variables.
+
+173
+00:08:21,400 --> 00:08:29,490
+We going to see a matrix of data in the next slide.
+
+174
+00:08:29,490 --> 00:08:30,560
+It&#39;s a credit card data.
+
+175
+00:08:30,560 --> 00:08:32,900
+In fact, I&#39;ll just take you there now.
+
+176
+00:08:32,900 --> 00:08:37,580
+And so here&#39;s a bunch of variables on
+
+177
+00:08:37,580 --> 00:08:40,120
+credit cards and ratings.
+
+178
+00:08:40,120 --> 00:08:45,170
+And we see the current balance on the credit card, the age,
+
+179
+00:08:45,170 --> 00:08:46,930
+number of cards, and so on.
+
+180
+00:08:46,930 --> 00:08:50,170
+These are all quantitative variables.
+
+181
+00:08:50,170 --> 00:08:55,510
+Now in addition to these variables, we have some
+
+182
+00:08:55,510 --> 00:08:56,610
+qualitative variables.
+
+183
+00:08:56,610 --> 00:08:58,210
+So one of them is gender.
+
+184
+00:08:58,210 --> 00:09:01,950
+So that take on values male and female.
+
+185
+00:09:01,950 --> 00:09:06,740
+Student, so the student status of the cardholder, whether
+
+186
+00:09:06,740 --> 00:09:08,300
+they are a students or not.
+
+187
+00:09:08,300 --> 00:09:10,460
+So these are qualitative values.
+
+188
+00:09:10,460 --> 00:09:15,530
+Marital status, say, married, single, or divorced.
+
+189
+00:09:15,530 --> 00:09:17,870
+There&#39;s no order really in those variables.
+
+190
+00:09:17,870 --> 00:09:20,280
+They&#39;re just different categories.
+
+191
+00:09:20,280 --> 00:09:21,570
+And likewise, ethnicity.
+
+192
+00:09:21,570 --> 00:09:24,920
+Say Caucasian, African-American, or Asian.
+
+193
+00:09:24,920 --> 00:09:28,690
+Again, in no way an ordered variable.
+
+194
+00:09:28,690 --> 00:09:31,800
+So how do we deal with such qualitative predictors when
+
+195
+00:09:31,800 --> 00:09:35,580
+we&#39;re fitting linear regression models?
+
+196
+00:09:35,580 --> 00:09:40,180
+So let&#39;s consider an example on credit cards.
+
+197
+00:09:40,180 --> 00:09:43,200
+Imagine investigating the difference in credit card
+
+198
+00:09:43,200 --> 00:09:45,780
+balance between males and females,
+
+199
+00:09:45,780 --> 00:09:48,910
+ignoring the other variables.
+
+200
+00:09:48,910 --> 00:09:52,870
+So what we do is we do we create a new variable.
+
+201
+00:09:52,870 --> 00:09:56,850
+Let&#39;s call it x.
+
+202
+00:09:56,850 --> 00:09:57,500
+We call it x.
+
+203
+00:09:57,500 --> 00:10:00,330
+And the i value is going to be 1, if the ith person is a
+
+204
+00:10:00,330 --> 00:10:05,170
+female, and a 0 if the ith person is a male.
+
+205
+00:10:05,170 --> 00:10:07,550
+So we&#39;ve got a name for such a variable.
+
+206
+00:10:07,550 --> 00:10:09,310
+We call it a dummy variable.
+
+207
+00:10:09,310 --> 00:10:11,390
+It&#39;s a created variable just to represent
+
+208
+00:10:11,390 --> 00:10:15,700
+this categorical feature.
+
+209
+00:10:15,700 --> 00:10:20,140
+So for each value of i, we score an individual as 0 or 1,
+
+210
+00:10:20,140 --> 00:10:24,070
+depending on if they&#39;re male or female.
+
+211
+00:10:24,070 --> 00:10:27,050
+And so now if we put such a variable in a model, let&#39;s say
+
+212
+00:10:27,050 --> 00:10:33,210
+on its own, we&#39;ve got the linear regression model with a
+
+213
+00:10:33,210 --> 00:10:37,750
+coefficient for this dummy variable, xi.
+
+214
+00:10:37,750 --> 00:10:39,720
+And let&#39;s see what it produces.
+
+215
+00:10:39,720 --> 00:10:44,270
+Well, since xi takes on only two possible values, 0 or 1,
+
+216
+00:10:44,270 --> 00:10:49,700
+the model&#39;s either going to be beta 9 plus beta 1 plus error
+
+217
+00:10:49,700 --> 00:10:51,630
+if the person is female.
+
+218
+00:10:51,630 --> 00:10:54,520
+And if the person is male, it&#39;s just going to be beta 0
+
+219
+00:10:54,520 --> 00:10:56,090
+plus error.
+
+220
+00:10:56,090 --> 00:11:02,530
+So beta 1 is telling us the effect of being female versus
+
+221
+00:11:02,530 --> 00:11:05,980
+the baseline, in this case, of being male.
+
+222
+00:11:05,980 --> 00:11:09,930
+And so that&#39;s how we deal with the categorical variable with
+
+223
+00:11:09,930 --> 00:11:12,890
+just two levels.
+
+224
+00:11:12,890 --> 00:11:16,320
+So you will see the results of the regression model using
+
+225
+00:11:16,320 --> 00:11:20,640
+just the single variable gender and the dummy variable
+
+226
+00:11:20,640 --> 00:11:24,160
+0, 1, the 1 representing female.
+
+227
+00:11:24,160 --> 00:11:26,150
+And so we see the result.
+
+228
+00:11:26,150 --> 00:11:31,170
+And the coefficient is 19.73, but it&#39;s not significant.
+
+229
+00:11:31,170 --> 00:11:35,040
+The p value is 0.66, which is not significant.
+
+230
+00:11:35,040 --> 00:11:40,000
+So contrary to popular wisdom, females don&#39;t generally have a
+
+231
+00:11:40,000 --> 00:11:43,790
+higher credit card balance than males.
+
+232
+00:11:43,790 --> 00:11:46,550
+The number 19.73 is slightly higher, but it&#39;s not
+
+233
+00:11:46,550 --> 00:11:47,800
+significant.
+
+234
+00:11:50,180 --> 00:11:52,370
+So what do we do it if we have a variable with
+
+235
+00:11:52,370 --> 00:11:54,710
+more than two levels?
+
+236
+00:11:54,710 --> 00:11:56,960
+So ethnicity is such a variable.
+
+237
+00:11:56,960 --> 00:11:59,490
+Well, we just make more dummy variables.
+
+238
+00:11:59,490 --> 00:12:02,930
+So ethnicity has three levels.
+
+239
+00:12:02,930 --> 00:12:05,970
+So we&#39;ll make two dummy variables in this case, and
+
+240
+00:12:05,970 --> 00:12:08,210
+we&#39;ll call them x1 and x2.
+
+241
+00:12:08,210 --> 00:12:12,960
+And so xi1 is the value for the ith individual for dummy
+
+242
+00:12:12,960 --> 00:12:13,960
+variable one.
+
+243
+00:12:13,960 --> 00:12:19,450
+We&#39;ll call it a 1 if the ith person is Asian, otherwise 0.
+
+244
+00:12:19,450 --> 00:12:22,770
+And the second dummy variable will be 1 if the ith person is
+
+245
+00:12:22,770 --> 00:12:25,900
+Caucasian, and 0 if not.
+
+246
+00:12:25,900 --> 00:12:28,170
+And of course if they&#39;re both zero, the person, the
+
+247
+00:12:28,170 --> 00:12:31,930
+individual, will be African-American.
+
+248
+00:12:31,930 --> 00:12:35,930
+And so that&#39;s the general rule if you&#39;ve got a categorical
+
+249
+00:12:35,930 --> 00:12:40,630
+variable with three levels, you make two dummy variables.
+
+250
+00:12:40,630 --> 00:12:43,330
+If it&#39;s got two levels, you make one dummy variable.
+
+251
+00:12:43,330 --> 00:12:46,440
+And if it&#39;s got k levels, you&#39;ll make k minus 1 dummy
+
+252
+00:12:46,440 --> 00:12:48,805
+variables to represent each of those categories.
+
+253
+00:12:52,420 --> 00:12:54,970
+So what does the model look like in this case?
+
+254
+00:12:54,970 --> 00:12:58,600
+Well, we&#39;ll have a model now with two coefficients, one for
+
+255
+00:12:58,600 --> 00:13:00,990
+each of these dummy variables.
+
+256
+00:13:00,990 --> 00:13:02,910
+And let&#39;s look at the different cases.
+
+257
+00:13:02,910 --> 00:13:06,200
+So if the person&#39;s Asian, they&#39;ll get the beta 1.
+
+258
+00:13:10,480 --> 00:13:16,100
+If the person&#39;s Caucasian, they&#39;ll get the beta 2.
+
+259
+00:13:16,100 --> 00:13:19,170
+And if the person&#39;s African American, they don&#39;t have beta
+
+260
+00:13:19,170 --> 00:13:22,960
+1 or beta 2, so the baseline, beta 0, represents such an
+
+261
+00:13:22,960 --> 00:13:24,620
+individual.
+
+262
+00:13:24,620 --> 00:13:27,690
+And so what we see now is that beta 1 represents the
+
+263
+00:13:27,690 --> 00:13:31,740
+difference between the baseline beta 0, which is
+
+264
+00:13:31,740 --> 00:13:35,990
+African American, and the difference between that
+
+265
+00:13:35,990 --> 00:13:37,500
+individual and an Asian.
+
+266
+00:13:37,500 --> 00:13:42,530
+So it&#39;s the additional effect for being an Asian, and beta 2
+
+267
+00:13:42,530 --> 00:13:46,310
+is an additional effect for being Caucasian.
+
+268
+00:13:46,310 --> 00:13:48,290
+And as I said, there will be always one fewer dummy
+
+269
+00:13:48,290 --> 00:13:51,440
+variable than the number of levels.
+
+270
+00:13:51,440 --> 00:13:56,150
+So in this case, we call the category African-American is
+
+271
+00:13:56,150 --> 00:13:58,750
+known as the baseline level, because it doesn&#39;t have a
+
+272
+00:13:58,750 --> 00:14:01,300
+parameter representing it except beta 0.
+
+273
+00:14:04,960 --> 00:14:06,600
+So here&#39;s the linear model.
+
+274
+00:14:06,600 --> 00:14:09,560
+We&#39;ve picked African-American as a baseline.
+
+275
+00:14:09,560 --> 00:14:11,710
+And so that actually determines which
+
+276
+00:14:11,710 --> 00:14:13,230
+comparisons we make.
+
+277
+00:14:13,230 --> 00:14:19,350
+So the coefficient minus 18.69 is comparing Asian to
+
+278
+00:14:19,350 --> 00:14:20,360
+African-American.
+
+279
+00:14:20,360 --> 00:14:21,970
+And that&#39;s not significant.
+
+280
+00:14:21,970 --> 00:14:26,110
+And likewise, the Caucasian to African-American, which is
+
+281
+00:14:26,110 --> 00:14:27,910
+also not significant.
+
+282
+00:14:27,910 --> 00:14:30,720
+Now, it turns out the choice of the baseline does not take
+
+283
+00:14:30,720 --> 00:14:31,820
+the fit of the model.
+
+284
+00:14:31,820 --> 00:14:35,210
+The residual sum of squares would be the same no matter
+
+285
+00:14:35,210 --> 00:14:38,850
+which category you chose as the baseline.
+
+286
+00:14:38,850 --> 00:14:43,585
+But the contrasts would change, because picking the
+
+287
+00:14:43,585 --> 00:14:45,880
+baseline determines which contrasts you make.
+
+288
+00:14:45,880 --> 00:14:49,060
+And so the p values potentially would change as
+
+289
+00:14:49,060 --> 00:14:50,310
+you change the baseline.
+
