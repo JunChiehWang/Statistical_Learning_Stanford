@@ -1,0 +1,1300 @@
+0
+00:00:00,460 --> 00:00:02,550
+We&#39;re now going to start our discussion of multiple linear
+
+1
+00:00:02,550 --> 00:00:03,840
+regression, which is regression with
+
+2
+00:00:03,840 --> 00:00:06,090
+more than one predictor.
+
+3
+00:00:06,090 --> 00:00:09,300
+I should say the term
+
+4
+00:00:09,300 --> 00:00:10,630
+&quot;regression&quot; is kind of unusual.
+
+5
+00:00:10,630 --> 00:00:12,425
+You might be wondering, why linear regression?
+
+6
+00:00:12,425 --> 00:00:14,110
+It&#39;s a linear model.
+
+7
+00:00:14,110 --> 00:00:15,950
+And this actually is an unusual term.
+
+8
+00:00:15,950 --> 00:00:17,280
+It&#39;s actually historical.
+
+9
+00:00:17,280 --> 00:00:20,200
+It comes from the idea of regression towards the mean,
+
+10
+00:00:20,200 --> 00:00:25,310
+which is a concept which was discussed in the early 1900s.
+
+11
+00:00:25,310 --> 00:00:28,240
+You might want to look that up yourself and later on in the
+
+12
+00:00:28,240 --> 00:00:30,400
+course we&#39;ll describe what regression
+
+13
+00:00:30,400 --> 00:00:31,570
+towards the mean is.
+
+14
+00:00:31,570 --> 00:00:34,980
+But it&#39;s resulted in a sort of unusual name for a linear
+
+15
+00:00:34,980 --> 00:00:38,830
+model called linear regression.
+
+16
+00:00:38,830 --> 00:00:40,820
+But we have to live with this term because
+
+17
+00:00:40,820 --> 00:00:43,350
+it&#39;s become time honored.
+
+18
+00:00:43,350 --> 00:00:46,900
+So multiple linear regression now extends the simple model
+
+19
+00:00:46,900 --> 00:00:48,810
+to we have more than one predictor.
+
+20
+00:00:48,810 --> 00:00:51,770
+Like in our example, we have three predictors.
+
+21
+00:00:51,770 --> 00:00:53,450
+So we want to fit them all together and use them all
+
+22
+00:00:53,450 --> 00:00:55,990
+together to predict the outcome.
+
+23
+00:00:55,990 --> 00:00:58,270
+So here&#39;s the model.
+
+24
+00:00:58,270 --> 00:01:02,320
+We have an overall intercept term, and then we have a slope
+
+25
+00:01:02,320 --> 00:01:04,120
+for each of the predictors in the model.
+
+26
+00:01:04,120 --> 00:01:07,720
+Which again, the betas or the parameters, they&#39;re unknown.
+
+27
+00:01:07,720 --> 00:01:09,080
+And the x&#39;s are observed.
+
+28
+00:01:09,080 --> 00:01:12,520
+And we&#39;re trying to use the x&#39;s to predict y.
+
+29
+00:01:12,520 --> 00:01:15,410
+So in the advertising example we particularly will have the
+
+30
+00:01:15,410 --> 00:01:19,450
+three predictors TV, radio, and newspaper advertising.
+
+31
+00:01:19,450 --> 00:01:21,370
+And we&#39;re going to try to predict sales.
+
+32
+00:01:21,370 --> 00:01:25,310
+And we have the error term along points to deviate around
+
+33
+00:01:25,310 --> 00:01:26,120
+the function.
+
+34
+00:01:26,120 --> 00:01:27,940
+And now the function actually is a--
+
+35
+00:01:27,940 --> 00:01:29,200
+it&#39;s called a hyperplane.
+
+36
+00:01:29,200 --> 00:01:33,182
+Let&#39;s actually flip a head to slide 19 for a moment where I
+
+37
+00:01:33,182 --> 00:01:34,320
+have a picture of this.
+
+38
+00:01:34,320 --> 00:01:39,520
+So whereas before we had a line, now it&#39;s a hyperplane.
+
+39
+00:01:39,520 --> 00:01:43,910
+So I&#39;ve been able to draw it here just for two predictors.
+
+40
+00:01:43,910 --> 00:01:45,250
+It&#39;s hard to draw it for three.
+
+41
+00:01:45,250 --> 00:01:48,890
+But now the line is now replaced by this flat surface
+
+42
+00:01:48,890 --> 00:01:51,540
+called a plane or hyperplane.
+
+43
+00:01:51,540 --> 00:01:53,560
+So here&#39;s our data points.
+
+44
+00:01:53,560 --> 00:01:57,360
+For each point we have its two predictor values, let&#39;s say TV
+
+45
+00:01:57,360 --> 00:01:58,500
+and newspaper.
+
+46
+00:01:58,500 --> 00:02:01,080
+And we have its sales on the vertical axis.
+
+47
+00:02:01,080 --> 00:02:06,230
+And here&#39;s each data point is a red point.
+
+48
+00:02:06,230 --> 00:02:09,680
+What multiple aggression does, it fits a hyperplane, a plane
+
+49
+00:02:09,680 --> 00:02:12,900
+to these points to minimize the square distance between
+
+50
+00:02:12,900 --> 00:02:16,610
+each point and the closest point on the plane.
+
+51
+00:02:16,610 --> 00:02:18,070
+Very intuitive.
+
+52
+00:02:18,070 --> 00:02:20,110
+The same way we did it for a line, now the
+
+53
+00:02:20,110 --> 00:02:22,490
+line becomes a plane.
+
+54
+00:02:22,490 --> 00:02:23,740
+So let&#39;s now go back to the.
+
+55
+00:02:28,790 --> 00:02:30,050
+So the model, again.
+
+56
+00:02:30,050 --> 00:02:33,190
+So it&#39;s an equation of hyperplane with its
+
+57
+00:02:33,190 --> 00:02:34,440
+coefficients.
+
+58
+00:02:37,290 --> 00:02:41,770
+Well, before we talk about the least squares estimates and
+
+59
+00:02:41,770 --> 00:02:45,175
+some of the details, let&#39;s step back for a moment and
+
+60
+00:02:45,175 --> 00:02:47,150
+think about how you might interpret the regression
+
+61
+00:02:47,150 --> 00:02:47,710
+coefficients.
+
+62
+00:02:47,710 --> 00:02:49,280
+Because now there&#39;s more than one of them.
+
+63
+00:02:49,280 --> 00:02:51,450
+In a simple model we had only one to deal with.
+
+64
+00:02:51,450 --> 00:02:55,110
+Now we have a multiple, say three coefficients.
+
+65
+00:02:55,110 --> 00:02:58,110
+How do we interpret them together?
+
+66
+00:02:58,110 --> 00:03:04,900
+Well, if the predictors had no correlation in the data, then
+
+67
+00:03:04,900 --> 00:03:08,250
+we could talk about each coefficient separately.
+
+68
+00:03:08,250 --> 00:03:11,210
+We can make statements like, a unit change in xj, for
+
+69
+00:03:11,210 --> 00:03:14,210
+example, is associated with a beta j change-- that&#39;s its
+
+70
+00:03:14,210 --> 00:03:14,740
+coefficient--
+
+71
+00:03:14,740 --> 00:03:16,140
+in the outcome.
+
+72
+00:03:16,140 --> 00:03:20,180
+With all the other variables fixed.
+
+73
+00:03:20,180 --> 00:03:24,840
+But predictors are not usually uncorrelated in the data.
+
+74
+00:03:24,840 --> 00:03:27,380
+For example, here we can expect--
+
+75
+00:03:27,380 --> 00:03:28,480
+and we&#39;ll see it actually--
+
+76
+00:03:28,480 --> 00:03:31,300
+that the various amounts spent on the three kinds of
+
+77
+00:03:31,300 --> 00:03:33,830
+advertising are correlated.
+
+78
+00:03:33,830 --> 00:03:39,310
+So these kind of interpretations are difficult
+
+79
+00:03:39,310 --> 00:03:42,900
+in observational data where they&#39;re correlated.
+
+80
+00:03:42,900 --> 00:03:45,300
+What problem does the correlation cause?
+
+81
+00:03:45,300 --> 00:03:48,270
+Well, the variance of all coefficients tend to increase,
+
+82
+00:03:48,270 --> 00:03:49,982
+sometimes dramatically.
+
+83
+00:03:49,982 --> 00:03:53,250
+In particular, imagine we have two predictors which are
+
+84
+00:03:53,250 --> 00:03:55,640
+almost identical.
+
+85
+00:03:55,640 --> 00:03:59,210
+Then we can&#39;t really separate their coefficients, right?
+
+86
+00:03:59,210 --> 00:04:02,110
+If I have a coefficient on one variable I could just as soon
+
+87
+00:04:02,110 --> 00:04:04,810
+move that coefficient to the other variable.
+
+88
+00:04:04,810 --> 00:04:05,660
+And the fit of the model is going to be
+
+89
+00:04:05,660 --> 00:04:07,360
+pretty much the same.
+
+90
+00:04:07,360 --> 00:04:10,140
+So the variance of the coefficients of those two
+
+91
+00:04:10,140 --> 00:04:14,390
+predictors are going to be very large.
+
+92
+00:04:14,390 --> 00:04:16,015
+And then interpretation becomes difficult when there&#39;s
+
+93
+00:04:16,015 --> 00:04:16,790
+a correlation.
+
+94
+00:04:16,790 --> 00:04:21,370
+Because one can&#39;t really say, suppose I were to change xj.
+
+95
+00:04:21,370 --> 00:04:24,980
+And we can think about, suppose I was to increase the
+
+96
+00:04:24,980 --> 00:04:27,350
+TV advertising by a certain amount.
+
+97
+00:04:27,350 --> 00:04:29,040
+What would be the effect on sales?
+
+98
+00:04:29,040 --> 00:04:32,760
+Well if that happened, we probably wouldn&#39;t be
+
+99
+00:04:32,760 --> 00:04:34,780
+reasonable to assume that the other advertising
+
+100
+00:04:34,780 --> 00:04:36,520
+budgets stay the same.
+
+101
+00:04:36,520 --> 00:04:39,890
+For example, maybe the company has a fixed budget overall.
+
+102
+00:04:39,890 --> 00:04:41,760
+So that if I increase TV advertising I&#39;d have to
+
+103
+00:04:41,760 --> 00:04:44,080
+decrease the other advertising.
+
+104
+00:04:44,080 --> 00:04:46,750
+Or maybe TV advertising is increasing just because that
+
+105
+00:04:46,750 --> 00:04:51,090
+company has more money in general and decides it wants
+
+106
+00:04:51,090 --> 00:04:53,570
+to spend more on advertising of all kinds.
+
+107
+00:04:53,570 --> 00:04:59,080
+So in both those cases we can&#39;t really talk about the
+
+108
+00:04:59,080 --> 00:05:01,160
+change of one predictor where the other one&#39;s fixed.
+
+109
+00:05:01,160 --> 00:05:03,850
+Because the predictors will tend to move
+
+110
+00:05:03,850 --> 00:05:06,440
+together in real data.
+
+111
+00:05:06,440 --> 00:05:07,710
+And what this means is claims of
+
+112
+00:05:07,710 --> 00:05:10,390
+causality should be avoided.
+
+113
+00:05:10,390 --> 00:05:14,050
+We can&#39;t really say that one predictor causes the outcome
+
+114
+00:05:14,050 --> 00:05:19,290
+when there&#39;s predictors in the system that are correlated
+
+115
+00:05:19,290 --> 00:05:21,090
+with that given predictor.
+
+116
+00:05:21,090 --> 00:05:26,400
+So this becomes a complicated challenge to
+
+117
+00:05:26,400 --> 00:05:27,650
+try to discuss causality.
+
+118
+00:05:27,650 --> 00:05:30,370
+And we&#39;re going to avoid that.
+
+119
+00:05:30,370 --> 00:05:34,480
+And there&#39;s a nice book which actually when I was a graduate
+
+120
+00:05:34,480 --> 00:05:36,400
+student it was one of the books I learned from, Data
+
+121
+00:05:36,400 --> 00:05:38,830
+Analysis and Regression by Mosteller and Tukey, two very
+
+122
+00:05:38,830 --> 00:05:41,650
+famous statisticians.
+
+123
+00:05:41,650 --> 00:05:46,450
+And I look at the book now and I don&#39;t like the book that
+
+124
+00:05:46,450 --> 00:05:46,990
+much overall.
+
+125
+00:05:46,990 --> 00:05:50,540
+But there&#39;s one wonderful chapter called the woes of
+
+126
+00:05:50,540 --> 00:05:54,490
+regression coefficients that talks about the problems of
+
+127
+00:05:54,490 --> 00:05:56,770
+interpreting regression coefficients in a multiple
+
+128
+00:05:56,770 --> 00:05:57,500
+regression model.
+
+129
+00:05:57,500 --> 00:06:01,730
+That&#39;s a very useful chapter to read.
+
+130
+00:06:01,730 --> 00:06:02,570
+And I&#39;ve made this point.
+
+131
+00:06:02,570 --> 00:06:06,370
+So the first point here I&#39;ve just made it, a regression
+
+132
+00:06:06,370 --> 00:06:10,090
+coefficient what it measures is the change in y per unit
+
+133
+00:06:10,090 --> 00:06:14,010
+change in xj with all other predictors held fixed.
+
+134
+00:06:14,010 --> 00:06:16,460
+But this is not usually a reflection of reality.
+
+135
+00:06:16,460 --> 00:06:18,670
+Because usually when you change one predictor the
+
+136
+00:06:18,670 --> 00:06:20,340
+others change as well.
+
+137
+00:06:20,340 --> 00:06:22,930
+I mentioned the example with advertising.
+
+138
+00:06:22,930 --> 00:06:26,820
+So here&#39;s couple of examples which I&#39;ll just
+
+139
+00:06:26,820 --> 00:06:29,030
+have you think about.
+
+140
+00:06:29,030 --> 00:06:30,150
+And maybe we&#39;ll put it on a quiz.
+
+141
+00:06:30,150 --> 00:06:33,270
+But here&#39;s an example, the first example, to have you
+
+142
+00:06:33,270 --> 00:06:34,670
+think about this point.
+
+143
+00:06:34,670 --> 00:06:35,900
+Suppose I measure the total amount of
+
+144
+00:06:35,900 --> 00:06:37,150
+change in your pocket.
+
+145
+00:06:39,270 --> 00:06:40,180
+That&#39;s y.
+
+146
+00:06:40,180 --> 00:06:43,500
+I also measure two predictors, the number of coins and the
+
+147
+00:06:43,500 --> 00:06:45,730
+number of pennies, nickels, and dimes.
+
+148
+00:06:45,730 --> 00:06:47,780
+That&#39;s x2.
+
+149
+00:06:47,780 --> 00:06:50,490
+Now by itself, the regression coefficient of y on the total
+
+150
+00:06:50,490 --> 00:06:52,040
+number of pennies, nickels, and dimes will probably be
+
+151
+00:06:52,040 --> 00:06:52,840
+positive, right?
+
+152
+00:06:52,840 --> 00:06:55,540
+The more you have of these, the more likely the you have
+
+153
+00:06:55,540 --> 00:06:57,310
+more change.
+
+154
+00:06:57,310 --> 00:07:01,190
+But what about if I have x1 in the model?
+
+155
+00:07:01,190 --> 00:07:06,950
+So for a given level of x1, think about whether the
+
+156
+00:07:06,950 --> 00:07:11,850
+coefficient of x2 will be positive or negative.
+
+157
+00:07:11,850 --> 00:07:15,095
+And talk about the answer to this later on.
+
+158
+00:07:15,095 --> 00:07:18,990
+But that&#39;s a simple example where you can see now how the
+
+159
+00:07:18,990 --> 00:07:21,920
+presence of one predictor affects the way that we think
+
+160
+00:07:21,920 --> 00:07:22,930
+about and interpret the
+
+161
+00:07:22,930 --> 00:07:24,180
+coefficient of another predictor.
+
+162
+00:07:24,180 --> 00:07:25,930
+And of course, these two predictors are highly
+
+163
+00:07:25,930 --> 00:07:29,090
+correlated by construction.
+
+164
+00:07:29,090 --> 00:07:31,520
+Another example, which is actually from a chapter in
+
+165
+00:07:31,520 --> 00:07:35,880
+this book, from American football.
+
+166
+00:07:35,880 --> 00:07:41,800
+y is the number of tackles by a football player in a season.
+
+167
+00:07:41,800 --> 00:07:44,690
+w and h are his height and weight.
+
+168
+00:07:44,690 --> 00:07:49,260
+And they imagine that they take data from this situation,
+
+169
+00:07:49,260 --> 00:07:55,700
+they fit a regression model, and they obtain beta zero.
+
+170
+00:07:55,700 --> 00:07:58,840
+But the coefficient of weight is 0.50.
+
+171
+00:07:58,840 --> 00:08:03,050
+Coefficient of height is minus 0.10, which seems to say that
+
+172
+00:08:03,050 --> 00:08:08,070
+it&#39;s better to be short to make more tackles.
+
+173
+00:08:08,070 --> 00:08:10,730
+So the question we&#39;re asking here is, how would you
+
+174
+00:08:10,730 --> 00:08:13,700
+interpret this coefficient of height given the
+
+175
+00:08:13,700 --> 00:08:15,130
+weights in the model?
+
+176
+00:08:15,130 --> 00:08:17,180
+And again, think about this and we&#39;ll return
+
+177
+00:08:17,180 --> 00:08:18,430
+to the answer later.
+
+178
+00:08:20,690 --> 00:08:27,400
+And they also mention in that same book, there&#39;s two quotes
+
+179
+00:08:27,400 --> 00:08:29,180
+essentially by George Box who was another famous
+
+180
+00:08:29,180 --> 00:08:30,510
+statistician.
+
+181
+00:08:30,510 --> 00:08:33,370
+Essentially all models are wrong but some are useful.
+
+182
+00:08:33,370 --> 00:08:35,169
+This is interesting.
+
+183
+00:08:35,169 --> 00:08:37,909
+Because it&#39;s true that, as we saw like on the very first
+
+184
+00:08:37,909 --> 00:08:40,409
+slide, the regression model, a linear model, is
+
+185
+00:08:40,409 --> 00:08:42,179
+never exactly right.
+
+186
+00:08:42,179 --> 00:08:44,680
+But it&#39;s often very useful.
+
+187
+00:08:44,680 --> 00:08:47,800
+So it&#39;s important to remember that the model that you assume
+
+188
+00:08:47,800 --> 00:08:50,560
+is not to take it too seriously.
+
+189
+00:08:50,560 --> 00:08:52,920
+Test out your model.
+
+190
+00:08:52,920 --> 00:08:55,440
+Remember that it&#39;s going to be wrong.
+
+191
+00:08:55,440 --> 00:09:00,320
+But also remember the fact that, despite the fact it&#39;s an
+
+192
+00:09:00,320 --> 00:09:02,810
+approximation, it can be a very useful approximation in
+
+193
+00:09:02,810 --> 00:09:04,370
+many situations.
+
+194
+00:09:04,370 --> 00:09:07,440
+And then this point in their chapter, also paraphrasing
+
+195
+00:09:07,440 --> 00:09:11,790
+George Box, which really sort of sums up what I talked about
+
+196
+00:09:11,790 --> 00:09:13,540
+during [INAUDIBLE] coefficients, the only way to
+
+197
+00:09:13,540 --> 00:09:16,580
+find what will happen when a complex system is disturbed is
+
+198
+00:09:16,580 --> 00:09:18,430
+to disturb the system, not merely
+
+199
+00:09:18,430 --> 00:09:19,770
+to observe it passively.
+
+200
+00:09:19,770 --> 00:09:23,420
+In other words, if you want to make a causal statement about
+
+201
+00:09:23,420 --> 00:09:26,460
+a predictor for an outcome, you actually have to be able
+
+202
+00:09:26,460 --> 00:09:31,340
+to take the system and perturb that particular predictor
+
+203
+00:09:31,340 --> 00:09:33,230
+keeping the other ones fixed.
+
+204
+00:09:33,230 --> 00:09:36,600
+That will allow you to make a causal statement about a
+
+205
+00:09:36,600 --> 00:09:39,780
+variable like xj and its effect on the outcome.
+
+206
+00:09:39,780 --> 00:09:48,000
+It&#39;s not good enough simply to observe some observations from
+
+207
+00:09:48,000 --> 00:09:49,150
+the system.
+
+208
+00:09:49,150 --> 00:09:51,830
+We can&#39;t use that data to conclude causality.
+
+209
+00:09:51,830 --> 00:09:54,040
+So if you want to know what happens when a complex system
+
+210
+00:09:54,040 --> 00:09:56,170
+is perturbed, you have to perturb it.
+
+211
+00:09:56,170 --> 00:09:57,970
+You can&#39;t simply observe it.
+
+212
+00:09:57,970 --> 00:10:05,520
+So I think that&#39;s a very wise summary of the use of models
+
+213
+00:10:05,520 --> 00:10:06,770
+and observational data.
+
+214
+00:10:09,750 --> 00:10:13,470
+So how do we find the least squares estimates for the
+
+215
+00:10:13,470 --> 00:10:15,010
+multiple regression model?
+
+216
+00:10:15,010 --> 00:10:18,500
+Well, t&#39;s really very much the same, the same tack we took
+
+217
+00:10:18,500 --> 00:10:19,920
+for the simple model.
+
+218
+00:10:19,920 --> 00:10:24,420
+So first of all, our predictions will be given by
+
+219
+00:10:24,420 --> 00:10:25,410
+this equation.
+
+220
+00:10:25,410 --> 00:10:26,830
+This is the intercept.
+
+221
+00:10:26,830 --> 00:10:30,330
+And now we have one slope parameter for each predictor.
+
+222
+00:10:30,330 --> 00:10:35,030
+We put hats on there, as we always will when we infer that
+
+223
+00:10:35,030 --> 00:10:37,630
+value from data, the estimates.
+
+224
+00:10:37,630 --> 00:10:39,480
+And now what&#39;s called the multiple least squares
+
+225
+00:10:39,480 --> 00:10:42,940
+estimates are the values that minimize the sum of square
+
+226
+00:10:42,940 --> 00:10:48,470
+deviations of points around the plane.
+
+227
+00:10:48,470 --> 00:10:49,840
+Let&#39;s go--
+
+228
+00:10:49,840 --> 00:10:51,810
+remember, I showed this picture.
+
+229
+00:10:51,810 --> 00:10:55,490
+Here&#39;s my data points, here&#39;s my approximating
+
+230
+00:10:55,490 --> 00:10:56,840
+least squares plane.
+
+231
+00:10:56,840 --> 00:10:59,840
+And I&#39;m going to choose the orientation and height of this
+
+232
+00:10:59,840 --> 00:11:02,270
+plane to minimize the total squared distance between the
+
+233
+00:11:02,270 --> 00:11:07,090
+red points and the closest point on the hyperplane.
+
+234
+00:11:07,090 --> 00:11:10,880
+Those are called the least squares estimates.
+
+235
+00:11:10,880 --> 00:11:13,200
+They&#39;re called the multiple least squares estimates
+
+236
+00:11:13,200 --> 00:11:15,510
+because there&#39;s multiple predictors.
+
+237
+00:11:15,510 --> 00:11:17,840
+There&#39;s is a formula for these
+
+238
+00:11:17,840 --> 00:11:19,540
+coefficients, for the estimates.
+
+239
+00:11:19,540 --> 00:11:20,930
+It&#39;s kind of messy.
+
+240
+00:11:20,930 --> 00:11:23,330
+And it&#39;s not something that anyone ever computes by hand.
+
+241
+00:11:23,330 --> 00:11:26,590
+Although probably in the early 1960s people use to do these.
+
+242
+00:11:26,590 --> 00:11:28,170
+Poor guys used to actually compute least squares
+
+243
+00:11:28,170 --> 00:11:29,850
+estimates by hand.
+
+244
+00:11:29,850 --> 00:11:32,220
+They were good at doing matrix computations.
+
+245
+00:11:32,220 --> 00:11:35,140
+But today we have the luxury of fast computers.
+
+246
+00:11:35,140 --> 00:11:38,170
+And in a program like R or any other statistical package, we
+
+247
+00:11:38,170 --> 00:11:40,380
+can compute the least squares estimates for very big data
+
+248
+00:11:40,380 --> 00:11:41,330
+sets very quickly.
+
+249
+00:11:41,330 --> 00:11:43,450
+So we don&#39;t need to worry about the formula.
+
+250
+00:11:43,450 --> 00:11:45,560
+We just need to know what we&#39;re doing, which is we&#39;re
+
+251
+00:11:45,560 --> 00:11:49,250
+finding the values of the coefficients that minimize the
+
+252
+00:11:49,250 --> 00:11:50,500
+sum of squares.
+
+253
+00:11:53,920 --> 00:11:57,110
+So here&#39;s what we get for the advertising data.
+
+254
+00:12:00,990 --> 00:12:03,300
+The top table are the coefficients,
+
+255
+00:12:03,300 --> 00:12:04,590
+standard errors et cetera.
+
+256
+00:12:04,590 --> 00:12:09,260
+So these are the least squares estimates.
+
+257
+00:12:09,260 --> 00:12:11,500
+Again, there&#39;s a lot of terminology here.
+
+258
+00:12:11,500 --> 00:12:13,990
+Coefficient or parameter, we&#39;ll use those
+
+259
+00:12:13,990 --> 00:12:16,380
+interchangeably as people do.
+
+260
+00:12:16,380 --> 00:12:17,150
+The intercept.
+
+261
+00:12:17,150 --> 00:12:18,980
+Again, we&#39;re not typically interested in the intercept.
+
+262
+00:12:18,980 --> 00:12:22,560
+Because that&#39;s just telling us whether setting the other
+
+263
+00:12:22,560 --> 00:12:26,740
+three predictors to 0, whether the sales is the
+
+264
+00:12:26,740 --> 00:12:30,640
+average sales value.
+
+265
+00:12:30,640 --> 00:12:31,760
+So we don&#39;t really care about that.
+
+266
+00:12:31,760 --> 00:12:34,920
+But we care about the slopes, which are these guys.
+
+267
+00:12:34,920 --> 00:12:36,400
+These three values here.
+
+268
+00:12:36,400 --> 00:12:42,060
+So we see, for example, the coefficient of TV is 0.46.
+
+269
+00:12:42,060 --> 00:12:45,870
+Standard error, the t statistic is the ratio, 0.46
+
+270
+00:12:45,870 --> 00:12:48,220
+divided by 0.0014.
+
+271
+00:12:48,220 --> 00:12:52,150
+And the t statistic, remember I said a t statistic of bigger
+
+272
+00:12:52,150 --> 00:12:57,710
+than about 2 is significant at p value of 0.5.
+
+273
+00:12:57,710 --> 00:12:59,510
+So the p value of 32 is huge.
+
+274
+00:12:59,510 --> 00:13:03,130
+And p value is less than 0.0001.
+
+275
+00:13:03,130 --> 00:13:04,240
+Similarly for radio.
+
+276
+00:13:04,240 --> 00:13:06,140
+Very big effect.
+
+277
+00:13:06,140 --> 00:13:07,340
+Newspaper.
+
+278
+00:13:07,340 --> 00:13:09,390
+Newspaper looks like it&#39;s not having much effect.
+
+279
+00:13:09,390 --> 00:13:13,430
+Its t statistic is minus 0.18, which has got a p
+
+280
+00:13:13,430 --> 00:13:16,400
+value which is large.
+
+281
+00:13:16,400 --> 00:13:18,200
+And p values close to one--
+
+282
+00:13:18,200 --> 00:13:21,400
+p values above 0.05 or 0.1 are not significant.
+
+283
+00:13:21,400 --> 00:13:28,450
+They&#39;re not evidence against the null hypothesis, which is
+
+284
+00:13:28,450 --> 00:13:31,250
+that the coefficient is 0.
+
+285
+00:13:31,250 --> 00:13:34,580
+But let&#39;s be a little more careful how we interpret this.
+
+286
+00:13:34,580 --> 00:13:36,710
+Remember, each of these statements is made conditional
+
+287
+00:13:36,710 --> 00:13:38,140
+on the other two being in the model.
+
+288
+00:13:38,140 --> 00:13:42,800
+So in particular, this coefficient says, given I have
+
+289
+00:13:42,800 --> 00:13:49,110
+the amount of money spent on radio and newspaper, spending
+
+290
+00:13:49,110 --> 00:13:54,670
+money on TV still produces a change in sales.
+
+291
+00:13:54,670 --> 00:13:57,200
+So in the presence of the other two
+
+292
+00:13:57,200 --> 00:14:00,950
+predictors, TV is important.
+
+293
+00:14:00,950 --> 00:14:02,340
+Similarly for radio.
+
+294
+00:14:02,340 --> 00:14:06,350
+The presence of TV and radio advertising--
+
+295
+00:14:06,350 --> 00:14:10,280
+excuse me, TV and newspaper advertising, radio advertising
+
+296
+00:14:10,280 --> 00:14:11,330
+can be effective.
+
+297
+00:14:11,330 --> 00:14:14,300
+But newspaper is not, in the presence of these two.
+
+298
+00:14:14,300 --> 00:14:20,090
+So in particular, on its own newspaper may be significant,
+
+299
+00:14:20,090 --> 00:14:22,030
+its coefficient may be significant.
+
+300
+00:14:22,030 --> 00:14:23,910
+But in the presence of the other two, in the multiple
+
+301
+00:14:23,910 --> 00:14:27,230
+model, it&#39;s not showing significance.
+
+302
+00:14:27,230 --> 00:14:30,590
+And we can look at the correlations actually here.
+
+303
+00:14:30,590 --> 00:14:32,540
+Here are the simple correlations between the
+
+304
+00:14:32,540 --> 00:14:35,150
+predictors.
+
+305
+00:14:35,150 --> 00:14:38,430
+And we see there&#39;s some significant correlations.
+
+306
+00:14:38,430 --> 00:14:43,240
+For example, TV and sales--
+
+307
+00:14:43,240 --> 00:14:45,890
+well, sales is the outcome.
+
+308
+00:14:45,890 --> 00:14:50,440
+But in particular, radio and newspaper have a
+
+309
+00:14:50,440 --> 00:14:54,760
+correlation of 0.35.
+
+310
+00:14:54,760 --> 00:14:58,770
+So what&#39;s likely happened here is that any effect of
+
+311
+00:14:58,770 --> 00:15:01,570
+newspaper has been soaked up by radio because they&#39;re
+
+312
+00:15:01,570 --> 00:15:04,610
+correlated at 0.35.
+
+313
+00:15:04,610 --> 00:15:09,230
+So with radio in the model, newspaper&#39;s no longer needed.
+
+314
+00:15:09,230 --> 00:15:11,300
+It doesn&#39;t tell us anything more.
+
+315
+00:15:11,300 --> 00:15:13,550
+It doesn&#39;t improve the prediction given we&#39;ve
+
+316
+00:15:13,550 --> 00:15:15,420
+measured the radio advertising.
+
+317
+00:15:15,420 --> 00:15:20,100
+And that&#39;s because of the correlation being 0.35.
+
+318
+00:15:20,100 --> 00:15:22,120
+And the other hand, it looks like TV and radio were pretty
+
+319
+00:15:22,120 --> 00:15:23,850
+uncoordinated.
+
+320
+00:15:23,850 --> 00:15:28,400
+And their effects are somewhat complimentary.
+
+321
+00:15:28,400 --> 00:15:31,050
+So that completes our discussion of this example, in
+
+322
+00:15:31,050 --> 00:15:33,000
+the next segment we&#39;ll talk about some important questions
+
+323
+00:15:33,000 --> 00:15:34,930
+that arise when you use regression
+
+324
+00:15:34,930 --> 00:15:36,180
+for real data analysis.
+

@@ -1,0 +1,1132 @@
+0
+00:00:00,440 --> 00:00:02,100
+Hi again.
+
+1
+00:00:02,100 --> 00:00:04,130
+What we&#39;re going to do now, is we&#39;re going to have a look at
+
+2
+00:00:04,130 --> 00:00:11,480
+R. Doing data analysis, these days, definitely requires a
+
+3
+00:00:11,480 --> 00:00:13,700
+very good computing environment.
+
+4
+00:00:13,700 --> 00:00:15,210
+And there&#39;s lots around.
+
+5
+00:00:15,210 --> 00:00:18,800
+But from my point of view R is probably be the best
+
+6
+00:00:18,800 --> 00:00:21,780
+environment these days.
+
+7
+00:00:21,780 --> 00:00:24,510
+R is free, as we&#39;ve mentioned before.
+
+8
+00:00:24,510 --> 00:00:28,850
+And it&#39;s got a vast range of capabilities.
+
+9
+00:00:28,850 --> 00:00:33,140
+And there it&#39;s got quite a steep learning curve, but the
+
+10
+00:00:33,140 --> 00:00:35,720
+more you learn, the more capable you become.
+
+11
+00:00:35,720 --> 00:00:39,170
+So R allows you to do all kinds of basic
+
+12
+00:00:39,170 --> 00:00:40,900
+operations and data.
+
+13
+00:00:40,900 --> 00:00:43,960
+And it&#39;s also got lots of built-in packages.
+
+14
+00:00:43,960 --> 00:00:46,960
+And once you learn or R, you&#39;ll discover it&#39;s also good
+
+15
+00:00:46,960 --> 00:00:48,820
+very beautiful graphics.
+
+16
+00:00:48,820 --> 00:00:51,450
+And after a while, you&#39;ll find that to start writing
+
+17
+00:00:51,450 --> 00:00:54,870
+functions yourself, and expanding your abilities.
+
+18
+00:00:54,870 --> 00:00:58,680
+So really, R, and/or tools like R are fundamental to
+
+19
+00:00:58,680 --> 00:01:02,880
+doing good data analysis and statistical modeling.
+
+20
+00:01:02,880 --> 00:01:09,530
+And so we&#39;re making this an essential part of this course.
+
+21
+00:01:09,530 --> 00:01:12,880
+So what I&#39;m doing here is, I&#39;m actually running R in another
+
+22
+00:01:12,880 --> 00:01:14,790
+free program called R-Studio.
+
+23
+00:01:14,790 --> 00:01:17,670
+So that&#39;s just an environment for running R and for
+
+24
+00:01:17,670 --> 00:01:22,570
+developing presentations in R. And it&#39;s convenient for giving
+
+25
+00:01:22,570 --> 00:01:24,720
+a presentation of this kind.
+
+26
+00:01:24,720 --> 00:01:28,790
+So we&#39;ll now go to a introductory session in
+
+27
+00:01:28,790 --> 00:01:33,730
+R-Studio, and I&#39;ll just show you some of the features of R.
+
+28
+00:01:33,730 --> 00:01:35,620
+So here we are.
+
+29
+00:01:35,620 --> 00:01:40,120
+You&#39;ll see I&#39;ve got a script in the R-Studio session, in
+
+30
+00:01:40,120 --> 00:01:41,810
+the top left panel.
+
+31
+00:01:41,810 --> 00:01:45,620
+And in the bottom left panel, there&#39;s the R work in session.
+
+32
+00:01:45,620 --> 00:01:49,760
+And what&#39;s going to happen is, I&#39;m going to click on commands
+
+33
+00:01:49,760 --> 00:01:53,776
+that I&#39;ve pre-entered, and that will get sent to the R
+
+34
+00:01:53,776 --> 00:01:56,300
+session Window and executed.
+
+35
+00:01:56,300 --> 00:01:59,100
+Now of course, I could have tried to do you do this live
+
+36
+00:01:59,100 --> 00:02:02,020
+and just type in the commands, but I don&#39;t touch type, and
+
+37
+00:02:02,020 --> 00:02:04,820
+that would have been painful for you and me.
+
+38
+00:02:04,820 --> 00:02:06,370
+So here we go.
+
+39
+00:02:06,370 --> 00:02:09,580
+So the first thing we&#39;ll do is just see, working with basic
+
+40
+00:02:09,580 --> 00:02:12,040
+vectors and matrices.
+
+41
+00:02:12,040 --> 00:02:16,790
+So here we assign three numbers to a vector x.
+
+42
+00:02:16,790 --> 00:02:19,040
+And you see the commands going down below.
+
+43
+00:02:19,040 --> 00:02:22,470
+And if we just type in x, it will print the vector.
+
+44
+00:02:22,470 --> 00:02:24,230
+And there we see the three numbers.
+
+45
+00:02:24,230 --> 00:02:26,600
+Now there&#39;s many ways of creating vectors.
+
+46
+00:02:26,600 --> 00:02:30,330
+So here&#39;s another way, making a sequence, starting from 4,
+
+47
+00:02:30,330 --> 00:02:33,090
+and having length 3, and in steps by 3.
+
+48
+00:02:33,090 --> 00:02:37,640
+So that&#39;s a kind of natural thing one would want to do.
+
+49
+00:02:37,640 --> 00:02:39,940
+This command, seq, is actually very useful.
+
+50
+00:02:39,940 --> 00:02:44,540
+And if you want to find out more about it, in R the way to
+
+51
+00:02:44,540 --> 00:02:47,820
+get help on functions and objects is to put a question
+
+52
+00:02:47,820 --> 00:02:48,500
+mark in front.
+
+53
+00:02:48,500 --> 00:02:53,020
+So we do question mark seek, and in R-Studio, on the right
+
+54
+00:02:53,020 --> 00:02:56,510
+panel, we see the panel comes up giving us all
+
+55
+00:02:56,510 --> 00:02:58,140
+the options for seq.
+
+56
+00:02:58,140 --> 00:03:01,490
+And you&#39;ll see this quite a few options in the command seq
+
+57
+00:03:01,490 --> 00:03:06,080
+that let you make sequences in flexible ways.
+
+58
+00:03:06,080 --> 00:03:09,960
+If we type y, we see the values.
+
+59
+00:03:09,960 --> 00:03:14,150
+And as you might have expected, we see 4, 7, and 10.
+
+60
+00:03:14,150 --> 00:03:16,020
+So now I&#39;ve got two vectors, x and y,
+
+61
+00:03:16,020 --> 00:03:17,650
+both of the same length.
+
+62
+00:03:17,650 --> 00:03:19,620
+And now we can do things with them.
+
+63
+00:03:19,620 --> 00:03:23,590
+And R does vector operations in parallel.
+
+64
+00:03:23,590 --> 00:03:27,000
+So if we say x plus y, even though they&#39;re both vectors,
+
+65
+00:03:27,000 --> 00:03:30,170
+we get the sum of those two vectors, element by element.
+
+66
+00:03:30,170 --> 00:03:34,570
+And likewise, other operations, like x/y means x
+
+67
+00:03:34,570 --> 00:03:36,620
+divide y, and it does element-wise
+
+68
+00:03:36,620 --> 00:03:39,150
+division of the elements.
+
+69
+00:03:39,150 --> 00:03:43,490
+And you can do x to the power y, and it&#39;ll do element-wise
+
+70
+00:03:43,490 --> 00:03:44,780
+exponentiation.
+
+71
+00:03:44,780 --> 00:03:47,930
+Ooh, that gave us a rather big number over there.
+
+72
+00:03:47,930 --> 00:03:49,970
+So that&#39;s some simple operations
+
+73
+00:03:49,970 --> 00:03:52,360
+for creating vectors.
+
+74
+00:03:52,360 --> 00:03:55,220
+What about accessing elements of a vectors?
+
+75
+00:03:55,220 --> 00:03:59,200
+Well, so there&#39;s a subscript convention in R
+
+76
+00:03:59,200 --> 00:04:01,090
+using square braces.
+
+77
+00:04:01,090 --> 00:04:06,880
+So x square brace 2 gives us the second element of x.
+
+78
+00:04:06,880 --> 00:04:11,030
+If we go x square brace 2 colon 3, that says we want the
+
+79
+00:04:11,030 --> 00:04:13,650
+elements of x starting from element 2 and
+
+80
+00:04:13,650 --> 00:04:15,296
+ending at element 3.
+
+81
+00:04:15,296 --> 00:04:15,990
+OK.
+
+82
+00:04:15,990 --> 00:04:18,050
+So it gives us the two values.
+
+83
+00:04:18,050 --> 00:04:22,670
+And a very convenient option in R for subsetting is to put
+
+84
+00:04:22,670 --> 00:04:24,560
+negative signs in subscripts.
+
+85
+00:04:24,560 --> 00:04:30,510
+So x minus 2 means remove the element 2 from x, and return
+
+86
+00:04:30,510 --> 00:04:32,220
+the subsetted vector.
+
+87
+00:04:32,220 --> 00:04:34,290
+And so there we see that&#39;s done.
+
+88
+00:04:34,290 --> 00:04:37,260
+And you can remove more than one element at a time.
+
+89
+00:04:37,260 --> 00:04:42,160
+And so here we&#39;re moving the collection of indices 1 and 2,
+
+90
+00:04:42,160 --> 00:04:45,170
+and they can be arbitrary collection of indices.
+
+91
+00:04:45,170 --> 00:04:49,000
+And that just gives us a vector of length 1.
+
+92
+00:04:49,000 --> 00:04:51,320
+Something to note, there&#39;s no scalars in R.
+
+93
+00:04:51,320 --> 00:04:52,760
+Everything&#39;s a vector.
+
+94
+00:04:52,760 --> 00:04:57,810
+So a scalar is just a vector of length 1.
+
+95
+00:04:57,810 --> 00:04:58,110
+OK.
+
+96
+00:04:58,110 --> 00:04:59,230
+So those are vectors.
+
+97
+00:04:59,230 --> 00:05:01,920
+The next higher up object we&#39;re
+
+98
+00:05:01,920 --> 00:05:04,170
+interested in are matrices.
+
+99
+00:05:04,170 --> 00:05:10,100
+So matrices, and as a case of another array, you can high
+
+100
+00:05:10,100 --> 00:05:12,760
+dimensional arrays, as well, in R. A matrix
+
+101
+00:05:12,760 --> 00:05:14,880
+is a two-way array.
+
+102
+00:05:14,880 --> 00:05:17,360
+And here&#39;s a simple way of making a matrix.
+
+103
+00:05:17,360 --> 00:05:20,620
+So here we&#39;ve got z is equal to a matrix.
+
+104
+00:05:20,620 --> 00:05:22,370
+And we give it the numbers 1 to 12.
+
+105
+00:05:22,370 --> 00:05:26,720
+So the first argument are the actual numbers in the matrix.
+
+106
+00:05:26,720 --> 00:05:29,310
+And then we give it the dimensions 4 and 3.
+
+107
+00:05:29,310 --> 00:05:31,850
+So we want to make a 4 by 3 matrix.
+
+108
+00:05:31,850 --> 00:05:33,650
+And there it is.
+
+109
+00:05:33,650 --> 00:05:38,130
+And so you see it&#39;s taken the numbers in column order, which
+
+110
+00:05:38,130 --> 00:05:41,700
+is a convention in R. And so now, just like with vectors,
+
+111
+00:05:41,700 --> 00:05:44,010
+we can subset elements of a matrix.
+
+112
+00:05:44,010 --> 00:05:48,160
+So here we want to see the third and fourth row, and the
+
+113
+00:05:48,160 --> 00:05:50,260
+second and third column.
+
+114
+00:05:50,260 --> 00:05:52,330
+And there we go.
+
+115
+00:05:52,330 --> 00:05:56,930
+And if just put a comma and ignore the first index, you&#39;ll
+
+116
+00:05:56,930 --> 00:05:58,000
+just get the columns.
+
+117
+00:05:58,000 --> 00:06:02,440
+So this gives us a second and third column of z.
+
+118
+00:06:02,440 --> 00:06:05,060
+And there is the first column of z.
+
+119
+00:06:05,060 --> 00:06:07,290
+Now notice what&#39;s happened.
+
+120
+00:06:07,290 --> 00:06:11,460
+When we took just the first column of z, that became a
+
+121
+00:06:11,460 --> 00:06:14,970
+vector, and it actually dropped its matrix status.
+
+122
+00:06:14,970 --> 00:06:17,030
+Sometimes that&#39;s convenient.
+
+123
+00:06:17,030 --> 00:06:19,120
+But a lot of the time, it&#39;s not, especially when your
+
+124
+00:06:19,120 --> 00:06:21,610
+programming and you don&#39;t want to accidentally lose the
+
+125
+00:06:21,610 --> 00:06:23,460
+status of a matrix.
+
+126
+00:06:23,460 --> 00:06:28,250
+So the matrix subsetting has an argument, drop, and here we
+
+127
+00:06:28,250 --> 00:06:32,670
+say, drop equals false, and it keeps that one column matrix
+
+128
+00:06:32,670 --> 00:06:35,980
+as a matrix, and not a vector.
+
+129
+00:06:35,980 --> 00:06:37,620
+So there&#39;s various functions.
+
+130
+00:06:37,620 --> 00:06:39,610
+You could query the dimension of a matrix.
+
+131
+00:06:39,610 --> 00:06:44,751
+So dim of z gives you the dimensions of the matrix.
+
+132
+00:06:44,751 --> 00:06:45,210
+OK.
+
+133
+00:06:45,210 --> 00:06:48,090
+So those are vectors and matrices.
+
+134
+00:06:48,090 --> 00:06:49,720
+ls is a very nice command.
+
+135
+00:06:49,720 --> 00:06:51,950
+It tells you what you have available in
+
+136
+00:06:51,950 --> 00:06:53,890
+your working directory.
+
+137
+00:06:53,890 --> 00:06:56,280
+And so we&#39;ve got a number of variables there.
+
+138
+00:06:56,280 --> 00:07:00,230
+The ones we&#39;ve just made are x, y, and z.
+
+139
+00:07:00,230 --> 00:07:03,590
+You can clean up your working directory.
+
+140
+00:07:03,590 --> 00:07:07,930
+So for example, you can use the rm command to remove y.
+
+141
+00:07:07,930 --> 00:07:10,190
+And there we see y is gone.
+
+142
+00:07:10,190 --> 00:07:12,220
+OK.
+
+143
+00:07:12,220 --> 00:07:13,610
+All right.
+
+144
+00:07:13,610 --> 00:07:19,670
+So that&#39;s making data, sort of directly.
+
+145
+00:07:19,670 --> 00:07:22,310
+There&#39;s other convenient ways, especially in statistics.
+
+146
+00:07:22,310 --> 00:07:25,610
+You can often be doing simulations to test out
+
+147
+00:07:25,610 --> 00:07:28,150
+routines, and to test out ideas.
+
+148
+00:07:28,150 --> 00:07:33,660
+And so we need a good suite of tools for generating data.
+
+149
+00:07:33,660 --> 00:07:36,740
+So runif is random uniform.
+
+150
+00:07:36,740 --> 00:07:43,080
+So this command will create 50 random uniforms on 01.
+
+151
+00:07:43,080 --> 00:07:46,830
+And rnorm, is random norm, random Gaussians, random
+
+152
+00:07:46,830 --> 00:07:48,295
+normal variables.
+
+153
+00:07:48,295 --> 00:07:53,300
+It will create 50 standard random normal variables.
+
+154
+00:07:53,300 --> 00:07:55,930
+And let&#39;s look at a plot of these variables.
+
+155
+00:07:55,930 --> 00:07:58,340
+And so we plot x and y.
+
+156
+00:07:58,340 --> 00:08:01,600
+And there we get a plot on the right.
+
+157
+00:08:01,600 --> 00:08:05,760
+Now I must say, R graphics is really well designed.
+
+158
+00:08:05,760 --> 00:08:08,390
+One doesn&#39;t think too much about the design of graphics,
+
+159
+00:08:08,390 --> 00:08:12,660
+but a lot goes into it, such as aspect ratios, how much
+
+160
+00:08:12,660 --> 00:08:17,230
+space to put around the points on a plot, between the edge of
+
+161
+00:08:17,230 --> 00:08:20,420
+the points and the axes.
+
+162
+00:08:20,420 --> 00:08:22,620
+Just things like spacing of the axes, how many
+
+163
+00:08:22,620 --> 00:08:23,590
+ticks, and so on.
+
+164
+00:08:23,590 --> 00:08:26,460
+That all seems like a trivial details, but it&#39;s not.
+
+165
+00:08:26,460 --> 00:08:30,320
+And this has been carefully thought of and designed.
+
+166
+00:08:30,320 --> 00:08:33,620
+And therefore, R graphics, I think, are particularly
+
+167
+00:08:33,620 --> 00:08:36,150
+attractive.
+
+168
+00:08:36,150 --> 00:08:39,130
+Of course, I may be a little impervious since I&#39;ve been an
+
+169
+00:08:39,130 --> 00:08:43,659
+R, and its predecessor S, user for many, many years.
+
+170
+00:08:43,659 --> 00:08:46,540
+So you could put, or you can annotate your plots.
+
+171
+00:08:46,540 --> 00:08:49,630
+And add all kinds of features to your plots.
+
+172
+00:08:49,630 --> 00:08:51,960
+So there&#39;s the same plot, but we changed the plotting
+
+173
+00:08:51,960 --> 00:08:54,480
+character, and we put axis labels.
+
+174
+00:08:54,480 --> 00:08:58,570
+And there&#39;s many, many options for making plots.
+
+175
+00:08:58,570 --> 00:09:00,270
+Here&#39;s an option.
+
+176
+00:09:00,270 --> 00:09:03,640
+And the power command allows you to set
+
+177
+00:09:03,640 --> 00:09:04,455
+some of these options.
+
+178
+00:09:04,455 --> 00:09:07,450
+Some you can do directly in the plot command, and some,
+
+179
+00:09:07,450 --> 00:09:10,200
+like layout commands, you can set with power.
+
+180
+00:09:10,200 --> 00:09:13,890
+So this is one that&#39;s often used, mf row.
+
+181
+00:09:13,890 --> 00:09:19,810
+It says we want to have a panel of plots with two rows
+
+182
+00:09:19,810 --> 00:09:20,740
+and one column.
+
+183
+00:09:20,740 --> 00:09:23,750
+And so that we do with the mf row command.
+
+184
+00:09:23,750 --> 00:09:27,000
+And so now, if we do the same plot, in our plot region,
+
+185
+00:09:27,000 --> 00:09:29,500
+you&#39;ll see it&#39;s a little squashed up now, because we
+
+186
+00:09:29,500 --> 00:09:31,410
+want two plots in this region.
+
+187
+00:09:31,410 --> 00:09:34,360
+And so in the second part of the region, we&#39;re going to do
+
+188
+00:09:34,360 --> 00:09:36,380
+a histogram of y.
+
+189
+00:09:36,380 --> 00:09:42,050
+And so that mf row, that division will stay in place
+
+190
+00:09:42,050 --> 00:09:44,500
+until you reset it with another mf row command.
+
+191
+00:09:44,500 --> 00:09:47,850
+And so there, we&#39;ve reset it.
+
+192
+00:09:47,850 --> 00:09:48,410
+OK.
+
+193
+00:09:48,410 --> 00:09:50,580
+So we&#39;ve created data manually.
+
+194
+00:09:50,580 --> 00:09:55,840
+We&#39;ve generated data using random uniform number
+
+195
+00:09:55,840 --> 00:09:56,552
+generators.
+
+196
+00:09:56,552 --> 00:09:59,110
+And we saw uniform and normal.
+
+197
+00:09:59,110 --> 00:10:00,690
+And there&#39;s many other distributions you
+
+198
+00:10:00,690 --> 00:10:03,920
+can generate from.
+
+199
+00:10:03,920 --> 00:10:04,190
+OK.
+
+200
+00:10:04,190 --> 00:10:07,170
+So now we get a read in some data that we&#39;ve got in some of
+
+201
+00:10:07,170 --> 00:10:07,760
+the system.
+
+202
+00:10:07,760 --> 00:10:09,960
+For example, Excel is often the place where
+
+203
+00:10:09,960 --> 00:10:11,290
+you store your data.
+
+204
+00:10:11,290 --> 00:10:13,630
+And so we&#39;re going to read that.
+
+205
+00:10:13,630 --> 00:10:16,550
+There&#39;s ways of doing this in R. So we use
+
+206
+00:10:16,550 --> 00:10:21,010
+the read.csv function.
+
+207
+00:10:21,010 --> 00:10:23,560
+And so this requires that you&#39;ve saved your data in
+
+208
+00:10:23,560 --> 00:10:25,820
+comma separated value from Excel.
+
+209
+00:10:25,820 --> 00:10:29,200
+And then you can just read it in, in R, and it respects the
+
+210
+00:10:29,200 --> 00:10:32,030
+rows, and columns, and the headings, and everything else.
+
+211
+00:10:32,030 --> 00:10:35,650
+And of course, you need to know where the data is.
+
+212
+00:10:35,650 --> 00:10:37,670
+In this case, I know where the data is.
+
+213
+00:10:37,670 --> 00:10:38,980
+If not, you&#39;ll get an error.
+
+214
+00:10:38,980 --> 00:10:41,510
+But, yeah, we do know where that is.
+
+215
+00:10:41,510 --> 00:10:43,730
+And so now we can query the data that we
+
+216
+00:10:43,730 --> 00:10:45,570
+have just read in.
+
+217
+00:10:45,570 --> 00:10:50,070
+And you can see it&#39;s got a number of columns.
+
+218
+00:10:50,070 --> 00:10:52,780
+And those are the names of the variables.
+
+219
+00:10:52,780 --> 00:10:55,640
+And we can look at the dimension of the data.
+
+220
+00:10:55,640 --> 00:10:58,450
+It&#39;s 397 by 9.
+
+221
+00:10:58,450 --> 00:11:02,510
+And we can see, what is this object that we read in?
+
+222
+00:11:02,510 --> 00:11:06,080
+The class of order is dataframe.
+
+223
+00:11:06,080 --> 00:11:07,940
+And you&#39;ll learn more about dataframes.
+
+224
+00:11:07,940 --> 00:11:10,440
+They&#39;re very valuable objects.
+
+225
+00:11:10,440 --> 00:11:14,130
+It&#39;s sort of like a matrix, except that the columns can be
+
+226
+00:11:14,130 --> 00:11:15,740
+variables of different kinds.
+
+227
+00:11:15,740 --> 00:11:18,370
+So you can have what we call factors, and continuous
+
+228
+00:11:18,370 --> 00:11:23,140
+variables, and matrices, and so on, which is really the way
+
+229
+00:11:23,140 --> 00:11:29,210
+we think of observations in statistics.
+
+230
+00:11:29,210 --> 00:11:33,000
+Summaries are a useful function for a dataframe.
+
+231
+00:11:33,000 --> 00:11:35,160
+It&#39;ll give you a summary of each of the variables in the
+
+232
+00:11:35,160 --> 00:11:36,360
+data frame.
+
+233
+00:11:36,360 --> 00:11:39,960
+And you can see it&#39;s things like min, max, and so on.
+
+234
+00:11:42,550 --> 00:11:47,180
+Horsepower, for example, is a categorical variable, so it
+
+235
+00:11:47,180 --> 00:11:49,180
+actually gives you all the values.
+
+236
+00:11:49,180 --> 00:11:54,220
+And the name of the automobile is also categorical.
+
+237
+00:11:54,220 --> 00:11:55,230
+It&#39;s an effective variable.
+
+238
+00:11:55,230 --> 00:11:57,220
+It gives you the values.
+
+239
+00:11:57,220 --> 00:12:01,110
+So dataframes and summary of dataframes is very useful.
+
+240
+00:12:01,110 --> 00:12:05,400
+Now you can plot the elements of a dataframe.
+
+241
+00:12:05,400 --> 00:12:08,170
+So a dataframe is also a list.
+
+242
+00:12:08,170 --> 00:12:12,780
+And a list, you get the elements of the list by giving
+
+243
+00:12:12,780 --> 00:12:15,510
+the name of the list, which is Auto here, and
+
+244
+00:12:15,510 --> 00:12:16,950
+then use dollar sign.
+
+245
+00:12:16,950 --> 00:12:18,040
+And then you can give the name.
+
+246
+00:12:18,040 --> 00:12:21,690
+So that&#39;s one way of getting the elements of a list.
+
+247
+00:12:21,690 --> 00:12:24,820
+And so here, we want to plot the column cylinders against
+
+248
+00:12:24,820 --> 00:12:28,050
+the column miles per gallon, MPG.
+
+249
+00:12:28,050 --> 00:12:31,960
+And so we access both of those in the same way.
+
+250
+00:12:31,960 --> 00:12:32,890
+And so there we have.
+
+251
+00:12:32,890 --> 00:12:34,190
+Here&#39;s the plot.
+
+252
+00:12:34,190 --> 00:12:36,490
+And so you can see that cylinders also takes on
+
+253
+00:12:36,490 --> 00:12:37,740
+discrete values.
+
+254
+00:12:41,030 --> 00:12:45,410
+And yeah, we do cylinders against miles per gallon.
+
+255
+00:12:45,410 --> 00:12:49,430
+So that&#39;s a little cumbersome, having to do that dollar
+
+256
+00:12:49,430 --> 00:12:52,490
+indexing of the elements of the dataframe.
+
+257
+00:12:52,490 --> 00:12:57,660
+So what you can actually do is you can attach the dataframe.
+
+258
+00:12:57,660 --> 00:13:01,590
+And what it does, is it creates a workspace with all
+
+259
+00:13:01,590 --> 00:13:04,300
+the named variables as now variables in your workspace.
+
+260
+00:13:04,300 --> 00:13:06,844
+So now you can access them by name.
+
+261
+00:13:06,844 --> 00:13:07,750
+OK.
+
+262
+00:13:07,750 --> 00:13:11,050
+And so if we do issue the command Search, it tells us
+
+263
+00:13:11,050 --> 00:13:13,090
+our various workspaces.
+
+264
+00:13:13,090 --> 00:13:16,250
+And there we see the global environment is where we&#39;ve put
+
+265
+00:13:16,250 --> 00:13:20,310
+all our vectors, like x, y, and z, and the variables we&#39;ve
+
+266
+00:13:20,310 --> 00:13:22,320
+created in the session.
+
+267
+00:13:22,320 --> 00:13:25,020
+But this dataframe that we&#39;ve attached is in the second
+
+268
+00:13:25,020 --> 00:13:26,180
+position here.
+
+269
+00:13:26,180 --> 00:13:28,590
+And it&#39;s got the variables that are in the order
+
+270
+00:13:28,590 --> 00:13:31,530
+dataframe available for our direct use.
+
+271
+00:13:31,530 --> 00:13:33,240
+And you&#39;ll see there&#39;s other things in the
+
+272
+00:13:33,240 --> 00:13:34,900
+Search path, as well.
+
+273
+00:13:34,900 --> 00:13:38,160
+And these are largely packages, at this point, whose
+
+274
+00:13:38,160 --> 00:13:40,460
+functions we have available.
+
+275
+00:13:40,460 --> 00:13:43,910
+So now we can do that plot command more directly.
+
+276
+00:13:43,910 --> 00:13:48,130
+And here, we&#39;ve plotted cylinders
+
+277
+00:13:48,130 --> 00:13:50,340
+and miles per gallon.
+
+278
+00:13:50,340 --> 00:13:54,460
+And in this case, it&#39;s plotted it as a box plot.
+
+279
+00:13:54,460 --> 00:13:57,610
+And we see, for each level of cylinders, we get a box plot
+
+280
+00:13:57,610 --> 00:14:02,060
+of the values for miles per gallon, which is like a little
+
+281
+00:14:02,060 --> 00:14:09,290
+one dimensional summary of the values at
+
+282
+00:14:09,290 --> 00:14:10,810
+that level of cylinder.
+

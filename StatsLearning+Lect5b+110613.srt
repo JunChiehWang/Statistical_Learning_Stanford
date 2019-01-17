@@ -1,0 +1,736 @@
+0
+00:00:00,850 --> 00:00:02,230
+Welcome back.
+
+1
+00:00:02,230 --> 00:00:04,360
+We just finished talking about confidence intervals in the
+
+2
+00:00:04,360 --> 00:00:07,205
+previous segment, and now we&#39;ll talk about hypothesis
+
+3
+00:00:07,205 --> 00:00:10,240
+testing, which is a closely related idea.
+
+4
+00:00:10,240 --> 00:00:12,240
+We want to ask a question about a specific value of a
+
+5
+00:00:12,240 --> 00:00:15,840
+parameter, like is that coefficient 0?
+
+6
+00:00:15,840 --> 00:00:18,720
+In statistics, that&#39;s known as hypothesis testing.
+
+7
+00:00:18,720 --> 00:00:23,880
+So hypothesis testing is a test of a
+
+8
+00:00:23,880 --> 00:00:25,930
+relationship between--
+
+9
+00:00:25,930 --> 00:00:28,610
+it&#39;s a test of a certain value of a parameter.
+
+10
+00:00:28,610 --> 00:00:31,780
+In particular, here the hypothesis test we&#39;ll make is
+
+11
+00:00:31,780 --> 00:00:32,970
+that, is that parameter 0?
+
+12
+00:00:32,970 --> 00:00:34,510
+Is the slope 0?
+
+13
+00:00:34,510 --> 00:00:36,610
+So what&#39;s called the null hypothesis is that there&#39;s no
+
+14
+00:00:36,610 --> 00:00:41,090
+relationship between X and Y. In other words,
+
+15
+00:00:41,090 --> 00:00:45,460
+Beta 1 equals 0.
+
+16
+00:00:45,460 --> 00:00:47,460
+That&#39;s the equivalent statement.
+
+17
+00:00:47,460 --> 00:00:50,480
+The alternative hypothesis is that there is some
+
+18
+00:00:50,480 --> 00:00:51,890
+relationship between X and Y. In other words,
+
+19
+00:00:51,890 --> 00:00:53,140
+Beta 1 is not 0.
+
+20
+00:00:55,730 --> 00:00:58,505
+And Beta 1 could be positive or negative.
+
+21
+00:01:02,380 --> 00:01:06,100
+So mathematically, this corresponds to Beta 1 being 0.
+
+22
+00:01:06,100 --> 00:01:10,270
+Is the null hypothesis Beta 1 not equal 0?
+
+23
+00:01:10,270 --> 00:01:12,100
+So that&#39;s often the question you want to ask.
+
+24
+00:01:12,100 --> 00:01:13,550
+That&#39;s usually the first question you want to ask about
+
+25
+00:01:13,550 --> 00:01:15,730
+the predictors.
+
+26
+00:01:15,730 --> 00:01:19,470
+So to test the null hypothesis, we form what&#39;s
+
+27
+00:01:19,470 --> 00:01:20,860
+called a t-statistic.
+
+28
+00:01:20,860 --> 00:01:25,560
+We take the estimated slope divided by the standard error.
+
+29
+00:01:25,560 --> 00:01:28,410
+This will approximately have a t-distribution with n minus 2
+
+30
+00:01:28,410 --> 00:01:30,710
+degrees of freedom assuming that the null
+
+31
+00:01:30,710 --> 00:01:32,490
+hypothesis is true.
+
+32
+00:01:32,490 --> 00:01:33,275
+Now, what is a t-distribution?
+
+33
+00:01:33,275 --> 00:01:34,350
+You don&#39;t have to worry too much about that.
+
+34
+00:01:34,350 --> 00:01:38,620
+It&#39;s basically you look this up in a table or, nowadays
+
+35
+00:01:38,620 --> 00:01:40,150
+software will compute it for you.
+
+36
+00:01:40,150 --> 00:01:44,740
+It&#39;s basically a normal random variable except for small
+
+37
+00:01:44,740 --> 00:01:48,400
+numbers of samples. n is a little bit different.
+
+38
+00:01:48,400 --> 00:01:52,705
+In any case, you ask the computer to compute the
+
+39
+00:01:52,705 --> 00:01:56,610
+p-value based on this statistic.
+
+40
+00:01:56,610 --> 00:02:00,390
+p-value is the probability of getting the value of t at
+
+41
+00:02:00,390 --> 00:02:03,310
+least as large as you got in absolute value.
+
+42
+00:02:07,220 --> 00:02:12,200
+So for the advertising data using, again, just TV, here
+
+43
+00:02:12,200 --> 00:02:12,840
+are the results.
+
+44
+00:02:12,840 --> 00:02:15,170
+Here are the slope and intercept of that line.
+
+45
+00:02:15,170 --> 00:02:16,850
+So saw the least squares line.
+
+46
+00:02:16,850 --> 00:02:18,130
+Standard errors.
+
+47
+00:02:18,130 --> 00:02:19,540
+Here are the t-statistics.
+
+48
+00:02:19,540 --> 00:02:22,470
+That&#39;s just the coefficient divided by the standard error.
+
+49
+00:02:22,470 --> 00:02:24,120
+The one we care most about is for TV.
+
+50
+00:02:24,120 --> 00:02:26,160
+The intercept isn&#39;t really very interesting.
+
+51
+00:02:26,160 --> 00:02:27,770
+That&#39;s telling us what happens--
+
+52
+00:02:27,770 --> 00:02:31,830
+what&#39;s the sales when the TV is 0?
+
+53
+00:02:31,830 --> 00:02:34,140
+TV&#39;s budget is 0.
+
+54
+00:02:34,140 --> 00:02:36,530
+But the one we care most about here is this guy.
+
+55
+00:02:36,530 --> 00:02:39,650
+So this is measuring the effect of TV
+
+56
+00:02:39,650 --> 00:02:41,320
+advertising on sales.
+
+57
+00:02:41,320 --> 00:02:44,740
+And the t-statistic is huge.
+
+58
+00:02:44,740 --> 00:02:50,830
+It turns out in order to have a p-value of below 0.05, which
+
+59
+00:02:50,830 --> 00:02:54,320
+is quite significant, you need a t-statistic of about 2.
+
+60
+00:02:54,320 --> 00:02:56,700
+We&#39;re at 17, so it&#39;s very, very significant.
+
+61
+00:02:56,700 --> 00:02:59,730
+So the p-value is very, very small.
+
+62
+00:02:59,730 --> 00:03:00,730
+So how do we interpret this?
+
+63
+00:03:00,730 --> 00:03:04,960
+It says the chance of seeing this data, under the
+
+64
+00:03:04,960 --> 00:03:06,940
+assumption that the null hypothesis--
+
+65
+00:03:06,940 --> 00:03:11,400
+so there&#39;s no effect of TV advertising on sales--
+
+66
+00:03:11,400 --> 00:03:13,660
+is less than 10 to the minus 4.
+
+67
+00:03:13,660 --> 00:03:15,450
+So it&#39;s very unlikely to have seen this data.
+
+68
+00:03:15,450 --> 00:03:18,790
+It&#39;s possible, but very unlikely under the assumption
+
+69
+00:03:18,790 --> 00:03:21,220
+that TV advertising has no effect.
+
+70
+00:03:21,220 --> 00:03:23,640
+Our conclusion, therefore, is that TV advertising has an
+
+71
+00:03:23,640 --> 00:03:25,410
+effect on sales--
+
+72
+00:03:25,410 --> 00:03:28,190
+as we would hope.
+
+73
+00:03:28,190 --> 00:03:29,080
+OK?
+
+74
+00:03:29,080 --> 00:03:32,650
+So we&#39;ve seen how to fit a model with a single predictor
+
+75
+00:03:32,650 --> 00:03:35,760
+and how to assess the slope of that predictor, both in terms
+
+76
+00:03:35,760 --> 00:03:38,350
+of confidence intervals and hypothesis test.
+
+77
+00:03:38,350 --> 00:03:42,230
+Well, I did want to add one thing that&#39;s important.
+
+78
+00:03:42,230 --> 00:03:43,630
+So we&#39;ve seen the hypothesis test.
+
+79
+00:03:43,630 --> 00:03:46,050
+And before that we saw confidence intervals.
+
+80
+00:03:46,050 --> 00:03:48,090
+There&#39;s actually a one-to-one correspondence.
+
+81
+00:03:48,090 --> 00:03:50,490
+In other words, they&#39;re doing equivalent things.
+
+82
+00:03:50,490 --> 00:03:54,400
+To be more precise, if hypothesis test fails-- in
+
+83
+00:03:54,400 --> 00:03:56,910
+other words, if we reject the null hypothesis and conclude
+
+84
+00:03:56,910 --> 00:04:00,830
+that Beta 1 is not 0, as we did for TV advertising,
+
+85
+00:04:00,830 --> 00:04:03,720
+correspondingly the confidence interval constructed for that
+
+86
+00:04:03,720 --> 00:04:08,040
+data for the parameter will not contain 0.
+
+87
+00:04:08,040 --> 00:04:11,420
+Conversely, if the hypothesis test does not reject, so we
+
+88
+00:04:11,420 --> 00:04:15,520
+cannot conclude that TV advertising has an effect.
+
+89
+00:04:15,520 --> 00:04:17,180
+Its slope may be 0.
+
+90
+00:04:17,180 --> 00:04:20,209
+The confidence interval for that parameter will contain 0.
+
+91
+00:04:20,209 --> 00:04:22,290
+So really, the confidence interval is also doing
+
+92
+00:04:22,290 --> 00:04:24,160
+hypothesis testing for you.
+
+93
+00:04:24,160 --> 00:04:26,850
+But it&#39;s also telling you how big the effect is.
+
+94
+00:04:26,850 --> 00:04:29,270
+So it&#39;s always good to compute confidence intervals as well
+
+95
+00:04:29,270 --> 00:04:31,100
+as do hypothesis test.
+
+96
+00:04:31,100 --> 00:04:33,860
+So for example, here we see the interval
+
+97
+00:04:33,860 --> 00:04:35,475
+doesn&#39;t contain 0. .
+
+98
+00:04:35,475 --> 00:04:40,480
+Furthermore, we see that a lower limit on the effect of
+
+99
+00:04:40,480 --> 00:04:45,010
+TV advertising is 0.042, which we can interpret as-- these
+
+100
+00:04:45,010 --> 00:04:47,790
+are in $1,000 units, that we&#39;re going to affect sales by
+
+101
+00:04:47,790 --> 00:04:50,170
+1,000 times--
+
+102
+00:04:50,170 --> 00:04:55,840
+so for every 1,000 change in TV advertising, we&#39;ll get a
+
+103
+00:04:55,840 --> 00:04:57,840
+corresponding change in sales.
+
+104
+00:04:57,840 --> 00:05:00,700
+So this tells us not only is the effect 0 or not, but how
+
+105
+00:05:00,700 --> 00:05:04,180
+big is the effect likely to be?
+
+106
+00:05:04,180 --> 00:05:06,740
+OK.
+
+107
+00:05:06,740 --> 00:05:07,730
+So where are we now?
+
+108
+00:05:07,730 --> 00:05:09,720
+Let&#39;s see.
+
+109
+00:05:09,720 --> 00:05:13,200
+So we&#39;ve talked about how to assess the slope of an
+
+110
+00:05:13,200 --> 00:05:16,370
+individual predictor.
+
+111
+00:05:16,370 --> 00:05:18,570
+How about the overall fit of the model, the
+
+112
+00:05:18,570 --> 00:05:19,500
+accuracy of the model?
+
+113
+00:05:19,500 --> 00:05:22,223
+Well, what we can do here is we&#39;ll take the
+
+114
+00:05:22,223 --> 00:05:23,760
+residual sum of squares.
+
+115
+00:05:23,760 --> 00:05:25,710
+Remember, this is the quantity that we minimize in the first
+
+116
+00:05:25,710 --> 00:05:29,210
+place to get the best estimates of the intercept and
+
+117
+00:05:29,210 --> 00:05:31,940
+slope, the least squares estimates.
+
+118
+00:05:31,940 --> 00:05:34,520
+So we&#39;ll take what&#39;s called the mean squared residual and
+
+119
+00:05:34,520 --> 00:05:35,230
+take the square root.
+
+120
+00:05:35,230 --> 00:05:39,210
+This is the average squared deviation that we achieve
+
+121
+00:05:39,210 --> 00:05:42,680
+using the least fitting line, where this is the residual sum
+
+122
+00:05:42,680 --> 00:05:45,230
+of squares.
+
+123
+00:05:45,230 --> 00:05:49,950
+And we complete what&#39;s called the R squared or the fraction
+
+124
+00:05:49,950 --> 00:05:51,360
+of variance explained.
+
+125
+00:05:51,360 --> 00:05:52,660
+And here it is.
+
+126
+00:05:52,660 --> 00:05:56,070
+It&#39;s the total sum of squares minus the residual sum of
+
+127
+00:05:56,070 --> 00:05:58,080
+squares over the total sum of squares.
+
+128
+00:05:58,080 --> 00:05:59,670
+So what is this conceptually?
+
+129
+00:05:59,670 --> 00:06:03,050
+Well, if we didn&#39;t fit a model at all, if we forget about TV
+
+130
+00:06:03,050 --> 00:06:06,410
+advertising and just use the mean of sales as the
+
+131
+00:06:06,410 --> 00:06:07,710
+prediction, that&#39;s the simplest
+
+132
+00:06:07,710 --> 00:06:09,400
+prediction you can imagine.
+
+133
+00:06:09,400 --> 00:06:13,070
+This would be our error.
+
+134
+00:06:13,070 --> 00:06:14,010
+Here&#39;s our prediction.
+
+135
+00:06:14,010 --> 00:06:16,830
+Here&#39;s the true sales.
+
+136
+00:06:16,830 --> 00:06:19,450
+So this is the no model error.
+
+137
+00:06:19,450 --> 00:06:21,800
+And now, the residual sum of squares of the
+
+138
+00:06:21,800 --> 00:06:24,710
+fitted model is RSS.
+
+139
+00:06:24,710 --> 00:06:27,720
+This is how much-- it&#39;s going to be lower than this guy.
+
+140
+00:06:27,720 --> 00:06:30,050
+It&#39;s going to be lower because we could always achieve this
+
+141
+00:06:30,050 --> 00:06:31,690
+guy just by choosing a slope of 0.
+
+142
+00:06:31,690 --> 00:06:34,350
+So since we&#39;ve done least squares, we&#39;ve optimized over
+
+143
+00:06:34,350 --> 00:06:34,910
+the parameters.
+
+144
+00:06:34,910 --> 00:06:37,270
+We know that RSS will be less than TSS.
+
+145
+00:06:37,270 --> 00:06:40,580
+But this quality measures, how much did we reduce the total
+
+146
+00:06:40,580 --> 00:06:44,830
+sum of squares relative to itself?
+
+147
+00:06:44,830 --> 00:06:47,350
+And here, written in this way or this way.
+
+148
+00:06:47,350 --> 00:06:48,965
+So this is the fraction of variance explained.
+
+149
+00:06:52,600 --> 00:06:55,620
+And it can be shown algebraically.
+
+150
+00:06:55,620 --> 00:06:59,200
+This is actually equivalent to the squared correlation
+
+151
+00:06:59,200 --> 00:07:03,270
+between X and Y. So this is simple correlation between the
+
+152
+00:07:03,270 --> 00:07:04,670
+predictor of the outcome.
+
+153
+00:07:04,670 --> 00:07:05,870
+It kind of makes sense, right?
+
+154
+00:07:05,870 --> 00:07:09,850
+The higher the correlation, the more that we&#39;ll explain
+
+155
+00:07:09,850 --> 00:07:10,650
+the variance.
+
+156
+00:07:10,650 --> 00:07:14,450
+And there&#39;s actually an exact algebraic relationship that
+
+157
+00:07:14,450 --> 00:07:17,200
+the squared correlation is equal to this fraction of
+
+158
+00:07:17,200 --> 00:07:18,450
+variance explained.
+
+159
+00:07:20,790 --> 00:07:23,640
+So what did we get for our data?
+
+160
+00:07:23,640 --> 00:07:25,283
+The R squared is 0.61.
+
+161
+00:07:25,283 --> 00:07:26,010
+Here it is.
+
+162
+00:07:26,010 --> 00:07:31,140
+So in other words, using TV sales, we&#39;ve--
+
+163
+00:07:31,140 --> 00:07:32,070
+the budget.
+
+164
+00:07:32,070 --> 00:07:33,330
+Excuse me, TV budget.
+
+165
+00:07:33,330 --> 00:07:42,450
+We reduced the variance in sales by 61%.
+
+166
+00:07:42,450 --> 00:07:44,530
+That&#39;s a very strong predictor.
+
+167
+00:07:44,530 --> 00:07:46,560
+The F-statistic we&#39;ll talk about in a few minutes.
+
+168
+00:07:46,560 --> 00:07:48,750
+It&#39;s also a measure of how well the
+
+169
+00:07:48,750 --> 00:07:50,540
+overall model is doing.
+
+170
+00:07:50,540 --> 00:07:53,130
+So this is quite impressive.
+
+171
+00:07:53,130 --> 00:07:57,100
+In business and some kind of physical sciences, we see R
+
+172
+00:07:57,100 --> 00:07:57,700
+squareds like this.
+
+173
+00:07:57,700 --> 00:08:00,290
+In medicine, we don&#39;t tend to see R squareds.
+
+174
+00:08:00,290 --> 00:08:03,100
+You might see an R squared of 5% and you might get excited.
+
+175
+00:08:03,100 --> 00:08:07,730
+So always one has to remember the domain to sort of--
+
+176
+00:08:07,730 --> 00:08:09,530
+to have a judge of how good an R squared is.
+
+177
+00:08:09,530 --> 00:08:11,940
+But this is an impressive R squared, which you see
+
+178
+00:08:11,940 --> 00:08:15,710
+sometimes in business and finance applications.
+
+179
+00:08:15,710 --> 00:08:17,790
+So that completes our discussion of regression with
+
+180
+00:08:17,790 --> 00:08:19,010
+a single predictor.
+
+181
+00:08:19,010 --> 00:08:20,850
+In the next section, we&#39;ll move on to the harder problem
+
+182
+00:08:20,850 --> 00:08:22,730
+where we have multiple predictors and we do a
+
+183
+00:08:22,730 --> 00:08:23,980
+multiple regression.
+

@@ -1,0 +1,792 @@
+0
+00:00:00,540 --> 00:00:04,630
+OK, so we&#39;ve seen a variety of different models, from linear
+
+1
+00:00:04,630 --> 00:00:08,220
+models, which are rather simple and easy to work with
+
+2
+00:00:08,220 --> 00:00:11,670
+and interpret, to more complex models like nearest neighbor
+
+3
+00:00:11,670 --> 00:00:14,450
+average and thin plate splines.
+
+4
+00:00:14,450 --> 00:00:19,540
+And we need to know how to decide amongst these models.
+
+5
+00:00:19,540 --> 00:00:24,190
+And so we need a way of assessing model accuracy, and
+
+6
+00:00:24,190 --> 00:00:26,020
+when is a model adequate?
+
+7
+00:00:26,020 --> 00:00:28,780
+And when may we improve it?
+
+8
+00:00:28,780 --> 00:00:31,340
+OK, so suppose we have a model, f hat of x, that&#39;s been
+
+9
+00:00:31,340 --> 00:00:32,970
+put through some training data.
+
+10
+00:00:32,970 --> 00:00:36,050
+And we&#39;ll denote the training data by Tr.
+
+11
+00:00:36,050 --> 00:00:40,030
+And that consists of n data pairs, xi yi.
+
+12
+00:00:40,030 --> 00:00:47,330
+And remember, the notation of xi means the i-th observation,
+
+13
+00:00:47,330 --> 00:00:48,630
+and x may be a vector.
+
+14
+00:00:48,630 --> 00:00:50,820
+So it may have a bunch of components.
+
+15
+00:00:50,820 --> 00:00:55,540
+yi is typically a single y, a scalar.
+
+16
+00:00:55,540 --> 00:00:58,080
+And we want to see how well this model performs.
+
+17
+00:00:58,080 --> 00:01:00,880
+Well, we could compute the average squared prediction
+
+18
+00:01:00,880 --> 00:01:03,470
+error over the training data.
+
+19
+00:01:03,470 --> 00:01:07,230
+So that means we take our y, observe y.
+
+20
+00:01:07,230 --> 00:01:11,370
+We subtract from it f hat of x.
+
+21
+00:01:11,370 --> 00:01:14,600
+We square the difference to get rid of the sign.
+
+22
+00:01:14,600 --> 00:01:18,440
+And we just average those over all the training data.
+
+23
+00:01:18,440 --> 00:01:21,080
+Well, as you may imagine, this may be biased towards more
+
+24
+00:01:21,080 --> 00:01:22,900
+overfit models.
+
+25
+00:01:22,900 --> 00:01:24,730
+We saw with that thin plate spline, we could fit the
+
+26
+00:01:24,730 --> 00:01:25,780
+training data exactly.
+
+27
+00:01:25,780 --> 00:01:29,370
+We could make this means squared error sub train, we
+
+28
+00:01:29,370 --> 00:01:31,380
+could make it zero.
+
+29
+00:01:31,380 --> 00:01:33,420
+Instead, we should, if possible, compute it using a
+
+30
+00:01:33,420 --> 00:01:36,900
+fresh test data set, which we&#39;ll call Te.
+
+31
+00:01:36,900 --> 00:01:41,280
+So that&#39;s an additional, say, m data pairs xi yi different
+
+32
+00:01:41,280 --> 00:01:42,690
+from the training set.
+
+33
+00:01:42,690 --> 00:01:45,160
+And then we compute the similar quantity, which we&#39;ll
+
+34
+00:01:45,160 --> 00:01:49,360
+call mean squared error sub Te.
+
+35
+00:01:49,360 --> 00:01:52,930
+And that may be a better reflection of the performance
+
+36
+00:01:52,930 --> 00:01:55,610
+of our model.
+
+37
+00:01:55,610 --> 00:02:01,430
+OK, so now I&#39;m going to show you some examples.
+
+38
+00:02:01,430 --> 00:02:04,680
+We got back to one dimensional function fitting.
+
+39
+00:02:04,680 --> 00:02:08,090
+In the left hand panel, we see the black curve, which is
+
+40
+00:02:08,090 --> 00:02:09,570
+actually simulated.
+
+41
+00:02:09,570 --> 00:02:11,020
+So it&#39;s a generating curve.
+
+42
+00:02:11,020 --> 00:02:14,070
+That&#39;s the true function that we want to estimate.
+
+43
+00:02:14,070 --> 00:02:16,170
+The points are data points, generated from
+
+44
+00:02:16,170 --> 00:02:17,990
+that curve with error.
+
+45
+00:02:17,990 --> 00:02:19,250
+And then we actually see--
+
+46
+00:02:19,250 --> 00:02:21,460
+you have to look carefully in the plot-- we see three
+
+47
+00:02:21,460 --> 00:02:24,050
+different models fit to these data.
+
+48
+00:02:24,050 --> 00:02:27,460
+There&#39;s the orange model, the blue model,
+
+49
+00:02:27,460 --> 00:02:28,930
+and the green model.
+
+50
+00:02:28,930 --> 00:02:31,300
+And they&#39;re ordered in complexity.
+
+51
+00:02:31,300 --> 00:02:34,170
+The orange model is a linear model.
+
+52
+00:02:34,170 --> 00:02:37,420
+The blue model is a more flexible model, maybe some
+
+53
+00:02:37,420 --> 00:02:41,560
+kind of spline, one dimensional version of the
+
+54
+00:02:41,560 --> 00:02:43,250
+thin plate spline.
+
+55
+00:02:43,250 --> 00:02:45,160
+And then the green one is a much more
+
+56
+00:02:45,160 --> 00:02:46,800
+flexible version of that.
+
+57
+00:02:46,800 --> 00:02:50,280
+You can see it gets closer to the data.
+
+58
+00:02:50,280 --> 00:02:54,900
+Now since this is a simulated example, we can compute the
+
+59
+00:02:54,900 --> 00:02:59,910
+mean squared error on a very large population of test data.
+
+60
+00:02:59,910 --> 00:03:04,180
+And so in the right hand plot, we plot the mean squared error
+
+61
+00:03:04,180 --> 00:03:06,720
+for this large population of test data.
+
+62
+00:03:06,720 --> 00:03:09,640
+And that&#39;s the red curve.
+
+63
+00:03:09,640 --> 00:03:16,320
+And you&#39;ll notice that it starts off high for the very
+
+64
+00:03:16,320 --> 00:03:17,940
+rigid model.
+
+65
+00:03:17,940 --> 00:03:21,330
+It drops down and becomes quite low for
+
+66
+00:03:21,330 --> 00:03:23,090
+the in between model.
+
+67
+00:03:23,090 --> 00:03:25,460
+But then for the more flexible model, it
+
+68
+00:03:25,460 --> 00:03:28,730
+starts increasing again.
+
+69
+00:03:28,730 --> 00:03:30,740
+Of course, the mean squared error on the training data--
+
+70
+00:03:30,740 --> 00:03:32,340
+that&#39;s the grey curve--
+
+71
+00:03:32,340 --> 00:03:33,560
+just keeps on decreasing.
+
+72
+00:03:33,560 --> 00:03:36,510
+Because the more flexible the model, the closer it gets to
+
+73
+00:03:36,510 --> 00:03:38,940
+the data point.
+
+74
+00:03:38,940 --> 00:03:43,000
+But for the mean squared error on the test data, we can see
+
+75
+00:03:43,000 --> 00:03:46,410
+there&#39;s a magic point, which is the point at which it
+
+76
+00:03:46,410 --> 00:03:49,290
+minimizes the mean squared error.
+
+77
+00:03:49,290 --> 00:03:52,000
+And in this case, that&#39;s this point over here.
+
+78
+00:03:52,000 --> 00:03:56,530
+And it turns out it&#39;s pretty much spot on for the medium
+
+79
+00:03:56,530 --> 00:03:58,940
+flexible model in this figure.
+
+80
+00:03:58,940 --> 00:04:02,700
+And if you look closely at the plot, you will see that the
+
+81
+00:04:02,700 --> 00:04:05,150
+blue curve actually gets fairly close
+
+82
+00:04:05,150 --> 00:04:07,060
+to the black curve.
+
+83
+00:04:07,060 --> 00:04:09,020
+OK.
+
+84
+00:04:09,020 --> 00:04:11,740
+Again, because this is a simulation model, the
+
+85
+00:04:11,740 --> 00:04:15,340
+horizontal dotted line is the mean squared error that the
+
+86
+00:04:15,340 --> 00:04:20,170
+true function makes for data from this population.
+
+87
+00:04:20,170 --> 00:04:23,540
+And of course, that is the irreducible error, which we
+
+88
+00:04:23,540 --> 00:04:25,460
+call the variance of epsilon.
+
+89
+00:04:29,280 --> 00:04:32,030
+Here&#39;s another example of the same kind.
+
+90
+00:04:32,030 --> 00:04:35,190
+But here, the two functions are actually very smooth.
+
+91
+00:04:35,190 --> 00:04:36,740
+Same setup.
+
+92
+00:04:36,740 --> 00:04:39,570
+Well, now we see that the mean squared error, the linear
+
+93
+00:04:39,570 --> 00:04:40,940
+model does pretty well.
+
+94
+00:04:40,940 --> 00:04:42,620
+The best model is not much different
+
+95
+00:04:42,620 --> 00:04:43,910
+from the linear model.
+
+96
+00:04:43,910 --> 00:04:47,540
+And the wiggly one, of course, is overfitting again and so
+
+97
+00:04:47,540 --> 00:04:49,700
+it&#39;s making big prediction errors.
+
+98
+00:04:52,340 --> 00:04:56,310
+The training arrow, again, keeps on going down.
+
+99
+00:04:56,310 --> 00:04:59,360
+And finally, here&#39;s quite a wiggly true
+
+100
+00:04:59,360 --> 00:05:01,232
+function on the left.
+
+101
+00:05:01,232 --> 00:05:06,095
+The linear model does a really lousy job.
+
+102
+00:05:06,095 --> 00:05:09,760
+The most flexible model does about the best.
+
+103
+00:05:09,760 --> 00:05:13,400
+The blue model and the green model are pretty good, pretty
+
+104
+00:05:13,400 --> 00:05:15,800
+close together, in terms of the mean squared
+
+105
+00:05:15,800 --> 00:05:18,240
+error on the test data.
+
+106
+00:05:18,240 --> 00:05:21,850
+So I think this drums home the point.
+
+107
+00:05:21,850 --> 00:05:23,900
+Again, the training mean squared error just keeps on
+
+108
+00:05:23,900 --> 00:05:25,800
+going down.
+
+109
+00:05:25,800 --> 00:05:29,330
+So this drums home the point that if we want to have a
+
+110
+00:05:29,330 --> 00:05:31,980
+model that has good prediction error--
+
+111
+00:05:31,980 --> 00:05:35,200
+and that&#39;s measured here in terms of mean squared
+
+112
+00:05:35,200 --> 00:05:37,810
+prediction error on the test data--
+
+113
+00:05:37,810 --> 00:05:40,350
+we&#39;d like to be able to estimate this curve.
+
+114
+00:05:40,350 --> 00:05:42,680
+And one way you can do that, the red curve.
+
+115
+00:05:42,680 --> 00:05:45,750
+You can do that is to have a hold our test data set, that
+
+116
+00:05:45,750 --> 00:05:49,270
+you can value the performance of your different models on
+
+117
+00:05:49,270 --> 00:05:50,760
+the test data set.
+
+118
+00:05:50,760 --> 00:05:55,340
+And we&#39;re going to talk about ways of doing this later on in
+
+119
+00:05:55,340 --> 00:05:56,590
+the course.
+
+120
+00:05:59,590 --> 00:06:03,050
+I want to tell you about one aspect of this, which is
+
+121
+00:06:03,050 --> 00:06:05,570
+called a bias-variance trade-off.
+
+122
+00:06:05,570 --> 00:06:08,190
+So again, we&#39;ve got a f hat of x, which is fit to the
+
+123
+00:06:08,190 --> 00:06:09,870
+training data.
+
+124
+00:06:09,870 --> 00:06:14,530
+And let&#39;s say x0 y0 is a test observation drawn from the
+
+125
+00:06:14,530 --> 00:06:15,260
+population.
+
+126
+00:06:15,260 --> 00:06:19,450
+And we&#39;re going to evaluate the model at the single test
+
+127
+00:06:19,450 --> 00:06:22,360
+observation, OK?
+
+128
+00:06:22,360 --> 00:06:26,700
+And let&#39;s supposed the true model is given by the function
+
+129
+00:06:26,700 --> 00:06:29,800
+f again, where f is the regression function or the
+
+130
+00:06:29,800 --> 00:06:33,540
+conditional expectation in the population.
+
+131
+00:06:33,540 --> 00:06:35,760
+So let&#39;s look at the expected prediction error
+
+132
+00:06:35,760 --> 00:06:38,720
+between f hat at x 0.
+
+133
+00:06:38,720 --> 00:06:41,260
+So that&#39;s the predicted model.
+
+134
+00:06:41,260 --> 00:06:44,150
+The fitted model on the training data evaluated at the
+
+135
+00:06:44,150 --> 00:06:45,440
+new point x 0.
+
+136
+00:06:45,440 --> 00:06:48,640
+And see what the expected distance is from the test
+
+137
+00:06:48,640 --> 00:06:51,120
+point, y 0.
+
+138
+00:06:51,120 --> 00:06:55,780
+So this expectation averages over the variability of the
+
+139
+00:06:55,780 --> 00:06:59,450
+new y 0, as well as the variability that went into the
+
+140
+00:06:59,450 --> 00:07:04,040
+training set used to build f hat.
+
+141
+00:07:04,040 --> 00:07:07,270
+So it turns out that we can break this.
+
+142
+00:07:07,270 --> 00:07:09,210
+We can break up this expression into
+
+143
+00:07:09,210 --> 00:07:11,760
+three pieces exactly.
+
+144
+00:07:11,760 --> 00:07:14,620
+The one piece is again the irreducible error that comes
+
+145
+00:07:14,620 --> 00:07:19,090
+from the random variation in the new test point, y 0, about
+
+146
+00:07:19,090 --> 00:07:21,490
+the true function f.
+
+147
+00:07:21,490 --> 00:07:26,830
+But these other two pieces break up the reducible part of
+
+148
+00:07:26,830 --> 00:07:29,420
+the error, what we called the reducible part before, into
+
+149
+00:07:29,420 --> 00:07:31,060
+two components.
+
+150
+00:07:31,060 --> 00:07:34,620
+One is called the variance of f hat.
+
+151
+00:07:34,620 --> 00:07:37,680
+And that&#39;s the variance that comes from having different
+
+152
+00:07:37,680 --> 00:07:38,370
+trainings sets.
+
+153
+00:07:38,370 --> 00:07:41,260
+If I got a new training set and I fit my model again, I&#39;d
+
+154
+00:07:41,260 --> 00:07:45,670
+have a different function f hat.
+
+155
+00:07:45,670 --> 00:07:48,470
+But if I were to look at many, many different training sets,
+
+156
+00:07:48,470 --> 00:07:52,180
+there would be variability in my prediction at x 0.
+
+157
+00:07:52,180 --> 00:07:55,640
+And then, a quantity called the bias of f hat.
+
+158
+00:07:55,640 --> 00:08:00,490
+And what the bias is is the difference between the average
+
+159
+00:08:00,490 --> 00:08:03,540
+prediction at x 0 averaged over all these different
+
+160
+00:08:03,540 --> 00:08:07,610
+training sets, and the truth f of x 0.
+
+161
+00:08:07,610 --> 00:08:10,290
+And what you have is, typically as the flexibility
+
+162
+00:08:10,290 --> 00:08:13,360
+of f hat increases, its variance increases.
+
+163
+00:08:13,360 --> 00:08:16,620
+Because it&#39;s going after the individual training set that
+
+164
+00:08:16,620 --> 00:08:19,610
+you&#39;ve provided, which will of course be different from the
+
+165
+00:08:19,610 --> 00:08:21,440
+next training set.
+
+166
+00:08:21,440 --> 00:08:23,800
+But its bias decreases.
+
+167
+00:08:23,800 --> 00:08:27,100
+So choosing the flexibility based on average test error
+
+168
+00:08:27,100 --> 00:08:31,570
+amounts to what we call a bias-variance trade-off.
+
+169
+00:08:31,570 --> 00:08:38,030
+This will come up a lot in future parts of the course.
+
+170
+00:08:38,030 --> 00:08:40,549
+For those three examples, we see the
+
+171
+00:08:40,549 --> 00:08:42,409
+bias-variance trade-off.
+
+172
+00:08:42,409 --> 00:08:45,540
+Again, in this part the red curve is the mean squared
+
+173
+00:08:45,540 --> 00:08:47,480
+error on the test data.
+
+174
+00:08:47,480 --> 00:08:50,790
+And then below it, we have the two components of that mean
+
+175
+00:08:50,790 --> 00:08:52,820
+squared error, the two important components, which
+
+176
+00:08:52,820 --> 00:08:55,730
+are the bias and the variance.
+
+177
+00:08:55,730 --> 00:09:03,062
+And in the left plot, we&#39;ve got the bias decreasing and
+
+178
+00:09:03,062 --> 00:09:06,610
+then flattening off as we get more flexible, and the
+
+179
+00:09:06,610 --> 00:09:08,080
+variance increasing.
+
+180
+00:09:08,080 --> 00:09:10,600
+And when you add those two components, you get the
+
+181
+00:09:10,600 --> 00:09:12,250
+u-shaped curve.
+
+182
+00:09:12,250 --> 00:09:17,470
+And in the middle and last plots that correspond to the
+
+183
+00:09:17,470 --> 00:09:22,460
+other two examples, the same decomposition is given.
+
+184
+00:09:22,460 --> 00:09:26,070
+And because the nature of their problem changed, the
+
+185
+00:09:26,070 --> 00:09:28,270
+trade-off is changing.
+
+186
+00:09:28,270 --> 00:09:31,300
+OK, so we&#39;ve seen now that choosing the amount of
+
+187
+00:09:31,300 --> 00:09:35,730
+flexibility of a model amounts to a bias-variance trade-off.
+
+188
+00:09:35,730 --> 00:09:38,840
+And depending on the problem, we might want to make the
+
+189
+00:09:38,840 --> 00:09:41,090
+trade-off in a different place.
+
+190
+00:09:41,090 --> 00:09:48,110
+And we can use the validation set or left out data to help
+
+191
+00:09:48,110 --> 00:09:49,280
+us make that choice.
+
+192
+00:09:49,280 --> 00:09:51,970
+But that&#39;s the choice that needs to be made
+
+193
+00:09:51,970 --> 00:09:54,430
+to select the model.
+
+194
+00:09:54,430 --> 00:09:57,340
+Now, we&#39;ve been addressing this in terms
+
+195
+00:09:57,340 --> 00:09:59,320
+of regression problems.
+
+196
+00:09:59,320 --> 00:10:01,800
+In the next segment, we&#39;re going to see how all this
+
+197
+00:10:01,800 --> 00:10:03,300
+works for classification problems.
+

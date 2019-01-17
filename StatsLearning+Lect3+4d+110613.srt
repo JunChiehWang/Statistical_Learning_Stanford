@@ -1,0 +1,1236 @@
+0
+00:00:00,750 --> 00:00:03,860
+OK, up till now, we&#39;ve talked about estimating regression
+
+1
+00:00:03,860 --> 00:00:06,920
+functions for quantitative response.
+
+2
+00:00:06,920 --> 00:00:09,430
+And we&#39;ve seen how to do model selection there.
+
+3
+00:00:09,430 --> 00:00:12,570
+Now we&#39;re going to move to classification problems.
+
+4
+00:00:12,570 --> 00:00:13,980
+And here, we&#39;ve got a different
+
+5
+00:00:13,980 --> 00:00:15,170
+kind of response variable.
+
+6
+00:00:15,170 --> 00:00:17,800
+It&#39;s what we call a qualitative variable.
+
+7
+00:00:17,800 --> 00:00:22,320
+For example, email is one of two classes, spam or ham, ham
+
+8
+00:00:22,320 --> 00:00:24,150
+being the good email.
+
+9
+00:00:24,150 --> 00:00:27,790
+And if we classify in digits, it&#39;s one of the class is 0, 1,
+
+10
+00:00:27,790 --> 00:00:31,280
+up to 9, and so it&#39;s a slightly different problem.
+
+11
+00:00:31,280 --> 00:00:34,520
+And our goals are slightly different as well.
+
+12
+00:00:34,520 --> 00:00:37,370
+Here, our goals up to build a classifier, which we might
+
+13
+00:00:37,370 --> 00:00:42,790
+call c of x, that assigns a class label from our set c to
+
+14
+00:00:42,790 --> 00:00:46,640
+a future, unlabeled observation x, where is x is
+
+15
+00:00:46,640 --> 00:00:49,280
+the feature vector.
+
+16
+00:00:49,280 --> 00:00:51,580
+We&#39;d also like to assess the uncertainty in each
+
+17
+00:00:51,580 --> 00:00:54,900
+classification, and we&#39;d also like to understand the roles
+
+18
+00:00:54,900 --> 00:00:58,370
+of the different predictors amongst the x&#39;s in producing
+
+19
+00:00:58,370 --> 00:01:00,610
+that classify.
+
+20
+00:01:00,610 --> 00:01:03,940
+And so we are going to see how we do that in the
+
+21
+00:01:03,940 --> 00:01:05,190
+next number of slides.
+
+22
+00:01:08,350 --> 00:01:09,390
+OK.
+
+23
+00:01:09,390 --> 00:01:11,360
+To try and parallel our development for the
+
+24
+00:01:11,360 --> 00:01:13,820
+quantitative response, I&#39;ve made up a
+
+25
+00:01:13,820 --> 00:01:16,980
+little simulation example.
+
+26
+00:01:16,980 --> 00:01:19,790
+And we&#39;ve got one x, one y.
+
+27
+00:01:19,790 --> 00:01:22,270
+The y takes on two values in this example.
+
+28
+00:01:22,270 --> 00:01:25,610
+The values are just coded as 0 and 1.
+
+29
+00:01:25,610 --> 00:01:30,100
+And we&#39;ve got a big sample of these y&#39;s from a population.
+
+30
+00:01:30,100 --> 00:01:36,220
+So each little vertical bar here indicates an occurrence
+
+31
+00:01:36,220 --> 00:01:40,780
+of a zero, the orange vertical bars, as a
+
+32
+00:01:40,780 --> 00:01:42,750
+function of the x&#39;s.
+
+33
+00:01:42,750 --> 00:01:48,220
+And at the top, we&#39;ve got where the ones occurred, OK?
+
+34
+00:01:48,220 --> 00:01:50,590
+So this scatter plot&#39;s much harder to read.
+
+35
+00:01:50,590 --> 00:01:53,670
+You can&#39;t really see what&#39;s going on.
+
+36
+00:01:53,670 --> 00:01:57,380
+And there&#39;s a black curve drawn in the figure.
+
+37
+00:01:57,380 --> 00:02:01,500
+And the back curve was what actually generated the data.
+
+38
+00:02:01,500 --> 00:02:04,380
+The black curve is actually showing us the probability of
+
+39
+00:02:04,380 --> 00:02:08,500
+a one in the model that I used to generate the data.
+
+40
+00:02:08,500 --> 00:02:17,140
+And so up in this region over here, the high values of x,
+
+41
+00:02:17,140 --> 00:02:23,060
+there&#39;s a higher probability of a one, close to 90% of
+
+42
+00:02:23,060 --> 00:02:23,650
+getting a one.
+
+43
+00:02:23,650 --> 00:02:27,710
+And so of course, we see more blue ones there than we see
+
+44
+00:02:27,710 --> 00:02:29,550
+zeroes down there.
+
+45
+00:02:29,550 --> 00:02:32,830
+And even though it&#39;s hard to see, there&#39;s a higher density
+
+46
+00:02:32,830 --> 00:02:37,290
+of zeroes in this region over here, where the probability is
+
+47
+00:02:37,290 --> 00:02:43,860
+0.4 of being a one, versus a zero it&#39;s 0.6.
+
+48
+00:02:43,860 --> 00:02:50,570
+OK, so we want to talk about what is an ideal
+
+49
+00:02:50,570 --> 00:02:52,926
+classifier c of x.
+
+50
+00:02:52,926 --> 00:02:55,890
+OK, so let&#39;s define these probabilities that I was
+
+51
+00:02:55,890 --> 00:02:57,390
+talking about.
+
+52
+00:02:57,390 --> 00:03:02,520
+And we&#39;ll call p sub k of x, this quantity over here,
+
+53
+00:03:02,520 --> 00:03:06,790
+that&#39;s a conditional probability that y is k given
+
+54
+00:03:06,790 --> 00:03:08,470
+x equals x.
+
+55
+00:03:08,470 --> 00:03:12,990
+In this case, we&#39;re just looking at probability of one
+
+56
+00:03:12,990 --> 00:03:13,650
+in the plot.
+
+57
+00:03:13,650 --> 00:03:16,760
+We&#39;re just showing the probability that y is one is
+
+58
+00:03:16,760 --> 00:03:17,660
+only two classes.
+
+59
+00:03:17,660 --> 00:03:21,570
+But in general, they&#39;ll be, say, capital K classes.
+
+60
+00:03:21,570 --> 00:03:24,350
+And they&#39;ll be capital K of these conditional
+
+61
+00:03:24,350 --> 00:03:26,860
+probabilities.
+
+62
+00:03:26,860 --> 00:03:30,700
+Now in classification problems, those conditional
+
+63
+00:03:30,700 --> 00:03:34,760
+probabilities completely capture the distribution, the
+
+64
+00:03:34,760 --> 00:03:39,180
+conditional distribution, of y given x.
+
+65
+00:03:39,180 --> 00:03:42,300
+And it turns out, that those also deliver the ideal
+
+66
+00:03:42,300 --> 00:03:43,550
+classifier.
+
+67
+00:03:45,220 --> 00:03:49,700
+We call the Bayes Optimal Classifier the classifier that
+
+68
+00:03:49,700 --> 00:03:52,360
+classifies to the class for which the conditional
+
+69
+00:03:52,360 --> 00:03:58,700
+probability for that element of the class is largest.
+
+70
+00:03:58,700 --> 00:04:00,150
+It makes sense.
+
+71
+00:04:00,150 --> 00:04:01,930
+You go to any point.
+
+72
+00:04:01,930 --> 00:04:06,840
+So here we&#39;ve gone to point 5 in the x space.
+
+73
+00:04:06,840 --> 00:04:12,880
+And you look above it, and you see that there&#39;s about 80%
+
+74
+00:04:12,880 --> 00:04:18,670
+probability of a one, and 20% probability of a zero.
+
+75
+00:04:18,670 --> 00:04:21,190
+And now we&#39;re going to say, well, if you were to classify
+
+76
+00:04:21,190 --> 00:04:23,130
+to one class at that point, which class would
+
+77
+00:04:23,130 --> 00:04:24,660
+you classify to?
+
+78
+00:04:24,660 --> 00:04:29,030
+Well, you&#39;re going to classify to the majority class, OK?
+
+79
+00:04:29,030 --> 00:04:31,015
+And that&#39;s called the Bayes Optimal Classifier.
+
+80
+00:04:33,700 --> 00:04:36,870
+Here&#39;s the same example, except now we&#39;ve only got a
+
+81
+00:04:36,870 --> 00:04:37,780
+handful of points.
+
+82
+00:04:37,780 --> 00:04:44,020
+We&#39;ve got 100 points having one of the two class labels.
+
+83
+00:04:44,020 --> 00:04:47,320
+The story is the same as before.
+
+84
+00:04:47,320 --> 00:04:49,740
+We can&#39;t compute the conditional probabilities
+
+85
+00:04:49,740 --> 00:04:51,860
+exactly, say, at the point 5.
+
+86
+00:04:51,860 --> 00:04:55,190
+Because in this case, we have got one one
+
+87
+00:04:55,190 --> 00:04:58,340
+at five and no zeroes.
+
+88
+00:04:58,340 --> 00:05:02,440
+So we send out a neighborhood, say, and gather 10% of the
+
+89
+00:05:02,440 --> 00:05:03,550
+data points.
+
+90
+00:05:03,550 --> 00:05:06,280
+And then estimate the conditional probabilities by
+
+91
+00:05:06,280 --> 00:05:09,760
+the proportions, in this case of ones and zeros in the
+
+92
+00:05:09,760 --> 00:05:11,530
+neighborhood.
+
+93
+00:05:11,530 --> 00:05:16,040
+And those are indicated by these little bars here.
+
+94
+00:05:16,040 --> 00:05:18,190
+These are meant to represent the probabilities or
+
+95
+00:05:18,190 --> 00:05:20,850
+proportions at this point, 5.
+
+96
+00:05:20,850 --> 00:05:22,350
+And again, there&#39;s a higher proportion of
+
+97
+00:05:22,350 --> 00:05:23,865
+ones here than zeroes.
+
+98
+00:05:23,865 --> 00:05:26,100
+I forgot to say that in the previous slide, that&#39;s the
+
+99
+00:05:26,100 --> 00:05:29,910
+same quantity over here that&#39;s indicating the probabilities
+
+100
+00:05:29,910 --> 00:05:31,980
+of the ones and the zeroes.
+
+101
+00:05:31,980 --> 00:05:34,470
+This is the exact in the population.
+
+102
+00:05:34,470 --> 00:05:39,540
+And here it is estimated with the nearest neighbor average.
+
+103
+00:05:39,540 --> 00:05:40,780
+So here we&#39;ve done the nearest neighbor
+
+104
+00:05:40,780 --> 00:05:43,400
+classifying in one dimension.
+
+105
+00:05:43,400 --> 00:05:45,060
+And we can draw a nice picture.
+
+106
+00:05:45,060 --> 00:05:48,180
+But of course, this works in multiple dimensions as well,
+
+107
+00:05:48,180 --> 00:05:49,900
+just like it did for regression.
+
+108
+00:05:49,900 --> 00:05:52,320
+So suppose we, for example, have two x&#39;s, and
+
+109
+00:05:52,320 --> 00:05:55,740
+they lie on the floor.
+
+110
+00:05:55,740 --> 00:06:01,840
+And we have a target point, say this point over here, and
+
+111
+00:06:01,840 --> 00:06:03,770
+we want to classify a new observation that
+
+112
+00:06:03,770 --> 00:06:05,060
+falls at this point.
+
+113
+00:06:05,060 --> 00:06:07,310
+Well, we can spread out a little, say, circular
+
+114
+00:06:07,310 --> 00:06:10,550
+neighborhood, and gather a bunch of observations who fall
+
+115
+00:06:10,550 --> 00:06:11,810
+in this neighborhood.
+
+116
+00:06:11,810 --> 00:06:15,025
+And we can count how many in class one, how many in class
+
+117
+00:06:15,025 --> 00:06:17,720
+two, and assign to the majority class.
+
+118
+00:06:17,720 --> 00:06:19,730
+And of course, this can be generalized to multiple
+
+119
+00:06:19,730 --> 00:06:21,400
+dimensions.
+
+120
+00:06:21,400 --> 00:06:24,780
+In all the problems we had with nearest neighbors for
+
+121
+00:06:24,780 --> 00:06:27,720
+regression, the curse of dimensionality when the number
+
+122
+00:06:27,720 --> 00:06:30,840
+of dimensions get large also happens here.
+
+123
+00:06:30,840 --> 00:06:33,300
+In order to gather enough points when the dimension&#39;s
+
+124
+00:06:33,300 --> 00:06:37,640
+really high, we have to send out a bigger and bigger sphere
+
+125
+00:06:37,640 --> 00:06:41,120
+to capture the points, and things start to break down,
+
+126
+00:06:41,120 --> 00:06:45,090
+because it&#39;s not local anymore.
+
+127
+00:06:45,090 --> 00:06:47,350
+So, some details.
+
+128
+00:06:47,350 --> 00:06:50,450
+Typically, we&#39;ll measure the performance of the classifier
+
+129
+00:06:50,450 --> 00:06:54,780
+using what we call them misclassification error rate.
+
+130
+00:06:54,780 --> 00:06:56,940
+And here, it&#39;s written on the test data set.
+
+131
+00:06:56,940 --> 00:06:59,910
+The error is just the average number of
+
+132
+00:06:59,910 --> 00:07:02,520
+mistakes we make, OK?
+
+133
+00:07:02,520 --> 00:07:07,410
+So it&#39;s the average number of times that the classification,
+
+134
+00:07:07,410 --> 00:07:12,790
+so c hat at a point xi, is not equal to the class label yi
+
+135
+00:07:12,790 --> 00:07:15,820
+averaged over a test set.
+
+136
+00:07:15,820 --> 00:07:17,880
+It&#39;s just the number of mistakes.
+
+137
+00:07:17,880 --> 00:07:22,620
+So that&#39;s when we count a mistake, mistaking a one for a
+
+138
+00:07:22,620 --> 00:07:25,950
+zero and a zero for a one as equal.
+
+139
+00:07:25,950 --> 00:07:28,870
+There are other ways of classifying error, where you
+
+140
+00:07:28,870 --> 00:07:32,600
+can have a cost, which gives higher cost to some mistakes
+
+141
+00:07:32,600 --> 00:07:33,620
+than others.
+
+142
+00:07:33,620 --> 00:07:36,790
+But we won&#39;t go into that here.
+
+143
+00:07:36,790 --> 00:07:41,690
+So that base classifier, the one that used the true
+
+144
+00:07:41,690 --> 00:07:45,360
+probabilities to decide on the classification rule, is the
+
+145
+00:07:45,360 --> 00:07:49,500
+one that makes the least mistakes in the population.
+
+146
+00:07:49,500 --> 00:07:53,670
+And that makes sense if you look at our population
+
+147
+00:07:53,670 --> 00:07:55,050
+example over here.
+
+148
+00:07:55,050 --> 00:07:58,790
+By classifying to one over here, we are going to make
+
+149
+00:07:58,790 --> 00:08:03,770
+mistakes on about 20% of the conditional population at this
+
+150
+00:08:03,770 --> 00:08:04,620
+value of x.
+
+151
+00:08:04,620 --> 00:08:07,470
+But we&#39;ll get it correct 80% of the time.
+
+152
+00:08:07,470 --> 00:08:10,250
+And so that&#39;s why it&#39;s obvious we want to classify to the
+
+153
+00:08:10,250 --> 00:08:11,030
+largest class.
+
+154
+00:08:11,030 --> 00:08:12,280
+We will make the fewest mistakes.
+
+155
+00:08:15,290 --> 00:08:17,760
+Later on in the course, we going to talk about support
+
+156
+00:08:17,760 --> 00:08:18,820
+vector machines.
+
+157
+00:08:18,820 --> 00:08:21,050
+And they build structured models for the
+
+158
+00:08:21,050 --> 00:08:22,740
+classifier c of x.
+
+159
+00:08:22,740 --> 00:08:24,760
+And we&#39;ll also build structured models for
+
+160
+00:08:24,760 --> 00:08:26,810
+representing the probabilities themselves.
+
+161
+00:08:26,810 --> 00:08:29,720
+And there, we&#39;ll discuss methods like logistic
+
+162
+00:08:29,720 --> 00:08:31,505
+regression and generalized additive models.
+
+163
+00:08:35,100 --> 00:08:41,679
+The high dimensional problem is worse for modeling the
+
+164
+00:08:41,679 --> 00:08:43,809
+probabilities than it is for actually building the
+
+165
+00:08:43,808 --> 00:08:44,710
+classifier.
+
+166
+00:08:44,710 --> 00:08:48,040
+For the classifier, the classifer just has to be
+
+167
+00:08:48,040 --> 00:08:50,160
+accurate with regard to which of the
+
+168
+00:08:50,160 --> 00:08:52,020
+probabilities is largest.
+
+169
+00:08:52,020 --> 00:08:53,430
+Whereas if we&#39;re really interested in the
+
+170
+00:08:53,430 --> 00:08:55,940
+probabilities themselves, we going to be measuring them on
+
+171
+00:08:55,940 --> 00:08:57,190
+a much finer scale.
+
+172
+00:08:59,590 --> 00:09:03,300
+OK, we&#39;ll end up with a two dimensional
+
+173
+00:09:03,300 --> 00:09:05,460
+example of nearest neighbors.
+
+174
+00:09:05,460 --> 00:09:09,180
+So this represents the truth.
+
+175
+00:09:09,180 --> 00:09:11,400
+We got an x1 and an x2.
+
+176
+00:09:11,400 --> 00:09:14,370
+And we&#39;ve got points from some population.
+
+177
+00:09:14,370 --> 00:09:17,900
+And the purple dotted line is what&#39;s called the Bayes
+
+178
+00:09:17,900 --> 00:09:19,120
+Decision Boundary.
+
+179
+00:09:19,120 --> 00:09:21,420
+Since we know the truth here, we know what the true
+
+180
+00:09:21,420 --> 00:09:24,800
+probabilities are everywhere in this domain.
+
+181
+00:09:24,800 --> 00:09:27,880
+And I indicated that all the points in the domain by the
+
+182
+00:09:27,880 --> 00:09:30,670
+little dots in the figure.
+
+183
+00:09:30,670 --> 00:09:32,940
+And so if you classify according to the true
+
+184
+00:09:32,940 --> 00:09:37,970
+probabilities, all the points, all the region colored orange
+
+185
+00:09:37,970 --> 00:09:40,870
+would be classified as the one class.
+
+186
+00:09:40,870 --> 00:09:44,320
+And all the region colored blue would be classified as
+
+187
+00:09:44,320 --> 00:09:45,660
+the blue class.
+
+188
+00:09:45,660 --> 00:09:48,210
+And the dotted line is called the decision boundary.
+
+189
+00:09:48,210 --> 00:09:51,300
+And so that&#39;s a contour of the place where, in this case,
+
+190
+00:09:51,300 --> 00:09:52,370
+there are two classes.
+
+191
+00:09:52,370 --> 00:09:55,600
+It&#39;s a contour of where the probabilities are equal for
+
+192
+00:09:55,600 --> 00:09:56,880
+the two classes.
+
+193
+00:09:56,880 --> 00:09:58,400
+So that&#39;s an undecided region.
+
+194
+00:09:58,400 --> 00:10:01,940
+It&#39;s called the decision boundary.
+
+195
+00:10:01,940 --> 00:10:05,870
+OK, so we can do nearest neighbor, averaging in two
+
+196
+00:10:05,870 --> 00:10:07,400
+dimensions.
+
+197
+00:10:07,400 --> 00:10:10,970
+So of course what we do here is, at any given point when we
+
+198
+00:10:10,970 --> 00:10:12,980
+want to classify--
+
+199
+00:10:12,980 --> 00:10:15,620
+let&#39;s say we pick this point over here--
+
+200
+00:10:15,620 --> 00:10:19,860
+we spread out a little neighborhood, in this case,
+
+201
+00:10:19,860 --> 00:10:24,090
+until we find the 10 closest points to the target point.
+
+202
+00:10:24,090 --> 00:10:27,100
+And we&#39;ll estimate the probability at this center
+
+203
+00:10:27,100 --> 00:10:31,910
+point here by the proportion of blues versus oranges.
+
+204
+00:10:31,910 --> 00:10:34,090
+And you do that at every point.
+
+205
+00:10:34,090 --> 00:10:37,130
+And if you use those as the probabilities, you get this
+
+206
+00:10:37,130 --> 00:10:39,810
+somewhat wiggly black curve as the
+
+207
+00:10:39,810 --> 00:10:42,500
+estimated decision boundary.
+
+208
+00:10:42,500 --> 00:10:46,340
+And you can see it&#39;s actually, apart from the somewhat ugly
+
+209
+00:10:46,340 --> 00:10:50,220
+wiggliness, it gets reasonably close to the true decision
+
+210
+00:10:50,220 --> 00:10:56,590
+boundary, which is, again, the purple dashed line, or curve.
+
+211
+00:10:56,590 --> 00:10:59,830
+OK, in the last slide, we used k equals 10.
+
+212
+00:10:59,830 --> 00:11:02,480
+We can use other values of k.
+
+213
+00:11:02,480 --> 00:11:04,240
+k equals 1 is a popular choice.
+
+214
+00:11:04,240 --> 00:11:07,410
+This is called the nearest neighbor classifier.
+
+215
+00:11:07,410 --> 00:11:12,210
+And we take literally at each target point, we find the
+
+216
+00:11:12,210 --> 00:11:14,390
+closest point amongst the training data and
+
+217
+00:11:14,390 --> 00:11:17,240
+classify to its class.
+
+218
+00:11:17,240 --> 00:11:20,410
+So for example, if we took a point over here, which is the
+
+219
+00:11:20,410 --> 00:11:21,910
+closest training point?
+
+220
+00:11:21,910 --> 00:11:23,490
+Well, this is it over here.
+
+221
+00:11:23,490 --> 00:11:24,090
+It&#39;s a blue.
+
+222
+00:11:24,090 --> 00:11:26,910
+So we&#39;d classify this as blue.
+
+223
+00:11:26,910 --> 00:11:29,490
+Right, when you&#39;re in a sea of blues, of course the nearest
+
+224
+00:11:29,490 --> 00:11:30,680
+point is always another blue.
+
+225
+00:11:30,680 --> 00:11:33,810
+And so you&#39;d always classified as blue.
+
+226
+00:11:33,810 --> 00:11:36,930
+What&#39;s interesting is as you get close to some of the
+
+227
+00:11:36,930 --> 00:11:38,680
+orange points.
+
+228
+00:11:38,680 --> 00:11:43,920
+And what this gives you-- you can see the boundary here is a
+
+229
+00:11:43,920 --> 00:11:45,340
+piecewise linear boundary.
+
+230
+00:11:45,340 --> 00:11:47,475
+Of course, the probabilities that we estimate is just one
+
+231
+00:11:47,475 --> 00:11:49,720
+and zero, because there&#39;s only one point to average.
+
+232
+00:11:49,720 --> 00:11:51,700
+So there&#39;s no real probabilities.
+
+233
+00:11:51,700 --> 00:11:54,150
+But if you think about the decision boundary, it&#39;s a
+
+234
+00:11:54,150 --> 00:11:57,630
+piecewise linear decision boundary.
+
+235
+00:11:57,630 --> 00:12:04,160
+And it&#39;s gotten by looking at the bisector of the line
+
+236
+00:12:04,160 --> 00:12:06,550
+separating each pair of points when they&#39;re
+
+237
+00:12:06,550 --> 00:12:08,890
+of different colors.
+
+238
+00:12:08,890 --> 00:12:13,100
+So you get this very ragged decision boundary.
+
+239
+00:12:13,100 --> 00:12:14,470
+You also get little islands.
+
+240
+00:12:14,470 --> 00:12:16,630
+So for example, there&#39;s a blue point and a
+
+241
+00:12:16,630 --> 00:12:18,080
+sea of oranges here.
+
+242
+00:12:18,080 --> 00:12:20,520
+So there&#39;s a little piecewise linear boundary around that
+
+243
+00:12:20,520 --> 00:12:21,650
+blue point.
+
+244
+00:12:21,650 --> 00:12:26,410
+Those are the points that are closest to that blue point,
+
+245
+00:12:26,410 --> 00:12:29,460
+closer to the blue point than the oranges.
+
+246
+00:12:29,460 --> 00:12:32,370
+Again, we see the true boundary here, or the best
+
+247
+00:12:32,370 --> 00:12:34,490
+base decision boundary is purple.
+
+248
+00:12:34,490 --> 00:12:38,270
+This nearest neighbor average approximates
+
+249
+00:12:38,270 --> 00:12:40,240
+it in a noisy way.
+
+250
+00:12:40,240 --> 00:12:43,110
+Now then, you can make k really large.
+
+251
+00:12:43,110 --> 00:12:45,050
+Here, we&#39;ve made k 100.
+
+252
+00:12:45,050 --> 00:12:47,900
+And the neighborhood&#39;s really large.
+
+253
+00:12:47,900 --> 00:12:50,240
+It&#39;s essentially, there&#39;s 200 points here.
+
+254
+00:12:50,240 --> 00:12:52,440
+So it&#39;s taken half the points to be in any given
+
+255
+00:12:52,440 --> 00:12:53,730
+neighborhood.
+
+256
+00:12:53,730 --> 00:12:58,320
+So let&#39;s suppose our test point was over here.
+
+257
+00:12:58,320 --> 00:13:02,780
+We&#39;d be sending out quite a big circle, gathering 100
+
+258
+00:13:02,780 --> 00:13:05,280
+points, getting the proportional of blues, the
+
+259
+00:13:05,280 --> 00:13:08,310
+proportion of oranges, and then making the boundary.
+
+260
+00:13:08,310 --> 00:13:11,630
+So as k gets bigger, this boundary starts smoothing out
+
+261
+00:13:11,630 --> 00:13:13,700
+and getting less interesting in this case.
+
+262
+00:13:13,700 --> 00:13:16,400
+It&#39;s almost like a linear boundary over here, and
+
+263
+00:13:16,400 --> 00:13:20,540
+doesn&#39;t pick up the nuances of the decision boundary.
+
+264
+00:13:20,540 --> 00:13:23,320
+Whereas with k equals 10, it seemed like a pretty good
+
+265
+00:13:23,320 --> 00:13:27,200
+choice, and of approximates that this is the decision
+
+266
+00:13:27,200 --> 00:13:29,960
+boundary pretty well.
+
+267
+00:13:29,960 --> 00:13:33,540
+OK, so the choice of k is a tuning parameter.
+
+268
+00:13:33,540 --> 00:13:35,560
+And that needs to be selected.
+
+269
+00:13:35,560 --> 00:13:40,550
+And here we showed what happens as you vary k, first
+
+270
+00:13:40,550 --> 00:13:43,370
+on the training data and then on the test data.
+
+271
+00:13:43,370 --> 00:13:48,340
+So on the training data, k tends to just keep on
+
+272
+00:13:48,340 --> 00:13:49,140
+decreasing.
+
+273
+00:13:49,140 --> 00:13:50,450
+It&#39;s not actually monotone.
+
+274
+00:13:50,450 --> 00:13:57,360
+Because we&#39;ve actually indexed this as 1/k, because as 1/k
+
+275
+00:13:57,360 --> 00:14:00,630
+gets big, let&#39;s see.
+
+276
+00:14:00,630 --> 00:14:04,550
+K large means we get a higher bias, so 1/k small.
+
+277
+00:14:04,550 --> 00:14:06,850
+So this is the low complexity region.
+
+278
+00:14:06,850 --> 00:14:10,560
+This is the high complexity region.
+
+279
+00:14:10,560 --> 00:14:13,750
+Now you notice that the training error for one nearest
+
+280
+00:14:13,750 --> 00:14:17,800
+neighbors, which is right down at the end here,
+
+281
+00:14:17,800 --> 00:14:20,630
+1/k is one is zero.
+
+282
+00:14:20,630 --> 00:14:23,930
+Well, if you think about it, that&#39;s what it&#39;s got to be, if
+
+283
+00:14:23,930 --> 00:14:25,840
+you think about what training error is.
+
+284
+00:14:25,840 --> 00:14:27,610
+For the test error, it&#39;s actually
+
+285
+00:14:27,610 --> 00:14:30,400
+started increasing again.
+
+286
+00:14:30,400 --> 00:14:35,830
+This horizontal dotted line is the Bayes error, which you
+
+287
+00:14:35,830 --> 00:14:38,960
+can&#39;t do better than the Bayes error in theory.
+
+288
+00:14:38,960 --> 00:14:40,790
+Of course, this is a finite test data set.
+
+289
+00:14:40,790 --> 00:14:43,750
+But it actually just touches on the Bayes error.
+
+290
+00:14:43,750 --> 00:14:47,120
+It starts decreasing, and then at some point, it levels off
+
+291
+00:14:47,120 --> 00:14:49,420
+and then starts increasing again.
+
+292
+00:14:49,420 --> 00:14:52,880
+So if we had a validation set available, that&#39;s what we use
+
+293
+00:14:52,880 --> 00:14:55,530
+to determine k.
+
+294
+00:14:55,530 --> 00:14:58,890
+So that&#39;s nearest neighbor classification.
+
+295
+00:14:58,890 --> 00:15:01,000
+Very powerful tool.
+
+296
+00:15:01,000 --> 00:15:04,900
+It&#39;s said that about one third of classification problems,
+
+297
+00:15:04,900 --> 00:15:08,850
+the best tool will be nearest neighbor classification.
+
+298
+00:15:08,850 --> 00:15:12,750
+On the handwritten zip code problem, the classifying
+
+299
+00:15:12,750 --> 00:15:15,980
+handwritten digits, nearest neighbor classifiers do about
+
+300
+00:15:15,980 --> 00:15:19,040
+as well as in any other method tried.
+
+301
+00:15:19,040 --> 00:15:22,290
+So it&#39;s a powerful technique to have in the tool bag, and
+
+302
+00:15:22,290 --> 00:15:24,260
+it&#39;s one of the techniques that we&#39;ll use for
+
+303
+00:15:24,260 --> 00:15:25,530
+classification.
+
+304
+00:15:25,530 --> 00:15:27,340
+But in the rest of the course, we&#39;ll cover other
+
+305
+00:15:27,340 --> 00:15:29,060
+techniques as well.
+
+306
+00:15:29,060 --> 00:15:31,750
+In particular, with the support vector machines,
+
+307
+00:15:31,750 --> 00:15:34,250
+various forms of logistic regression and linear
+
+308
+00:15:34,250 --> 00:15:35,500
+discriminant analysis.
+

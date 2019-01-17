@@ -1,0 +1,1100 @@
+0
+00:00:01,100 --> 00:00:03,650
+OK, now we&#39;re going to talk about the supervised learning
+
+1
+00:00:03,650 --> 00:00:06,270
+problem and set down a little bit of notation.
+
+2
+00:00:06,270 --> 00:00:10,060
+So we&#39;ll have an outcome measurement Y, which goes by
+
+3
+00:00:10,060 --> 00:00:13,220
+various names, dependent variable, response, or target.
+
+4
+00:00:13,220 --> 00:00:15,910
+And then we&#39;ll have a vector of p predictor measurements,
+
+5
+00:00:15,910 --> 00:00:18,920
+which we usually call X. They go by the name inputs,
+
+6
+00:00:18,920 --> 00:00:21,720
+regressors, covariates, features,
+
+7
+00:00:21,720 --> 00:00:24,090
+or independent variables.
+
+8
+00:00:24,090 --> 00:00:26,000
+And we distinguish two cases.
+
+9
+00:00:26,000 --> 00:00:29,780
+One is the regression problem, Y is quantitative, such as
+
+10
+00:00:29,780 --> 00:00:32,570
+price or blood pressure.
+
+11
+00:00:32,570 --> 00:00:35,800
+In the classification problem, Y takes values in a finite,
+
+12
+00:00:35,800 --> 00:00:38,930
+unordered set, such as survived or died, the digit
+
+13
+00:00:38,930 --> 00:00:41,250
+classes zero to nine, the cancer class
+
+14
+00:00:41,250 --> 00:00:43,580
+of the tissue sample.
+
+15
+00:00:43,580 --> 00:00:45,460
+Now we have training data pairs.
+
+16
+00:00:45,460 --> 00:00:48,770
+X1, y1, x2, y2, up to xN, yN.
+
+17
+00:00:48,770 --> 00:00:52,500
+So again, x1 is a vector of p measurements, y1 is usually a
+
+18
+00:00:52,500 --> 00:00:54,830
+single response variable.
+
+19
+00:00:54,830 --> 00:00:57,900
+And so these are examples or instances of these
+
+20
+00:00:57,900 --> 00:01:00,070
+measurements.
+
+21
+00:01:00,070 --> 00:01:02,540
+So the objectives of supervised
+
+22
+00:01:02,540 --> 00:01:04,140
+learning are as follows.
+
+23
+00:01:04,140 --> 00:01:06,670
+On the basis of the training data, we would like to
+
+24
+00:01:06,670 --> 00:01:11,020
+accurately predict unseen test cases, understand which inputs
+
+25
+00:01:11,020 --> 00:01:14,550
+affect the outcome and how, and also to assess the quality
+
+26
+00:01:14,550 --> 00:01:18,100
+of our predictions and the inferences.
+
+27
+00:01:18,100 --> 00:01:22,130
+So by way of philosophy, as you take this course, we want
+
+28
+00:01:22,130 --> 00:01:24,660
+not just to give you a laundry list of methods, but we want
+
+29
+00:01:24,660 --> 00:01:26,670
+you to know that it is important to understand the
+
+30
+00:01:26,670 --> 00:01:28,865
+ideas behind the various techniques, so you know where
+
+31
+00:01:28,865 --> 00:01:29,680
+and when to use them.
+
+32
+00:01:29,680 --> 00:01:32,100
+Because in your own work, you&#39;re going to have problems
+
+33
+00:01:32,100 --> 00:01:34,510
+that we&#39;ve never seen before, you never seen before, and you
+
+34
+00:01:34,510 --> 00:01:36,410
+want to be able to judge which method are likely to work well
+
+35
+00:01:36,410 --> 00:01:38,530
+and which ones are not likely to work well.
+
+36
+00:01:38,530 --> 00:01:41,660
+As well, not just prediction accuracy is important, but
+
+37
+00:01:41,660 --> 00:01:45,710
+it&#39;s important to do to try simpler methods first in order
+
+38
+00:01:45,710 --> 00:01:47,530
+to grasp the more sophisticated ones.
+
+39
+00:01:47,530 --> 00:01:50,070
+We&#39;re going to spend quite a bit of time on linear models,
+
+40
+00:01:50,070 --> 00:01:52,550
+linear regression, and linear logistic regression.
+
+41
+00:01:52,550 --> 00:01:55,430
+These are simple methods, but they&#39;re very effective.
+
+42
+00:01:55,430 --> 00:01:57,030
+And it&#39;s also important to understand how
+
+43
+00:01:57,030 --> 00:01:57,910
+well method is doing.
+
+44
+00:01:57,910 --> 00:01:59,300
+It&#39;s easy to apply an algorithm.
+
+45
+00:01:59,300 --> 00:02:02,640
+Nowadays you can just run software, but it&#39;s difficult
+
+46
+00:02:02,640 --> 00:02:05,290
+but also very important to figure out how well is the
+
+47
+00:02:05,290 --> 00:02:07,850
+method actually working so you can tell your boss or your
+
+48
+00:02:07,850 --> 00:02:10,100
+collaborator that, when you apply this method we
+
+49
+00:02:10,100 --> 00:02:13,210
+developed, how well you&#39;re likely to do it tomorrow.
+
+50
+00:02:13,210 --> 00:02:16,180
+And in some cases, you won&#39;t do well enough to actually use
+
+51
+00:02:16,180 --> 00:02:18,470
+the method, and you&#39;ll have to improve your algorithm or
+
+52
+00:02:18,470 --> 00:02:20,810
+maybe collect better data.
+
+53
+00:02:20,810 --> 00:02:23,120
+The other thing we want to convey just through the course
+
+54
+00:02:23,120 --> 00:02:26,690
+and hopefully through examples is that this is a really
+
+55
+00:02:26,690 --> 00:02:28,010
+exciting area in research.
+
+56
+00:02:28,010 --> 00:02:29,820
+I mean, statistics in general is very hot area.
+
+57
+00:02:29,820 --> 00:02:32,930
+Statistical learning and machine learning is of more
+
+58
+00:02:32,930 --> 00:02:34,885
+and more importance, and it&#39;s really exciting that the
+
+59
+00:02:34,885 --> 00:02:37,620
+area&#39;s not gelled in anyway in the sense that there&#39;s a lot
+
+60
+00:02:37,620 --> 00:02:39,810
+of good methods out there, but a lot of challenging problems
+
+61
+00:02:39,810 --> 00:02:41,140
+aren&#39;t solved.
+
+62
+00:02:41,140 --> 00:02:44,750
+Especially in recent years, Rob, with the onset of big
+
+63
+00:02:44,750 --> 00:02:49,220
+data and coined the word data science.
+
+64
+00:02:49,220 --> 00:02:52,440
+Right, and statistical learning has is a fundamental
+
+65
+00:02:52,440 --> 00:02:56,430
+ingredient in this new area of data science.
+
+66
+00:02:56,430 --> 00:03:00,000
+So you might be wondering where&#39;s the term supervised
+
+67
+00:03:00,000 --> 00:03:00,670
+learning come from?
+
+68
+00:03:00,670 --> 00:03:02,630
+It&#39;s actually a very clever term, and I would like to take
+
+69
+00:03:02,630 --> 00:03:04,700
+credit for it, but I can&#39;t.
+
+70
+00:03:04,700 --> 00:03:08,420
+It was developed by someone in the machine learning area.
+
+71
+00:03:08,420 --> 00:03:09,700
+The idea of supervised learning, [? I&#39;m thinking ?]
+
+72
+00:03:09,700 --> 00:03:13,910
+in kindergarten of a teacher trying to teach a child to
+
+73
+00:03:13,910 --> 00:03:16,750
+discriminate between what, say, a house is and a bike.
+
+74
+00:03:16,750 --> 00:03:20,330
+So he might show the child, maybe Johnny, say Johnny, here
+
+75
+00:03:20,330 --> 00:03:22,430
+are some examples of what a house looks like.
+
+76
+00:03:22,430 --> 00:03:24,150
+And maybe in LEGO blocks.
+
+77
+00:03:24,150 --> 00:03:29,040
+And here&#39;s some examples of what a bike looks like.
+
+78
+00:03:29,040 --> 00:03:31,220
+He tells Johnny this and shows him examples
+
+79
+00:03:31,220 --> 00:03:31,940
+of each of the classes.
+
+80
+00:03:31,940 --> 00:03:34,800
+And the child then learns, oh I see.
+
+81
+00:03:34,800 --> 00:03:37,110
+Houses got sort of square edges, and a bike has got some
+
+82
+00:03:37,110 --> 00:03:38,860
+more rounded edges, et cetera.
+
+83
+00:03:38,860 --> 00:03:41,300
+That&#39;s supervised learning, because he&#39;s been given
+
+84
+00:03:41,300 --> 00:03:43,585
+examples of label training observations.
+
+85
+00:03:43,585 --> 00:03:45,250
+He&#39;s been supervised.
+
+86
+00:03:45,250 --> 00:03:49,890
+And as Trevor just sketched out on the previous slide, the
+
+87
+00:03:49,890 --> 00:03:54,520
+Y there is given and the child tries to learn to classify the
+
+88
+00:03:54,520 --> 00:03:57,430
+two objects based on the features, the X&#39;s.
+
+89
+00:03:57,430 --> 00:04:01,677
+Now, unsupervised learning is another thing that we&#39;re
+
+90
+00:04:01,677 --> 00:04:02,330
+talking in this course.
+
+91
+00:04:02,330 --> 00:04:04,720
+Which I grew up with.
+
+92
+00:04:04,720 --> 00:04:06,330
+See, that&#39;s the problem.
+
+93
+00:04:06,330 --> 00:04:09,420
+So in unsupervised learning, now in the kindergarten,
+
+94
+00:04:09,420 --> 00:04:13,110
+Trevor&#39;s in kindergarten, and Trevor was not given examples
+
+95
+00:04:13,110 --> 00:04:15,870
+of what a house and a bike was.
+
+96
+00:04:15,870 --> 00:04:19,120
+He just sees on the ground lots of things.
+
+97
+00:04:19,120 --> 00:04:22,160
+He sees maybe some houses, some bikes, some other things.
+
+98
+00:04:22,160 --> 00:04:24,240
+And so this data is unlabeled.
+
+99
+00:04:24,240 --> 00:04:25,225
+There&#39;s no Y.
+
+100
+00:04:25,225 --> 00:04:27,240
+I was pretty sharp.
+
+101
+00:04:27,240 --> 00:04:31,270
+So the problem there now is for the child, it&#39;s
+
+102
+00:04:31,270 --> 00:04:34,000
+unsupervised, to try to organize in his own mind the
+
+103
+00:04:34,000 --> 00:04:36,040
+common patterns of what he sees.
+
+104
+00:04:36,040 --> 00:04:38,800
+He may look at the objects and say, oh these three things are
+
+105
+00:04:38,800 --> 00:04:39,470
+probably houses.
+
+106
+00:04:39,470 --> 00:04:41,430
+Or he doesn&#39;t know they&#39;re called houses, but they&#39;re
+
+107
+00:04:41,430 --> 00:04:43,880
+similar to each other because they have common features.
+
+108
+00:04:43,880 --> 00:04:47,000
+These other objects, maybe they&#39;re bikes or other things,
+
+109
+00:04:47,000 --> 00:04:48,860
+they&#39;re similar to each other, because I see some
+
+110
+00:04:48,860 --> 00:04:50,070
+commonality.
+
+111
+00:04:50,070 --> 00:04:54,160
+And that brings the idea of trying to group observations
+
+112
+00:04:54,160 --> 00:04:57,970
+by similarity of features, which is going to be a major
+
+113
+00:04:57,970 --> 00:05:00,950
+topic of this course, unsupervised learning.
+
+114
+00:05:00,950 --> 00:05:04,050
+So more formally, there&#39;s no outcome variable measure, just
+
+115
+00:05:04,050 --> 00:05:05,265
+a set of predictors.
+
+116
+00:05:05,265 --> 00:05:07,100
+And the objective is more fuzzy.
+
+117
+00:05:07,100 --> 00:05:10,520
+It&#39;s not just to predict Y, because there is no Y. It&#39;s
+
+118
+00:05:10,520 --> 00:05:14,170
+rather to learn about how the data is organized, and to find
+
+119
+00:05:14,170 --> 00:05:15,500
+which features are important for the
+
+120
+00:05:15,500 --> 00:05:16,790
+organization of the data.
+
+121
+00:05:16,790 --> 00:05:18,610
+So we&#39;ll talk about the clustering of principle
+
+122
+00:05:18,610 --> 00:05:22,220
+components which are important techniques for
+
+123
+00:05:22,220 --> 00:05:23,680
+unsupervised learning.
+
+124
+00:05:23,680 --> 00:05:26,400
+One of the other challenges is it&#39;s hard to know how well
+
+125
+00:05:26,400 --> 00:05:27,060
+you&#39;re doing.
+
+126
+00:05:27,060 --> 00:05:28,410
+There&#39;s no gold standard.
+
+127
+00:05:28,410 --> 00:05:33,010
+There&#39;s no Y. So when you&#39;ve done a clustering analysis,
+
+128
+00:05:33,010 --> 00:05:35,120
+you don&#39;t really know how well you&#39;ve done.
+
+129
+00:05:35,120 --> 00:05:36,200
+And that&#39;s one of the challenges.
+
+130
+00:05:36,200 --> 00:05:41,650
+But nonetheless, it&#39;s an extremely important area.
+
+131
+00:05:41,650 --> 00:05:44,180
+One reason is that the idea of unsupervised learning is an
+
+132
+00:05:44,180 --> 00:05:46,380
+important preprocessor for supervised learning.
+
+133
+00:05:46,380 --> 00:05:49,450
+It&#39;s often useful to try to organize your features, choose
+
+134
+00:05:49,450 --> 00:05:55,690
+features based on the X&#39;s themselves, and then use those
+
+135
+00:05:55,690 --> 00:05:57,580
+processed or chosen features as input
+
+136
+00:05:57,580 --> 00:05:59,130
+into supervised learning.
+
+137
+00:05:59,130 --> 00:06:01,870
+And the last point is that it&#39;s a lot easier, it&#39;s a lot
+
+138
+00:06:01,870 --> 00:06:04,540
+more common to collect data which is unlabeled.
+
+139
+00:06:04,540 --> 00:06:07,020
+Because on the web, for example, if you look at movie
+
+140
+00:06:07,020 --> 00:06:10,470
+reviews, a computer algorithm can just scan the
+
+141
+00:06:10,470 --> 00:06:12,110
+web and grab reviews.
+
+142
+00:06:12,110 --> 00:06:14,360
+Figuring out whether review, on the other hand, is positive
+
+143
+00:06:14,360 --> 00:06:16,860
+or negative often takes human intervention.
+
+144
+00:06:16,860 --> 00:06:19,540
+So it&#39;s much harder and costly to label data.
+
+145
+00:06:19,540 --> 00:06:24,910
+Much easier just to collect unsupervised, unlabeled data.
+
+146
+00:06:24,910 --> 00:06:26,670
+The last example we&#39;re going to show you
+
+147
+00:06:26,670 --> 00:06:27,750
+is a wonderful example.
+
+148
+00:06:27,750 --> 00:06:29,530
+It&#39;s the Netflix prize.
+
+149
+00:06:29,530 --> 00:06:35,540
+Netflix is a movie rental company in the US, and now you
+
+150
+00:06:35,540 --> 00:06:36,680
+can get the movies online.
+
+151
+00:06:36,680 --> 00:06:41,110
+There used to be DVDs that were mailed out.
+
+152
+00:06:41,110 --> 00:06:46,110
+And Netflix set up a competition to try and improve
+
+153
+00:06:46,110 --> 00:06:47,770
+on their recommender system.
+
+154
+00:06:47,770 --> 00:06:53,150
+So they created a data set of 400,000 Netflix customers and
+
+155
+00:06:53,150 --> 00:06:56,900
+18,000 movies, and each of these customers that rated on
+
+156
+00:06:56,900 --> 00:07:00,720
+average around 200 movies each.
+
+157
+00:07:00,720 --> 00:07:06,260
+So each customer had only seen about 1% of the movies.
+
+158
+00:07:06,260 --> 00:07:10,590
+And so you can think of this as having a very big matrix
+
+159
+00:07:10,590 --> 00:07:13,110
+which was very sparsely populated with ratings between
+
+160
+00:07:13,110 --> 00:07:14,040
+one and five.
+
+161
+00:07:14,040 --> 00:07:16,870
+And the goal is to try and predict, as in all recommender
+
+162
+00:07:16,870 --> 00:07:19,110
+systems, to predict what the customers would think of the
+
+163
+00:07:19,110 --> 00:07:22,010
+other movies based on what they rated so far.
+
+164
+00:07:22,010 --> 00:07:26,490
+So Netflix set up a competition where they offered
+
+165
+00:07:26,490 --> 00:07:29,990
+a $1 million prize for the first team that could improve
+
+166
+00:07:29,990 --> 00:07:34,505
+on their rating system by 10% by some measure.
+
+167
+00:07:34,505 --> 00:07:37,250
+And the design of the competition is very clever.
+
+168
+00:07:37,250 --> 00:07:39,670
+I don&#39;t know if it was by luck or not, but the are
+
+169
+00:07:39,670 --> 00:07:40,810
+root-mean-square error of the original
+
+170
+00:07:40,810 --> 00:07:43,290
+algorithm was about 9.953.
+
+171
+00:07:43,290 --> 00:07:45,540
+So that&#39;s on a scale of, again, one to five.
+
+172
+00:07:45,540 --> 00:07:47,900
+And it took the community, when they announced the
+
+173
+00:07:47,900 --> 00:07:49,450
+competition and put the data on the web, it took the
+
+174
+00:07:49,450 --> 00:07:52,660
+community about a month or so to have an algorithm which
+
+175
+00:07:52,660 --> 00:07:54,070
+improved upon that.
+
+176
+00:07:54,070 --> 00:07:56,760
+But then it took the community about another three years to
+
+177
+00:07:56,760 --> 00:07:59,690
+actually for someone to win the competition.
+
+178
+00:07:59,690 --> 00:08:03,720
+It&#39;s a great example, here&#39;s the leader&#39;s board at the time
+
+179
+00:08:03,720 --> 00:08:06,180
+the competition ended.
+
+180
+00:08:06,180 --> 00:08:08,800
+It was eventually won by a team called BellKor&#39;s
+
+181
+00:08:08,800 --> 00:08:10,930
+Pragmatic Chaos.
+
+182
+00:08:10,930 --> 00:08:13,140
+But a very close second was Ensemble.
+
+183
+00:08:13,140 --> 00:08:15,270
+In fact, they had the same score up to
+
+184
+00:08:15,270 --> 00:08:17,470
+four decimal points.
+
+185
+00:08:17,470 --> 00:08:21,050
+And the final winner was determined by who submitted
+
+186
+00:08:21,050 --> 00:08:24,470
+the final predictions first.
+
+187
+00:08:24,470 --> 00:08:26,660
+So it was a wonderful competition, but what was
+
+188
+00:08:26,660 --> 00:08:29,010
+especially wonderful was the amount of
+
+189
+00:08:29,010 --> 00:08:32,030
+research that it generated.
+
+190
+00:08:32,030 --> 00:08:34,700
+Tens of thousands of teams all over the world entered this
+
+191
+00:08:34,700 --> 00:08:38,169
+competition over the period of three years, and a whole lot
+
+192
+00:08:38,169 --> 00:08:41,100
+of new techniques were invented in the process.
+
+193
+00:08:41,100 --> 00:08:43,750
+A lot of the winning techniques ended up using a
+
+194
+00:08:43,750 --> 00:08:46,530
+form of principal components in the
+
+195
+00:08:46,530 --> 00:08:47,790
+presence of missing data.
+
+196
+00:08:47,790 --> 00:08:49,590
+How come our name&#39;s not on that list, Trevor?
+
+197
+00:08:49,590 --> 00:08:51,940
+Where&#39;s our team?
+
+198
+00:08:51,940 --> 00:08:53,860
+That&#39;s a good point, Rob.
+
+199
+00:08:53,860 --> 00:08:55,830
+The page isn&#39;t long enough.
+
+200
+00:08:55,830 --> 00:08:58,550
+I think if we went down a few hundred, you might.
+
+201
+00:08:58,550 --> 00:09:00,840
+So actually, seriously, we actually tried with a graduate
+
+202
+00:09:00,840 --> 00:09:02,160
+student when the competition started.
+
+203
+00:09:02,160 --> 00:09:05,380
+We spent about three or four months trying to win the
+
+204
+00:09:05,380 --> 00:09:06,460
+competition.
+
+205
+00:09:06,460 --> 00:09:09,190
+And one of the problems was computation.
+
+206
+00:09:09,190 --> 00:09:11,080
+The data was so big and our computers
+
+207
+00:09:11,080 --> 00:09:11,870
+were not fast enough.
+
+208
+00:09:11,870 --> 00:09:14,260
+Just to try things out took too long.
+
+209
+00:09:14,260 --> 00:09:17,570
+And we realized that the graduate student was probably
+
+210
+00:09:17,570 --> 00:09:19,630
+not going to succeed and was probably going to waste three
+
+211
+00:09:19,630 --> 00:09:21,750
+years of his graduate program, which was not a good idea for
+
+212
+00:09:21,750 --> 00:09:22,410
+his career.
+
+213
+00:09:22,410 --> 00:09:25,180
+So we basically abandoned ship early on.
+
+214
+00:09:27,770 --> 00:09:30,540
+So I mentioned in the beginning the field of machine
+
+215
+00:09:30,540 --> 00:09:35,420
+learning, which actually led to the statistical learning
+
+216
+00:09:35,420 --> 00:09:38,000
+area which we&#39;re talking about in this course.
+
+217
+00:09:38,000 --> 00:09:40,960
+And machine learning itself arose as a sub field of
+
+218
+00:09:40,960 --> 00:09:43,500
+artificial intelligence, especially with the advent of
+
+219
+00:09:43,500 --> 00:09:46,010
+neural networks in the &#39;80s.
+
+220
+00:09:46,010 --> 00:09:48,720
+So it&#39;s natural to wonder what&#39;s the relationship
+
+221
+00:09:48,720 --> 00:09:51,420
+between statistical learning and machine learning.
+
+222
+00:09:51,420 --> 00:09:52,700
+First of all, the question&#39;s hard to answer.
+
+223
+00:09:52,700 --> 00:09:54,310
+We ask that question often.
+
+224
+00:09:54,310 --> 00:09:55,640
+There&#39;s a lot of overlap.
+
+225
+00:09:55,640 --> 00:09:57,950
+Machine learning tends to work at larger scales.
+
+226
+00:09:57,950 --> 00:09:59,800
+They tend to work on bigger problems.
+
+227
+00:09:59,800 --> 00:10:02,830
+Although again, the gap tends to be closing because fast
+
+228
+00:10:02,830 --> 00:10:05,200
+computers now are becoming much cheaper.
+
+229
+00:10:05,200 --> 00:10:07,820
+Machine learning worries more about peer prediction and how
+
+230
+00:10:07,820 --> 00:10:09,060
+well things predict.
+
+231
+00:10:09,060 --> 00:10:11,850
+Statistical learning also worries about prediction but
+
+232
+00:10:11,850 --> 00:10:15,840
+also tries to come up with models, methods that can be
+
+233
+00:10:15,840 --> 00:10:18,110
+interpreted by scientists and others.
+
+234
+00:10:18,110 --> 00:10:21,550
+And also by how well the method is doing.
+
+235
+00:10:21,550 --> 00:10:24,310
+We worry more about precision and uncertainty.
+
+236
+00:10:24,310 --> 00:10:26,270
+But again, the distinctions become more and more blurred,
+
+237
+00:10:26,270 --> 00:10:28,060
+and there&#39;s a lot of cross-fertilization between
+
+238
+00:10:28,060 --> 00:10:29,720
+the methods.
+
+239
+00:10:29,720 --> 00:10:32,680
+Machine learning clearly has the upper hand in marketing.
+
+240
+00:10:32,680 --> 00:10:35,780
+They tend to get much bigger grants and their conferences
+
+241
+00:10:35,780 --> 00:10:38,540
+are much nicer places, but we&#39;re trying to change that,
+
+242
+00:10:38,540 --> 00:10:41,590
+starting with this course.
+
+243
+00:10:41,590 --> 00:10:45,020
+So here&#39;s the course text, Introduction
+
+244
+00:10:45,020 --> 00:10:46,650
+to Statistical Learning.
+
+245
+00:10:46,650 --> 00:10:47,500
+We&#39;re very excited.
+
+246
+00:10:47,500 --> 00:10:51,840
+This is a new book by two of our graduate students, past
+
+247
+00:10:51,840 --> 00:10:54,690
+graduate students, Gareth James and Daniela Witten and
+
+248
+00:10:54,690 --> 00:10:55,780
+Rob and myself.
+
+249
+00:10:55,780 --> 00:10:59,340
+Book just came out in August, 2013.
+
+250
+00:10:59,340 --> 00:11:02,230
+And this course will cover this book in its entirety.
+
+251
+00:11:02,230 --> 00:11:07,710
+The book has at the end of each chapter, there&#39;s examples
+
+252
+00:11:07,710 --> 00:11:10,880
+run through in our computing language.
+
+253
+00:11:10,880 --> 00:11:14,660
+And we do sessions on R. And so when you do this course,
+
+254
+00:11:14,660 --> 00:11:16,890
+you will actually learn to use R as well.
+
+255
+00:11:16,890 --> 00:11:19,090
+R is a wonderful environment.
+
+256
+00:11:19,090 --> 00:11:23,290
+It&#39;s free, and it&#39;s a really nice way
+
+257
+00:11:23,290 --> 00:11:25,920
+of doing data analysis.
+
+258
+00:11:25,920 --> 00:11:29,470
+You see there&#39;s a second book there, which is our more
+
+259
+00:11:29,470 --> 00:11:32,150
+advanced textbook, Elements of Statistical Learning.
+
+260
+00:11:32,150 --> 00:11:34,820
+That&#39;s been around for a while.
+
+261
+00:11:34,820 --> 00:11:37,850
+That will serve as a reference book for this course for
+
+262
+00:11:37,850 --> 00:11:39,380
+people who want to understand some of the
+
+263
+00:11:39,380 --> 00:11:42,140
+techniques in more detail.
+
+264
+00:11:42,140 --> 00:11:45,590
+Now the nice thing is, not only is this course free, but
+
+265
+00:11:45,590 --> 00:11:47,500
+these books are free as well.
+
+266
+00:11:47,500 --> 00:11:50,490
+The Elements of Statistical Learning has been free, and
+
+267
+00:11:50,490 --> 00:11:52,620
+the PDF is available on our websites.
+
+268
+00:11:52,620 --> 00:11:55,610
+This new book is going to be free beginning of January when
+
+269
+00:11:55,610 --> 00:11:57,620
+the course begins.
+
+270
+00:11:57,620 --> 00:12:01,270
+And that&#39;s with agreement with the publishers.
+
+271
+00:12:01,270 --> 00:12:03,020
+But if you want to buy the book, that&#39;s OK, too.
+
+272
+00:12:03,020 --> 00:12:04,120
+It&#39;s nice having the hard copy.
+
+273
+00:12:04,120 --> 00:12:06,770
+But if you want, the PDF is available.
+
+274
+00:12:06,770 --> 00:12:10,010
+So we hope you enjoy the rest of the class.
+

@@ -1,0 +1,852 @@
+0
+00:00:00,900 --> 00:00:04,680
+Well, we have a guest here today, Dr. John Chambers.
+
+1
+00:00:04,680 --> 00:00:07,080
+John was the inventor of the S language, which is the
+
+2
+00:00:07,080 --> 00:00:10,795
+language that we use in R. John was also my department
+
+3
+00:00:10,795 --> 00:00:13,920
+head at AT&amp;T Bell Labs when I worked there in
+
+4
+00:00:13,920 --> 00:00:15,550
+the &#39;80s and &#39;90s.
+
+5
+00:00:15,550 --> 00:00:18,030
+So John, welcome.
+
+6
+00:00:18,030 --> 00:00:18,990
+Great to be here.
+
+7
+00:00:18,990 --> 00:00:22,540
+Thank you and please tell us about S and how it became R.
+
+8
+00:00:22,540 --> 00:00:23,950
+It&#39;s an interesting story actually.
+
+9
+00:00:23,950 --> 00:00:26,840
+It&#39;s an interesting combination of ideas, and the
+
+10
+00:00:26,840 --> 00:00:29,680
+context for the ideas and outside events that we had no
+
+11
+00:00:29,680 --> 00:00:31,370
+control over.
+
+12
+00:00:31,370 --> 00:00:34,900
+It has a very specific birth-date actually, which is
+
+13
+00:00:34,900 --> 00:00:38,390
+the 5th of May, 1976.
+
+14
+00:00:38,390 --> 00:00:41,400
+And that was a day on which five of us at Bell Labs in
+
+15
+00:00:41,400 --> 00:00:43,730
+Murray Hill sat down in the little conference room and
+
+16
+00:00:43,730 --> 00:00:46,070
+started to talk about what we might do to create an
+
+17
+00:00:46,070 --> 00:00:49,010
+interactive system, as we called it at that time.
+
+18
+00:00:49,010 --> 00:00:49,880
+But it&#39;s very important.
+
+19
+00:00:49,880 --> 00:00:53,970
+It&#39;s part of the story that was far from the beginning of
+
+20
+00:00:53,970 --> 00:00:56,030
+statistical computing research at Bell Labs.
+
+21
+00:00:56,030 --> 00:00:58,460
+My own involvement had gone on for more than a
+
+22
+00:00:58,460 --> 00:01:00,510
+decade before that.
+
+23
+00:01:00,510 --> 00:01:04,340
+And as a another example, about a year before that, we
+
+24
+00:01:04,340 --> 00:01:08,110
+hired a really bright young guy named Rick Becker.
+
+25
+00:01:08,110 --> 00:01:10,590
+And Rick and I, the first thing that we worked on
+
+26
+00:01:10,590 --> 00:01:15,140
+together was a system of software for statistical
+
+27
+00:01:15,140 --> 00:01:17,870
+graphics, for scatter plots and other kinds of things like
+
+28
+00:01:17,870 --> 00:01:19,900
+that called GRZ.
+
+29
+00:01:19,900 --> 00:01:22,780
+And you&#39;ve probably never heard of GRZ, but you&#39;ve used
+
+30
+00:01:22,780 --> 00:01:26,420
+it because the base graphics in R is essentially designed
+
+31
+00:01:26,420 --> 00:01:29,140
+on the way that we structured GRZ.
+
+32
+00:01:29,140 --> 00:01:31,370
+Never knew that.
+
+33
+00:01:31,370 --> 00:01:33,840
+And in addition, we had lots of other software.
+
+34
+00:01:33,840 --> 00:01:37,350
+Numerical software, random number generation, data
+
+35
+00:01:37,350 --> 00:01:39,120
+management, all that kind of stuff.
+
+36
+00:01:39,120 --> 00:01:42,990
+The catch was, that all of it was in the form of FORTRAN
+
+37
+00:01:42,990 --> 00:01:44,650
+call subroutines.
+
+38
+00:01:44,650 --> 00:01:47,750
+So in order to use it, people had to construct a FORTRAN
+
+39
+00:01:47,750 --> 00:01:51,080
+main program, job control, and all that kind of stuff.
+
+40
+00:01:51,080 --> 00:01:53,720
+And the result was that there was a delay, and lots of
+
+41
+00:01:53,720 --> 00:01:56,350
+people were involved, and by the time you&#39;ve got the
+
+42
+00:01:56,350 --> 00:01:59,650
+results back you&#39;d kind of forgotten what the idea was in
+
+43
+00:01:59,650 --> 00:02:00,670
+the first place.
+
+44
+00:02:00,670 --> 00:02:04,550
+So our goal was to provide an interactive system, where the
+
+45
+00:02:04,550 --> 00:02:07,390
+people actually doing the statistical analysis, or doing
+
+46
+00:02:07,390 --> 00:02:10,639
+the research, could sit down themselves and express what
+
+47
+00:02:10,639 --> 00:02:12,960
+they wanted in some fairly natural way and get the
+
+48
+00:02:12,960 --> 00:02:14,930
+results back right away.
+
+49
+00:02:14,930 --> 00:02:18,510
+But, at the same time, and this is also important, we
+
+50
+00:02:18,510 --> 00:02:22,120
+wanted them to still have access to the best
+
+51
+00:02:22,120 --> 00:02:24,740
+computational methods that existed, regardless of where
+
+52
+00:02:24,740 --> 00:02:28,140
+they came from, or who had written them and including
+
+53
+00:02:28,140 --> 00:02:29,810
+things that would be developed later on.
+
+54
+00:02:29,810 --> 00:02:31,960
+So that was the basic philosophy.
+
+55
+00:02:31,960 --> 00:02:34,510
+And when you think about it, that&#39;s not a bad description
+
+56
+00:02:34,510 --> 00:02:38,760
+of what we&#39;re trying to do nowadays with R. So in the
+
+57
+00:02:38,760 --> 00:02:42,270
+first, next few months we did put together an initial
+
+58
+00:02:42,270 --> 00:02:45,920
+version of the system and started to have people use it
+
+59
+00:02:45,920 --> 00:02:49,135
+in the statistics research area and other colleagues at
+
+60
+00:02:49,135 --> 00:02:50,760
+Murray Hill.
+
+61
+00:02:50,760 --> 00:02:54,620
+That takes us to sort of late in the 1970s,
+
+62
+00:02:54,620 --> 00:02:57,400
+around 1978 or so.
+
+63
+00:02:57,400 --> 00:03:01,635
+And, meanwhile, the next event on the floor above us at
+
+64
+00:03:01,635 --> 00:03:04,350
+Murray Hill, there were some guys in computer science
+
+65
+00:03:04,350 --> 00:03:07,450
+research who were busy creating a new kind of
+
+66
+00:03:07,450 --> 00:03:12,640
+operating system, which eventually was called Unix.
+
+67
+00:03:12,640 --> 00:03:17,100
+And in particular, around 1978 or so, the new version of Unix
+
+68
+00:03:17,100 --> 00:03:17,780
+was developed.
+
+69
+00:03:17,780 --> 00:03:22,230
+It was based on the C programming language, and was
+
+70
+00:03:22,230 --> 00:03:25,470
+portable amongst different computers.
+
+71
+00:03:25,470 --> 00:03:28,300
+In particular, it was portable to 32-bit machines, which
+
+72
+00:03:28,300 --> 00:03:29,920
+meant that it was now a candidate for
+
+73
+00:03:29,920 --> 00:03:31,010
+doing scientific computing.
+
+74
+00:03:31,010 --> 00:03:33,650
+Before it had been on a 16-bit machine.
+
+75
+00:03:33,650 --> 00:03:36,040
+Rick and I immediately realized that this was the way
+
+76
+00:03:36,040 --> 00:03:38,320
+that we were going to get a portable version of S,
+
+77
+00:03:38,320 --> 00:03:41,200
+something that we had been worrying about for awhile.
+
+78
+00:03:41,200 --> 00:03:45,220
+So in the late &#39;70s, we rewrote S to use the C
+
+79
+00:03:45,220 --> 00:03:48,420
+language and Unix operating system.
+
+80
+00:03:48,420 --> 00:03:51,860
+That was the first version that was licensed for people
+
+81
+00:03:51,860 --> 00:03:54,170
+outside of AT&amp;T to use.
+
+82
+00:03:54,170 --> 00:03:58,470
+And there too, we piggybacked off Unix because the Unix
+
+83
+00:03:58,470 --> 00:04:02,870
+folks had arranged with AT&amp;T to license their software,
+
+84
+00:04:02,870 --> 00:04:04,330
+their operating system.
+
+85
+00:04:04,330 --> 00:04:08,190
+And in particular, to license it with a very favorable rate
+
+86
+00:04:08,190 --> 00:04:10,770
+to universities, basically free to universities, just for
+
+87
+00:04:10,770 --> 00:04:12,840
+the cost of copying the tape.
+
+88
+00:04:12,840 --> 00:04:16,040
+We managed to get the same arrangement for S, and so, at
+
+89
+00:04:16,040 --> 00:04:19,010
+that point, we started to have outside users, mainly
+
+90
+00:04:19,010 --> 00:04:21,829
+universities where there was a lot of interest in statistics,
+
+91
+00:04:21,829 --> 00:04:23,170
+in computing, and things like that.
+
+92
+00:04:23,170 --> 00:04:26,650
+Carnegie Mellon, Toronto, Berkeley.
+
+93
+00:04:26,650 --> 00:04:30,690
+And John, was that S very similar to what we use today?
+
+94
+00:04:30,690 --> 00:04:32,170
+Not so similar.
+
+95
+00:04:32,170 --> 00:04:34,780
+There were two books that Rick and I wrote
+
+96
+00:04:34,780 --> 00:04:35,860
+that describe that.
+
+97
+00:04:35,860 --> 00:04:38,685
+If you looked at it and just looked at what somebody had
+
+98
+00:04:38,685 --> 00:04:41,310
+written down say to do a linear regression, it would
+
+99
+00:04:41,310 --> 00:04:42,320
+look similar.
+
+100
+00:04:42,320 --> 00:04:44,860
+But as soon as you started to do anything nontrivial, it was
+
+101
+00:04:44,860 --> 00:04:46,580
+very different.
+
+102
+00:04:46,580 --> 00:04:49,860
+And, in fact, that&#39;s sort of the next part of the story.
+
+103
+00:04:49,860 --> 00:04:53,060
+So then some other events started to take place.
+
+104
+00:04:53,060 --> 00:04:57,470
+One was that in 1981, I left statistics for a few years and
+
+105
+00:04:57,470 --> 00:04:59,550
+went to head what was called the Advance Software
+
+106
+00:04:59,550 --> 00:05:00,830
+Department.
+
+107
+00:05:00,830 --> 00:05:06,060
+Their job was primarily to produce computing tools for
+
+108
+00:05:06,060 --> 00:05:07,970
+the company, particularly for what would
+
+109
+00:05:07,970 --> 00:05:09,820
+nowadays be called analytics.
+
+110
+00:05:09,820 --> 00:05:12,280
+And so while I was there, I started to look at some other
+
+111
+00:05:12,280 --> 00:05:15,620
+ideas and programming languages and started to write
+
+112
+00:05:15,620 --> 00:05:18,300
+a new language, a different language called a quadratic
+
+113
+00:05:18,300 --> 00:05:20,480
+programming environment, which originally wasn&#39;t going to
+
+114
+00:05:20,480 --> 00:05:23,720
+have any connection directly to S at all.
+
+115
+00:05:23,720 --> 00:05:26,660
+But while all that was happening, on a much, much
+
+116
+00:05:26,660 --> 00:05:32,050
+larger scale, AT&amp;T, the old Bell system, agreed to be
+
+117
+00:05:32,050 --> 00:05:35,830
+split up, to divest itself of all of the local telephone
+
+118
+00:05:35,830 --> 00:05:39,000
+companies, in response to an anti-trust suit from the
+
+119
+00:05:39,000 --> 00:05:40,410
+federal government.
+
+120
+00:05:40,410 --> 00:05:43,610
+This took place between 1981, 1983.
+
+121
+00:05:43,610 --> 00:05:48,370
+As part of that, Bell Labs spun off a fair fraction of
+
+122
+00:05:48,370 --> 00:05:51,080
+itself, including research, to a new company called Bell
+
+123
+00:05:51,080 --> 00:05:54,340
+Corp. And as part of the rearrangements and
+
+124
+00:05:54,340 --> 00:05:57,500
+reorganizations and everything that went on at that time, I
+
+125
+00:05:57,500 --> 00:06:00,035
+came back to statistics as head of the Statistics and
+
+126
+00:06:00,035 --> 00:06:02,380
+Data Analysis Research Department.
+
+127
+00:06:02,380 --> 00:06:04,560
+And Rick and I got back together.
+
+128
+00:06:04,560 --> 00:06:07,260
+And we decided to merge the sort of stuff I&#39;ve been
+
+129
+00:06:07,260 --> 00:06:11,080
+working on with what he&#39;d been doing to improve S itself, and
+
+130
+00:06:11,080 --> 00:06:14,750
+to create a new version, what we call the New S Language.
+
+131
+00:06:14,750 --> 00:06:18,710
+And a book that describes that.
+
+132
+00:06:18,710 --> 00:06:20,770
+That&#39;s probably the first one I got to know.
+
+133
+00:06:20,770 --> 00:06:21,940
+It probably is.
+
+134
+00:06:21,940 --> 00:06:24,620
+There were few universities who got into the old S, but
+
+135
+00:06:24,620 --> 00:06:29,360
+this is when S began to really take off with universities and
+
+136
+00:06:29,360 --> 00:06:31,895
+research labs, and to some extent, third party resellers.
+
+137
+00:06:35,240 --> 00:06:37,860
+And then, of course, as you very well know, we went on to
+
+138
+00:06:37,860 --> 00:06:41,540
+also produce the Statistical Models in S effort that you
+
+139
+00:06:41,540 --> 00:06:42,950
+and I edited.
+
+140
+00:06:42,950 --> 00:06:46,420
+And along with that came the first version of object
+
+141
+00:06:46,420 --> 00:06:48,370
+oriented programming for S.
+
+142
+00:06:48,370 --> 00:06:52,820
+So this takes us now to the middle--
+
+143
+00:06:52,820 --> 00:06:56,540
+I notice how much more play that book gets than this
+
+144
+00:06:56,540 --> 00:06:58,740
+grubby old blue book.
+
+145
+00:06:58,740 --> 00:07:01,260
+Anyway, so that now takes us to about the
+
+146
+00:07:01,260 --> 00:07:05,350
+middle of the 1990s.
+
+147
+00:07:05,350 --> 00:07:08,200
+Things were kind of taking off and doing quite well.
+
+148
+00:07:08,200 --> 00:07:13,000
+And now, we come to the next event, which is in 1996.
+
+149
+00:07:13,000 --> 00:07:16,740
+Ross Ihaka and Robert Gentleman published a paper on
+
+150
+00:07:16,740 --> 00:07:19,900
+something they just called a language for data analysis and
+
+151
+00:07:19,900 --> 00:07:25,350
+graphics, and just happened to have the name R.
+
+152
+00:07:25,350 --> 00:07:30,370
+So this expressed some ideas, particularly Ross had about
+
+153
+00:07:30,370 --> 00:07:32,090
+better ways to do some of the things that were done.
+
+154
+00:07:32,090 --> 00:07:36,050
+But as Ross was prone to say in talks at the time, it was a
+
+155
+00:07:36,050 --> 00:07:42,300
+language that was not unlike S. And in fact, once it was
+
+156
+00:07:42,300 --> 00:07:46,420
+out there, there&#39;s a lot of enthusiasm amongst a number of
+
+157
+00:07:46,420 --> 00:07:50,330
+people to make it into a free open source
+
+158
+00:07:50,330 --> 00:07:53,070
+clone of the S language.
+
+159
+00:07:53,070 --> 00:07:56,680
+Over the next few years, in the late 1990s, a group, which
+
+160
+00:07:56,680 --> 00:08:00,000
+came to be called R Corp, got together and did that.
+
+161
+00:08:00,000 --> 00:08:04,170
+Ross and Robert very wisely and very generously,
+
+162
+00:08:04,170 --> 00:08:06,920
+transferred control over R to the R Corp group.
+
+163
+00:08:06,920 --> 00:08:09,640
+And at that point, it really started to take off.
+
+164
+00:08:09,640 --> 00:08:13,590
+And the process was to replicate the facilities that
+
+165
+00:08:13,590 --> 00:08:16,270
+were described in the blue book, and for the most part,
+
+166
+00:08:16,270 --> 00:08:19,210
+in the white book in a new open source
+
+167
+00:08:19,210 --> 00:08:21,570
+and portable language.
+
+168
+00:08:21,570 --> 00:08:23,660
+And that&#39;s R.
+
+169
+00:08:23,660 --> 00:08:27,380
+The event there, which also has a very specific date, was
+
+170
+00:08:27,380 --> 00:08:30,510
+on February 29, 2000, which by the way, is
+
+171
+00:08:30,510 --> 00:08:32,190
+a very unique date.
+
+172
+00:08:32,190 --> 00:08:36,710
+And on that date version 1.0 of R was produced.
+
+173
+00:08:36,710 --> 00:08:39,630
+I wasn&#39;t part of R Corp at that time, but I was very
+
+174
+00:08:39,630 --> 00:08:43,169
+friendly with them and one of my most treasured souvenirs is
+
+175
+00:08:43,169 --> 00:08:46,800
+serial number one of the CD-ROMs that were produced at
+
+176
+00:08:46,800 --> 00:08:51,090
+that time for R, autographed by all the members of R Corp.
+
+177
+00:08:51,090 --> 00:08:53,570
+Very treasured memento.
+
+178
+00:08:53,570 --> 00:08:56,450
+So that basically, in a sense, that was it.
+
+179
+00:08:56,450 --> 00:08:58,270
+And the rest has kind of been history.
+
+180
+00:08:58,270 --> 00:09:02,520
+R has really taken off and has introduced a number of
+
+181
+00:09:02,520 --> 00:09:06,120
+additional ideas that we never had and there are now millions
+
+182
+00:09:06,120 --> 00:09:10,780
+of users and many thousands of packages and on the whole,
+
+183
+00:09:10,780 --> 00:09:13,645
+it&#39;s a great thing, and I&#39;m just overwhelmed by it all.
+
+184
+00:09:13,645 --> 00:09:16,250
+Well, I think that the generations of statisticians,
+
+185
+00:09:16,250 --> 00:09:19,530
+that today&#39;s generation, can be really grateful for this.
+
+186
+00:09:19,530 --> 00:09:20,500
+R is wonderful.
+
+187
+00:09:20,500 --> 00:09:22,540
+I&#39;ve used it for the last 10 years.
+
+188
+00:09:22,540 --> 00:09:22,900
+Love it.
+
+189
+00:09:22,900 --> 00:09:24,560
+Have written packages to.
+
+190
+00:09:24,560 --> 00:09:27,500
+And it&#39;s just such a wonderful environment to be able to work
+
+191
+00:09:27,500 --> 00:09:28,770
+in, and it&#39;s free.
+
+192
+00:09:28,770 --> 00:09:32,050
+So really good and very high quality.
+
+193
+00:09:32,050 --> 00:09:34,490
+I think the most important thing from my point-of-view is
+
+194
+00:09:34,490 --> 00:09:37,720
+that it&#39;s had a very strong effect, I&#39;d almost be tempted
+
+195
+00:09:37,720 --> 00:09:40,720
+to call it a revolutionary effect, in the way new results
+
+196
+00:09:40,720 --> 00:09:42,730
+in statistics are communicated.
+
+197
+00:09:42,730 --> 00:09:44,940
+Used to be, people would just write a paper and then you
+
+198
+00:09:44,940 --> 00:09:46,860
+would write to the author and try to figure out if there is
+
+199
+00:09:46,860 --> 00:09:49,010
+some way you could implement what he&#39;d done in
+
+200
+00:09:49,010 --> 00:09:50,680
+some form or other.
+
+201
+00:09:50,680 --> 00:09:54,510
+For many things now, not all, but many things now, people
+
+202
+00:09:54,510 --> 00:09:57,760
+produce the code, they produce an R package, and instantly,
+
+203
+00:09:57,760 --> 00:10:01,010
+everyone else can use what they&#39;ve got freely and
+
+204
+00:10:01,010 --> 00:10:02,660
+contribute their ideas to let things evolve.
+
+205
+00:10:02,660 --> 00:10:06,410
+And that I think is, to my mind, the most beneficial
+
+206
+00:10:06,410 --> 00:10:07,580
+result that&#39;s happened.
+
+207
+00:10:07,580 --> 00:10:09,090
+Well, thank you very much, John.
+
+208
+00:10:09,090 --> 00:10:09,690
+My pleasure.
+
+209
+00:10:09,690 --> 00:10:12,280
+John retired from Bell Labs a few years back, and we&#39;ve
+
+210
+00:10:12,280 --> 00:10:14,250
+managed to lure him to Stanford where he is a
+
+211
+00:10:14,250 --> 00:10:17,450
+consulting professor in the Statistics Department.
+
+212
+00:10:17,450 --> 00:10:18,700
+Thanks very much.
+
