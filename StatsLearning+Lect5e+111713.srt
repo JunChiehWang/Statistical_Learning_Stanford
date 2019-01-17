@@ -1,0 +1,1004 @@
+0
+00:00:00,960 --> 00:00:02,870
+So that&#39;s one extension of the linear model.
+
+1
+00:00:05,600 --> 00:00:08,100
+A number of extensions are interactions and
+
+2
+00:00:08,100 --> 00:00:10,810
+non-linearity.
+
+3
+00:00:10,810 --> 00:00:13,540
+We&#39;ll talk about interactions first.
+
+4
+00:00:13,540 --> 00:00:18,830
+So in our previous analysis with advertising data, we
+
+5
+00:00:18,830 --> 00:00:21,560
+assumed that the effect on sales of increasing one
+
+6
+00:00:21,560 --> 00:00:24,030
+advertising medium is independent of the amount
+
+7
+00:00:24,030 --> 00:00:26,270
+spent on the other media.
+
+8
+00:00:26,270 --> 00:00:28,700
+So for example, in the linear model, we&#39;ve
+
+9
+00:00:28,700 --> 00:00:32,170
+got TV, radio, newspaper.
+
+10
+00:00:32,170 --> 00:00:34,780
+It says that the average effect on sales of a one unit
+
+11
+00:00:34,780 --> 00:00:37,960
+increase in TV is always beta 1 regardless of the amount
+
+12
+00:00:37,960 --> 00:00:39,210
+spent on radio.
+
+13
+00:00:43,210 --> 00:00:46,220
+But suppose that spending money on radio advertising
+
+14
+00:00:46,220 --> 00:00:48,930
+actually increases the effectiveness of TV
+
+15
+00:00:48,930 --> 00:00:52,450
+advertising, so that the slope term for TV should increase as
+
+16
+00:00:52,450 --> 00:00:55,340
+radio increases.
+
+17
+00:00:55,340 --> 00:00:59,100
+So in this situation, suppose we&#39;re given a fixed budget of
+
+18
+00:00:59,100 --> 00:01:03,040
+$100,000, spending half on radio and half on TV may
+
+19
+00:01:03,040 --> 00:01:05,619
+increase sales more than allocating the entire amount
+
+20
+00:01:05,619 --> 00:01:09,060
+in either TV or to radio.
+
+21
+00:01:09,060 --> 00:01:12,300
+So in marketing, this is known as a synergy effect, and in
+
+22
+00:01:12,300 --> 00:01:17,070
+statistics, we often refer to it as an interaction effect.
+
+23
+00:01:17,070 --> 00:01:20,820
+So here&#39;s a nice, pretty picture of the regression
+
+24
+00:01:20,820 --> 00:01:27,410
+surface, sales as a function of TV and radio.
+
+25
+00:01:27,410 --> 00:01:31,260
+And we see that when the levels of either TV or radio
+
+26
+00:01:31,260 --> 00:01:34,910
+are low, then the true sales are lower than predicted by
+
+27
+00:01:34,910 --> 00:01:37,860
+the linear model.
+
+28
+00:01:37,860 --> 00:01:40,940
+But when advertising is split between the two media, then
+
+29
+00:01:40,940 --> 00:01:43,420
+model tends to underestimate sales.
+
+30
+00:01:46,410 --> 00:01:49,090
+And you can see that by the way the points stick out of
+
+31
+00:01:49,090 --> 00:01:52,290
+the surface at the two ends, or below the
+
+32
+00:01:52,290 --> 00:01:53,540
+surface in the middle.
+
+33
+00:01:59,400 --> 00:02:02,880
+So how do we deal with interactions or include them
+
+34
+00:02:02,880 --> 00:02:05,340
+in the model?
+
+35
+00:02:05,340 --> 00:02:08,590
+So what we do is we put in product terms.
+
+36
+00:02:08,590 --> 00:02:12,460
+So here we have a model where we have a term for TV and the
+
+37
+00:02:12,460 --> 00:02:16,250
+term for radio, and then we put in a term that is the
+
+38
+00:02:16,250 --> 00:02:18,580
+product of radio and TV.
+
+39
+00:02:18,580 --> 00:02:22,710
+So we literally multiply those two variables together, and
+
+40
+00:02:22,710 --> 00:02:25,330
+call it a new variable, and put a
+
+41
+00:02:25,330 --> 00:02:28,550
+coefficient on that variable.
+
+42
+00:02:28,550 --> 00:02:32,470
+Now you can rewrite that model slightly, as we&#39;ve done in the
+
+43
+00:02:32,470 --> 00:02:34,570
+second line over here.
+
+44
+00:02:34,570 --> 00:02:38,870
+And we&#39;ve just collected terms slightly differently.
+
+45
+00:02:38,870 --> 00:02:42,720
+And the way we&#39;ve written it here is showing that by
+
+46
+00:02:42,720 --> 00:02:46,530
+putting in this interaction, we can interpret it as the
+
+47
+00:02:46,530 --> 00:02:51,540
+coefficient of TV, which had been originally beta 1, is now
+
+48
+00:02:51,540 --> 00:02:53,340
+modified as a function of radio.
+
+49
+00:02:53,340 --> 00:02:58,690
+So as the values of radio changes, the coefficient of TV
+
+50
+00:02:58,690 --> 00:03:02,840
+changes by amount beta three times radio.
+
+51
+00:03:02,840 --> 00:03:05,910
+So that&#39;s a nice way of interpreting what this
+
+52
+00:03:05,910 --> 00:03:08,720
+interaction is doing.
+
+53
+00:03:08,720 --> 00:03:12,720
+And if you look at a summary of the linear model below,
+
+54
+00:03:12,720 --> 00:03:15,460
+indeed we see that the interaction is significant,
+
+55
+00:03:15,460 --> 00:03:18,910
+which we might have guessed from the previous picture.
+
+56
+00:03:18,910 --> 00:03:20,740
+So in this case, the interaction really is
+
+57
+00:03:20,740 --> 00:03:21,990
+significant.
+
+58
+00:03:26,600 --> 00:03:28,480
+So the results in this table suggest that
+
+59
+00:03:28,480 --> 00:03:30,970
+interactions are important.
+
+60
+00:03:30,970 --> 00:03:33,870
+The p-value for the interaction is extremely low,
+
+61
+00:03:33,870 --> 00:03:37,890
+so there&#39;s strong evidence in favor of the alternative here,
+
+62
+00:03:37,890 --> 00:03:40,480
+that beta three, which was the coefficient for
+
+63
+00:03:40,480 --> 00:03:44,200
+interaction, is not 0.
+
+64
+00:03:44,200 --> 00:03:47,130
+We can also look at the R squared for the model with
+
+65
+00:03:47,130 --> 00:03:54,250
+interaction, and it&#39;s jumped up to 96.8% compared to 89.7%
+
+66
+00:03:54,250 --> 00:03:58,410
+by just adding this one extra parameter to the model.
+
+67
+00:03:58,410 --> 00:04:01,600
+And we get that by adding an interaction
+
+68
+00:04:01,600 --> 00:04:03,010
+between TV and radio.
+
+69
+00:04:07,300 --> 00:04:12,860
+Another way of interpreting this is that we have 69% of
+
+70
+00:04:12,860 --> 00:04:15,690
+the variability in sales that remains off to fit in that
+
+71
+00:04:15,690 --> 00:04:18,779
+it&#39;s a model has it been explained by the interaction
+
+72
+00:04:18,779 --> 00:04:24,370
+to because we went from 89.7 to 96.8 and if we think of
+
+73
+00:04:24,370 --> 00:04:27,330
+that in terms of the fraction of unexplained variance, that
+
+74
+00:04:27,330 --> 00:04:29,385
+69% of unexplained variance.
+
+75
+00:04:34,260 --> 00:04:36,820
+The coefficient estimates in the table suggest that an
+
+76
+00:04:36,820 --> 00:04:41,170
+increase in TV advertising of $1,000 is associated with an
+
+77
+00:04:41,170 --> 00:04:44,060
+increased sales of--
+
+78
+00:04:44,060 --> 00:04:49,060
+and we plug in the numbers for beta 1 in beta 3.
+
+79
+00:04:49,060 --> 00:04:53,230
+It&#39;s 19 plus 11 times radio units.
+
+80
+00:04:53,230 --> 00:04:57,200
+Sorry 1.1 times radio units.
+
+81
+00:04:57,200 --> 00:05:00,630
+Alternatively, an increase in radio advertising of $1,000
+
+82
+00:05:00,630 --> 00:05:05,190
+will be associated with an increase in sales of--
+
+83
+00:05:05,190 --> 00:05:06,890
+so now we&#39;ve written it the other way around.
+
+84
+00:05:06,890 --> 00:05:09,790
+We factored it the other way around, and now thinking of
+
+85
+00:05:09,790 --> 00:05:14,840
+the coefficient of radio as changing as a function of TV,
+
+86
+00:05:14,840 --> 00:05:18,930
+and it&#39;ll be 29 plus 1.1 times TV units.
+
+87
+00:05:18,930 --> 00:05:22,010
+So you can make either of those interpretations when you
+
+88
+00:05:22,010 --> 00:05:23,380
+put an interaction in the model.
+
+89
+00:05:31,880 --> 00:05:34,430
+Sometimes it&#39;s the case that an interaction term has a very
+
+90
+00:05:34,430 --> 00:05:36,830
+small p-value, but the associated main effects-- in
+
+91
+00:05:36,830 --> 00:05:40,530
+this case, TV and radio-- do not.
+
+92
+00:05:40,530 --> 00:05:43,470
+But when we put an interaction in, we tend to leave in the
+
+93
+00:05:43,470 --> 00:05:47,350
+main effects, and we call this the hierarchy principle.
+
+94
+00:05:47,350 --> 00:05:50,770
+And so there it&#39;s stated if we put in an interaction, we put
+
+95
+00:05:50,770 --> 00:05:53,650
+in the main effects, even if the p-values associated with
+
+96
+00:05:53,650 --> 00:05:57,330
+the coefficients are not significant.
+
+97
+00:05:57,330 --> 00:05:59,270
+So why do we do this?
+
+98
+00:05:59,270 --> 00:06:01,810
+It&#39;s just that interactions are hard to interpret in a
+
+99
+00:06:01,810 --> 00:06:03,670
+model without main effects--
+
+100
+00:06:03,670 --> 00:06:07,780
+their mean: actually changes, and so it&#39;s just generally not
+
+101
+00:06:07,780 --> 00:06:10,540
+a good practice.
+
+102
+00:06:10,540 --> 00:06:13,370
+Another way of saying this is that the interaction term also
+
+103
+00:06:13,370 --> 00:06:19,040
+contains main effects, even if you [? foot ?] the model with
+
+104
+00:06:19,040 --> 00:06:20,380
+no main effect terms.
+
+105
+00:06:20,380 --> 00:06:22,265
+So it just becomes more cumbersome to interpret.
+
+106
+00:06:26,330 --> 00:06:28,580
+Now what if we want to put in the interactions between a
+
+107
+00:06:28,580 --> 00:06:31,220
+qualitative and a quantitative variable?
+
+108
+00:06:31,220 --> 00:06:34,580
+Turns out that actually easier to interpret, and
+
+109
+00:06:34,580 --> 00:06:36,360
+we&#39;ll see that now.
+
+110
+00:06:36,360 --> 00:06:39,930
+So let&#39;s look at the credit card data set again, and let&#39;s
+
+111
+00:06:39,930 --> 00:06:43,350
+suppose we&#39;re going to predict balance, as before, and we&#39;re
+
+112
+00:06:43,350 --> 00:06:46,640
+going to use income, which is a quantitative variable, and
+
+113
+00:06:46,640 --> 00:06:48,960
+student status, which is qualitative.
+
+114
+00:06:48,960 --> 00:06:51,950
+And so we&#39;ll have a dummy variable for student, which
+
+115
+00:06:51,950 --> 00:06:56,350
+will be 1 if the person&#39;s a student, otherwise a 0.
+
+116
+00:06:56,350 --> 00:07:02,790
+So without an interaction, the model looks like this.
+
+117
+00:07:02,790 --> 00:07:05,600
+And we see we&#39;ve got an intercept, we&#39;ve got a
+
+118
+00:07:05,600 --> 00:07:09,170
+coefficient for income, and then we&#39;re going to have beta
+
+119
+00:07:09,170 --> 00:07:12,060
+2 is the person is a student, and 0 if the
+
+120
+00:07:12,060 --> 00:07:14,390
+person&#39;s not a student.
+
+121
+00:07:14,390 --> 00:07:18,670
+And another way to write that is a coefficient on income,
+
+122
+00:07:18,670 --> 00:07:21,990
+and we just lump together the intercept and the dummy
+
+123
+00:07:21,990 --> 00:07:23,660
+variable for student.
+
+124
+00:07:23,660 --> 00:07:27,560
+And by grouping them like that, we can think of this as
+
+125
+00:07:27,560 --> 00:07:30,420
+having a common slope in income, but a different
+
+126
+00:07:30,420 --> 00:07:32,360
+intercept depending on whether the person is
+
+127
+00:07:32,360 --> 00:07:33,970
+a student or not.
+
+128
+00:07:33,970 --> 00:07:37,220
+And if a person as a student, the intercept is beta 0 plus
+
+129
+00:07:37,220 --> 00:07:40,060
+beta 2, and if the person&#39;s not a student,
+
+130
+00:07:40,060 --> 00:07:42,510
+it&#39;s just beta 0.
+
+131
+00:07:42,510 --> 00:07:45,730
+So that&#39;s without an interaction.
+
+132
+00:07:45,730 --> 00:07:48,390
+With interactions in the model, it takes the following
+
+133
+00:07:48,390 --> 00:07:51,510
+form, but before we study this, let&#39;s just look at a
+
+134
+00:07:51,510 --> 00:07:53,990
+picture of these two situations, because that&#39;ll
+
+135
+00:07:53,990 --> 00:07:55,700
+make things clear.
+
+136
+00:07:55,700 --> 00:08:00,330
+So in the left panel, we&#39;ve got no interaction, and we see
+
+137
+00:08:00,330 --> 00:08:06,170
+very clearly that there is a common slope for whether
+
+138
+00:08:06,170 --> 00:08:09,450
+you&#39;re a student or not, but just the intercept changes.
+
+139
+00:08:09,450 --> 00:08:14,540
+But if you put an interaction between the slop of income and
+
+140
+00:08:14,540 --> 00:08:17,220
+student status, you&#39;re going to get both a different
+
+141
+00:08:17,220 --> 00:08:19,540
+industry and the different slope.
+
+142
+00:08:19,540 --> 00:08:21,650
+And so that makes it really simple
+
+143
+00:08:21,650 --> 00:08:24,250
+explanation in this case.
+
+144
+00:08:24,250 --> 00:08:27,750
+And if we look at the actual model, it looks like this.
+
+145
+00:08:27,750 --> 00:08:31,170
+So we can write it in several different ways.
+
+146
+00:08:31,170 --> 00:08:36,820
+And so this second term over here is showing us what
+
+147
+00:08:36,820 --> 00:08:38,809
+happens with the interaction.
+
+148
+00:08:38,808 --> 00:08:42,760
+And so, if you&#39;re a student, you get both a different
+
+149
+00:08:42,760 --> 00:08:43,610
+intercept--
+
+150
+00:08:43,610 --> 00:08:45,990
+that&#39;s beta 2--
+
+151
+00:08:45,990 --> 00:08:49,550
+and you get a different slope on income-- which is beta 3.
+
+152
+00:08:49,550 --> 00:08:53,610
+And if you&#39;re not a student, there&#39;s 0, which means you get
+
+153
+00:08:53,610 --> 00:08:57,190
+the baseline intercept and slope.
+
+154
+00:08:57,190 --> 00:09:04,010
+And you can rearrange those terms in the following fashion
+
+155
+00:09:04,010 --> 00:09:06,980
+and it&#39;s telling you the same thing.
+
+156
+00:09:06,980 --> 00:09:12,870
+So the interpretation of interactions with categorical
+
+157
+00:09:12,870 --> 00:09:17,800
+variables and the associated dummy variables is more simple
+
+158
+00:09:17,800 --> 00:09:21,960
+than even in the quantitative case.
+
+159
+00:09:21,960 --> 00:09:27,360
+The other modification of the linear model is what if we
+
+160
+00:09:27,360 --> 00:09:30,390
+want to include nonlinear effects?
+
+161
+00:09:30,390 --> 00:09:34,370
+So here we&#39;ve got the plot of two of the variables in the
+
+162
+00:09:34,370 --> 00:09:36,140
+auto data set.
+
+163
+00:09:36,140 --> 00:09:40,240
+So we&#39;ve got miles per gallon against horsepower, and we&#39;ve
+
+164
+00:09:40,240 --> 00:09:44,600
+included three fitted models here.
+
+165
+00:09:44,600 --> 00:09:47,640
+We&#39;ve got the linear regression model, which is the
+
+166
+00:09:47,640 --> 00:09:49,940
+orange curve over here.
+
+167
+00:09:49,940 --> 00:09:52,580
+And you can see it&#39;s not quite capturing the
+
+168
+00:09:52,580 --> 00:09:54,950
+structure in the data.
+
+169
+00:09:54,950 --> 00:09:57,600
+And so to improve on that, what we&#39;ve actually done is
+
+170
+00:09:57,600 --> 00:10:01,610
+fit two polynomial models.
+
+171
+00:10:01,610 --> 00:10:05,590
+We&#39;ve fit a quadratic model, which is the blue curve, and
+
+172
+00:10:05,590 --> 00:10:09,400
+you can see that better captures the curvature in the data than
+
+173
+00:10:09,400 --> 00:10:10,810
+the linear model.
+
+174
+00:10:10,810 --> 00:10:14,260
+And then we&#39;ve also fitted a degree five polynomial, and
+
+175
+00:10:14,260 --> 00:10:16,960
+that one looks rather wiggly.
+
+176
+00:10:16,960 --> 00:10:20,310
+So we have an ability to fit models of different
+
+177
+00:10:20,310 --> 00:10:24,240
+complexity, in this case, using polynomials.
+
+178
+00:10:24,240 --> 00:10:26,260
+And these are very easy to do.
+
+179
+00:10:26,260 --> 00:10:29,650
+So just like we created an artificial dummy variable for
+
+180
+00:10:29,650 --> 00:10:33,660
+categorical variables, we can make extra variables to
+
+181
+00:10:33,660 --> 00:10:35,720
+accommodate polynomials.
+
+182
+00:10:35,720 --> 00:10:39,780
+So we make a variable horsepower squared, which we
+
+183
+00:10:39,780 --> 00:10:43,540
+just include in our data set, and now we fit a linear model
+
+184
+00:10:43,540 --> 00:10:47,690
+with the coefficient for horsepower, and a coefficient
+
+185
+00:10:47,690 --> 00:10:49,550
+for horsepower squared.
+
+186
+00:10:49,550 --> 00:10:52,920
+And of course that&#39;s a polynomial expression, and
+
+187
+00:10:52,920 --> 00:10:54,790
+we&#39;ll notice that that improves the fit.
+
+188
+00:10:54,790 --> 00:10:57,730
+We do the summary, and we see that the coefficient of both
+
+189
+00:10:57,730 --> 00:11:00,260
+horsepower and horsepower squared are strongly
+
+190
+00:11:00,260 --> 00:11:02,430
+significant.
+
+191
+00:11:02,430 --> 00:11:05,850
+And so you can do this, you can add a cubic term as well,
+
+192
+00:11:05,850 --> 00:11:08,620
+and in the previous example, we went all the way up to a
+
+193
+00:11:08,620 --> 00:11:10,710
+polynomial of degree five.
+
+194
+00:11:10,710 --> 00:11:15,070
+So that&#39;s a very easy way of allowing for nonlinearities in
+
+195
+00:11:15,070 --> 00:11:18,495
+a variable, and still use linear regression.
+
+196
+00:11:18,495 --> 00:11:21,780
+We still call it a linear model, because it&#39;s actually
+
+197
+00:11:21,780 --> 00:11:23,590
+linear in the coefficients.
+
+198
+00:11:23,590 --> 00:11:24,770
+But as a function of the
+
+199
+00:11:24,770 --> 00:11:27,020
+variables, it&#39;s become nonlinear.
+
+200
+00:11:27,020 --> 00:11:30,670
+But the same technology can be used to fit such models.
+
+201
+00:11:30,670 --> 00:11:34,065
+So that expands the scope of linear regression enormously.
+
+202
+00:11:36,800 --> 00:11:40,880
+OK so we&#39;ve reached the end of the session.
+
+203
+00:11:40,880 --> 00:11:43,130
+If you&#39;re reading along in the chapter, you&#39;ll see there&#39;s
+
+204
+00:11:43,130 --> 00:11:45,350
+some topics we didn&#39;t cover.
+
+205
+00:11:45,350 --> 00:11:47,430
+We didn&#39;t cover outliers.
+
+206
+00:11:47,430 --> 00:11:50,920
+There&#39;s non-constant variance of the error terms.
+
+207
+00:11:50,920 --> 00:11:56,260
+High leverage points, which means if you&#39;ve got points of
+
+208
+00:11:56,260 --> 00:12:00,640
+observations in x that really stick out far from the rest of
+
+209
+00:12:00,640 --> 00:12:03,680
+the crowd, what effect they have on the model.
+
+210
+00:12:03,680 --> 00:12:06,230
+And colinearity, if you have variables that are very
+
+211
+00:12:06,230 --> 00:12:10,110
+correlated with each other, what happens if you include
+
+212
+00:12:10,110 --> 00:12:11,650
+them in the model.
+
+213
+00:12:11,650 --> 00:12:14,090
+So we&#39;re not going to cover those here, but they&#39;re
+
+214
+00:12:14,090 --> 00:12:18,870
+covered in some detail in the book, and if you look at
+
+215
+00:12:18,870 --> 00:12:26,170
+section 3.33, you&#39;ll find coverage on that.
+
+216
+00:12:26,170 --> 00:12:29,910
+OK, so that finishes our coverage of linear models.
+
+217
+00:12:29,910 --> 00:12:32,180
+There are a lot of generalizations of linear
+
+218
+00:12:32,180 --> 00:12:36,000
+model, and as I&#39;ve hinted at [INAUDIBLE], it&#39;s actually
+
+219
+00:12:36,000 --> 00:12:38,700
+quite a powerful framework.
+
+220
+00:12:38,700 --> 00:12:42,510
+So we used similar technology for classification problems,
+
+221
+00:12:42,510 --> 00:12:44,590
+and that will be discussed in next.
+
+222
+00:12:44,590 --> 00:12:47,630
+So we&#39;ll be doing logistic regression and support vector
+
+223
+00:12:47,630 --> 00:12:51,190
+machines, which also have linear models underneath the
+
+224
+00:12:51,190 --> 00:12:55,310
+hood, but expand the scope greatly of linear models.
+
+225
+00:12:55,310 --> 00:12:58,190
+And then we&#39;ll cover non-linearity.
+
+226
+00:12:58,190 --> 00:13:01,590
+So we&#39;ll talk about techniques like kernel smoothing, and
+
+227
+00:13:01,590 --> 00:13:04,550
+splines, and generalized additive models, some of which
+
+228
+00:13:04,550 --> 00:13:07,840
+are also just extensions of linear models, and some of
+
+229
+00:13:07,840 --> 00:13:11,370
+which are richer form of modelling that are for
+
+230
+00:13:11,370 --> 00:13:15,230
+non-linearities in a more flexible way.
+
+231
+00:13:15,230 --> 00:13:18,160
+We covered some simple interactions in linear models
+
+232
+00:13:18,160 --> 00:13:21,180
+here, but we&#39;ll talk about much more general techniques
+
+233
+00:13:21,180 --> 00:13:25,490
+for dealing with interactions in a much more systematic way.
+
+234
+00:13:25,490 --> 00:13:28,490
+And so there we&#39;ll cover tree-based methods, and then
+
+235
+00:13:28,490 --> 00:13:31,040
+some of the state-of-the-art techniques, such as bagging,
+
+236
+00:13:31,040 --> 00:13:34,230
+random forests, and boosting, and these also captured
+
+237
+00:13:34,230 --> 00:13:35,510
+non-linearities.
+
+238
+00:13:35,510 --> 00:13:40,360
+And these really bring our bag of tools up to what we call
+
+239
+00:13:40,360 --> 00:13:42,240
+state-of-the-art.
+
+240
+00:13:42,240 --> 00:13:44,870
+And then another important class of methods we will
+
+241
+00:13:44,870 --> 00:13:48,620
+discuss use what&#39;s known as regularized fitting.
+
+242
+00:13:48,620 --> 00:13:51,540
+And so these include ridge regression and lasso.
+
+243
+00:13:51,540 --> 00:13:54,580
+And these have become very popular lately, especially
+
+244
+00:13:54,580 --> 00:13:58,860
+when we have data sets where we have very large numbers of
+
+245
+00:13:58,860 --> 00:13:59,690
+variables--
+
+246
+00:13:59,690 --> 00:14:03,810
+so-called wide data sets, and even linear models are too
+
+247
+00:14:03,810 --> 00:14:07,220
+rich for them, and so we need to use methods to control the
+
+248
+00:14:07,220 --> 00:14:08,640
+variability.
+
+249
+00:14:08,640 --> 00:14:11,730
+And so that&#39;s all still to come, and so we have lots of
+
+250
+00:14:11,730 --> 00:14:13,050
+nice things to look forward to.
+
