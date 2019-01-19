@@ -1,0 +1,1652 @@
+0
+00:00:00,900 --> 00:00:05,250
+OK, we&#39;re going to have an R session now in RStudio.
+
+1
+00:00:05,250 --> 00:00:08,680
+We&#39;ve learned about some techniques for fitting linear
+
+2
+00:00:08,680 --> 00:00:10,040
+regression models.
+
+3
+00:00:10,040 --> 00:00:12,946
+And now we&#39;re going to see how we do it in R.
+
+4
+00:00:12,946 --> 00:00:16,280
+So you&#39;ll see I&#39;ve got a session open in RStudio with
+
+5
+00:00:16,280 --> 00:00:19,460
+some commands that I&#39;ve already typed in.
+
+6
+00:00:19,460 --> 00:00:21,620
+And I&#39;m just going to go through these with you.
+
+7
+00:00:21,620 --> 00:00:24,160
+And we&#39;ll see some of the features in R for fitting
+
+8
+00:00:24,160 --> 00:00:25,410
+regression models.
+
+9
+00:00:27,500 --> 00:00:31,870
+OK, here we are.
+
+10
+00:00:31,870 --> 00:00:34,250
+We&#39;ve got a script window over here.
+
+11
+00:00:34,250 --> 00:00:37,440
+And we&#39;ll send commands down to the console.
+
+12
+00:00:37,440 --> 00:00:40,920
+So first, we&#39;ll do library(MASS) which has some
+
+13
+00:00:40,920 --> 00:00:43,510
+data sets that we&#39;re going to access.
+
+14
+00:00:43,510 --> 00:00:47,580
+And then we&#39;ll go library(ISLR), which is our
+
+15
+00:00:47,580 --> 00:00:51,240
+own library with data sets used in the book.
+
+16
+00:00:51,240 --> 00:00:54,750
+So first of all, we&#39;ll do simple linear regression.
+
+17
+00:00:54,750 --> 00:00:57,540
+So one of the data sets is the Boston data.
+
+18
+00:00:57,540 --> 00:00:59,720
+And it&#39;s got a bunch of variables.
+
+19
+00:00:59,720 --> 00:01:02,460
+And if you say names of Boston, you see all the names
+
+20
+00:01:02,460 --> 00:01:03,820
+of the variables.
+
+21
+00:01:03,820 --> 00:01:06,040
+Well, they&#39;re abbreviated names.
+
+22
+00:01:06,040 --> 00:01:08,290
+And so if you want more detail, you&#39;re going to ask
+
+23
+00:01:08,290 --> 00:01:09,770
+for help on Boston.
+
+24
+00:01:09,770 --> 00:01:12,950
+So we do that by putting a question mark before Boston.
+
+25
+00:01:12,950 --> 00:01:14,870
+Boston is a data frame.
+
+26
+00:01:14,870 --> 00:01:19,010
+And in the right panel now, we see the help
+
+27
+00:01:19,010 --> 00:01:21,440
+file for the Boston.
+
+28
+00:01:21,440 --> 00:01:25,180
+So we see it&#39;s housing values in suburbs of Boston.
+
+29
+00:01:25,180 --> 00:01:28,940
+It&#39;s got 506 rows and 14 columns.
+
+30
+00:01:28,940 --> 00:01:33,860
+And it now tells you details about each of the variables.
+
+31
+00:01:33,860 --> 00:01:39,060
+So crim, for example, is per capita crime rate by town.
+
+32
+00:01:39,060 --> 00:01:41,980
+zn is proportion of residential land zoned for
+
+33
+00:01:41,980 --> 00:01:46,630
+lots over 25,000 square feet, and so on, if
+
+34
+00:01:46,630 --> 00:01:48,410
+you go down the list.
+
+35
+00:01:48,410 --> 00:01:55,520
+And these are all features about these regions in Boston.
+
+36
+00:01:55,520 --> 00:01:58,840
+And they are summary features that describe the
+
+37
+00:01:58,840 --> 00:02:02,440
+socio-economic conditions in those regions.
+
+38
+00:02:02,440 --> 00:02:06,850
+lstat, lower status of the population, percentage, it&#39;s a
+
+39
+00:02:06,850 --> 00:02:09,490
+percentage of the population in that region
+
+40
+00:02:09,490 --> 00:02:11,900
+that&#39;s of lower status.
+
+41
+00:02:11,900 --> 00:02:14,770
+And medv is median value of owner
+
+42
+00:02:14,770 --> 00:02:17,910
+occupied homes in $100,000.
+
+43
+00:02:17,910 --> 00:02:22,720
+So you can do help on data frames.
+
+44
+00:02:22,720 --> 00:02:25,305
+So the first thing we do is we put a linear model--
+
+45
+00:02:28,500 --> 00:02:29,260
+oh, I beg your pardon.
+
+46
+00:02:29,260 --> 00:02:32,640
+The first thing we do is plot some variables.
+
+47
+00:02:32,640 --> 00:02:37,880
+So we&#39;ll plot medv and lstat, the two variables we just
+
+48
+00:02:37,880 --> 00:02:41,990
+mentioned, and comma Boston, which tells the plot function
+
+49
+00:02:41,990 --> 00:02:45,680
+to find those variables in the data frame Boston.
+
+50
+00:02:45,680 --> 00:02:48,390
+And by using a twiddle between medv and lstat, you&#39;re
+
+51
+00:02:48,390 --> 00:02:51,070
+actually telling it that really the response is medv,
+
+52
+00:02:51,070 --> 00:02:55,910
+that&#39;s the median housing value.
+
+53
+00:02:55,910 --> 00:02:58,450
+It&#39;s going to put that on the vertical axis.
+
+54
+00:02:58,450 --> 00:03:00,680
+And so there&#39;s the plot on the right.
+
+55
+00:03:00,680 --> 00:03:08,140
+And sure enough, as the lower status in the region
+
+56
+00:03:08,140 --> 00:03:09,830
+percentage increases, the median
+
+57
+00:03:09,830 --> 00:03:12,830
+housing value decreases.
+
+58
+00:03:12,830 --> 00:03:15,640
+We&#39;ll fit a linear model now to those data.
+
+59
+00:03:15,640 --> 00:03:17,430
+And you&#39;ll see the formula is the same as
+
+60
+00:03:17,430 --> 00:03:18,160
+we used in the plot.
+
+61
+00:03:18,160 --> 00:03:20,200
+And we call that fit one.
+
+62
+00:03:20,200 --> 00:03:21,590
+And there it&#39;s fit.
+
+63
+00:03:21,590 --> 00:03:23,360
+And then we&#39;ll print it out.
+
+64
+00:03:23,360 --> 00:03:26,090
+And it gives us an intercept and a coefficient.
+
+65
+00:03:26,090 --> 00:03:28,500
+And sure enough, the coefficient is negative.
+
+66
+00:03:28,500 --> 00:03:31,590
+As you can see, there&#39;s a negative relationship.
+
+67
+00:03:31,590 --> 00:03:34,740
+So printing out a linear model fit gives you
+
+68
+00:03:34,740 --> 00:03:36,280
+a very brief summary.
+
+69
+00:03:36,280 --> 00:03:38,100
+And for a more detailed summary, you can
+
+70
+00:03:38,100 --> 00:03:39,810
+say summary of fit.
+
+71
+00:03:39,810 --> 00:03:43,180
+And when we do that, we get a lot more.
+
+72
+00:03:43,180 --> 00:03:45,900
+So we get residuals.
+
+73
+00:03:45,900 --> 00:03:47,840
+Some of it has got cut off here.
+
+74
+00:03:47,840 --> 00:03:50,580
+If you just look up, you&#39;ll see you get the call that
+
+75
+00:03:50,580 --> 00:03:51,830
+created the fit.
+
+76
+00:03:55,270 --> 00:03:58,020
+And then you get the coefficients, their standard
+
+77
+00:03:58,020 --> 00:04:01,800
+errors, t-values, and p-values.
+
+78
+00:04:01,800 --> 00:04:04,670
+And both of these are very significant.
+
+79
+00:04:04,670 --> 00:04:06,910
+We&#39;re typically not interested too much in the intercept.
+
+80
+00:04:06,910 --> 00:04:10,030
+It&#39;s the coefficient of lstat that we&#39;re interested in here.
+
+81
+00:04:10,030 --> 00:04:12,600
+And it&#39;s negative, and very significantly so.
+
+82
+00:04:12,600 --> 00:04:15,690
+And then there&#39;s some other submarine material underneath,
+
+83
+00:04:15,690 --> 00:04:17,284
+which we&#39;ll maybe touch on a bit later.
+
+84
+00:04:21,500 --> 00:04:26,460
+So notice in the formula here, we had the response on the
+
+85
+00:04:26,460 --> 00:04:27,650
+left-hand side.
+
+86
+00:04:27,650 --> 00:04:31,170
+Twiddle means is modeled as.
+
+87
+00:04:31,170 --> 00:04:34,040
+And then lstat is the single predictor in this case.
+
+88
+00:04:34,040 --> 00:04:36,380
+And then we give the name of the data frame where these
+
+89
+00:04:36,380 --> 00:04:38,070
+variables can be found.
+
+90
+00:04:38,070 --> 00:04:41,180
+So that&#39;s the standard format for fitting linear models.
+
+91
+00:04:41,180 --> 00:04:42,240
+And there are other options, too.
+
+92
+00:04:42,240 --> 00:04:43,810
+But for the moment, we won&#39;t need them.
+
+93
+00:04:46,630 --> 00:04:49,920
+Now, we can add that linear model fit to the plot.
+
+94
+00:04:49,920 --> 00:04:54,900
+And there&#39;s a function called abline in R, which is able to
+
+95
+00:04:54,900 --> 00:04:57,260
+pick up a linear model and just do that.
+
+96
+00:04:57,260 --> 00:05:02,450
+And you&#39;ll see in the right-hand plot, it was
+
+97
+00:05:02,450 --> 00:05:05,470
+augmented with the line that corresponds to the fit.
+
+98
+00:05:09,430 --> 00:05:12,220
+Now, we&#39;ve done various things with the fit.
+
+99
+00:05:12,220 --> 00:05:14,150
+We&#39;ve plotted it with this abline.
+
+100
+00:05:14,150 --> 00:05:17,180
+We&#39;ve looked at it with summary and with print by just
+
+101
+00:05:17,180 --> 00:05:18,540
+printing its name.
+
+102
+00:05:18,540 --> 00:05:20,660
+You can see what other components are on it.
+
+103
+00:05:20,660 --> 00:05:23,240
+Actually, it has got quite a few components.
+
+104
+00:05:23,240 --> 00:05:24,960
+These are largely to do with the details
+
+105
+00:05:24,960 --> 00:05:26,210
+of fitting the model.
+
+106
+00:05:26,210 --> 00:05:28,860
+And we won&#39;t trouble ourselves too much with them.
+
+107
+00:05:28,860 --> 00:05:32,880
+But basically, you can see the coefficients on the fit.
+
+108
+00:05:32,880 --> 00:05:35,140
+And that was picked up by the summary.
+
+109
+00:05:35,140 --> 00:05:38,740
+And then a whole lot of other things that are used rather
+
+110
+00:05:38,740 --> 00:05:43,020
+internally, so we won&#39;t really concern ourselves with them.
+
+111
+00:05:43,020 --> 00:05:48,740
+confint finds your confidence interval for the fit.
+
+112
+00:05:48,740 --> 00:05:50,910
+And in this case, it gives a confidence interval for the
+
+113
+00:05:50,910 --> 00:05:51,990
+coefficients.
+
+114
+00:05:51,990 --> 00:05:55,210
+And by default, it gives the lower 25% and
+
+115
+00:05:55,210 --> 00:05:59,240
+upper 97.5% a balance.
+
+116
+00:05:59,240 --> 00:06:02,610
+So this is a 95% confidence interval for each of those
+
+117
+00:06:02,610 --> 00:06:03,860
+coefficients.
+
+118
+00:06:07,500 --> 00:06:10,920
+The predict function is another one of these methods
+
+119
+00:06:10,920 --> 00:06:15,480
+where we can use to query a linear model fit.
+
+120
+00:06:15,480 --> 00:06:19,510
+In this case, we&#39;re going to predict with three new values
+
+121
+00:06:19,510 --> 00:06:23,510
+for lstat, or three particular values, five, 10, and 15.
+
+122
+00:06:23,510 --> 00:06:25,740
+And we&#39;re going to not only ask for predictions, we&#39;re
+
+123
+00:06:25,740 --> 00:06:28,000
+going to ask for a confidence interval.
+
+124
+00:06:28,000 --> 00:06:31,170
+So those are additional arguments to predict.
+
+125
+00:06:31,170 --> 00:06:36,100
+And when we do that, we get the fit at those three values,
+
+126
+00:06:36,100 --> 00:06:38,630
+and then the lower confidence interval, and the upper
+
+127
+00:06:38,630 --> 00:06:39,880
+confidence band.
+
+128
+00:06:42,190 --> 00:06:45,600
+So you can give as many values here as you like and get those
+
+129
+00:06:45,600 --> 00:06:49,360
+lower and upper values.
+
+130
+00:06:49,360 --> 00:06:51,750
+So that&#39;s simple linear regression.
+
+131
+00:06:51,750 --> 00:06:53,820
+Let&#39;s move on to multiple linear regression.
+
+132
+00:06:53,820 --> 00:06:57,490
+And now we fit a linear model, fit2, which is going to be a
+
+133
+00:06:57,490 --> 00:07:00,310
+linear model with lstat and age.
+
+134
+00:07:00,310 --> 00:07:03,120
+And we separate those with a plus in the right-hand side of
+
+135
+00:07:03,120 --> 00:07:04,930
+the formula.
+
+136
+00:07:04,930 --> 00:07:09,030
+And we can fit that and do a summary.
+
+137
+00:07:09,030 --> 00:07:12,170
+Well, it&#39;s much like we had before, except now we&#39;ve got
+
+138
+00:07:12,170 --> 00:07:15,330
+two coefficients, two standard plus intercepts, so three
+
+139
+00:07:15,330 --> 00:07:17,640
+altogether, with their standard errors,
+
+140
+00:07:17,640 --> 00:07:20,090
+t-value, and p-values.
+
+141
+00:07:20,090 --> 00:07:23,740
+And age is also significant, quite strongly so, but not as
+
+142
+00:07:23,740 --> 00:07:24,990
+significant lstat.
+
+143
+00:07:28,550 --> 00:07:31,840
+One of the things down below is the r squared, which we
+
+144
+00:07:31,840 --> 00:07:34,850
+talked about as well, for the model.
+
+145
+00:07:34,850 --> 00:07:38,180
+Remember, r squared, it&#39;s the higher the better.
+
+146
+00:07:38,180 --> 00:07:40,810
+It&#39;s a percentage of variance explained.
+
+147
+00:07:40,810 --> 00:07:46,030
+And it also gives you a summary of the model.
+
+148
+00:07:46,030 --> 00:07:49,280
+The f statistic is the f statistic that we&#39;ll obtain if
+
+149
+00:07:49,280 --> 00:07:51,450
+we dropped out both of the predictors in this model.
+
+150
+00:07:55,150 --> 00:07:58,460
+Fit3, we&#39;re going to fit a linear model
+
+151
+00:07:58,460 --> 00:08:00,130
+with response medv.
+
+152
+00:08:00,130 --> 00:08:02,050
+And it goes twiddle dot.
+
+153
+00:08:02,050 --> 00:08:05,220
+And what that signifies is that we&#39;re supposed to use all
+
+154
+00:08:05,220 --> 00:08:08,500
+the other variables in the Boston data frame except medv,
+
+155
+00:08:08,500 --> 00:08:12,220
+which is the response, and all the others will be predictors.
+
+156
+00:08:12,220 --> 00:08:16,750
+And sure enough, when we do a summary of that model, you see
+
+157
+00:08:16,750 --> 00:08:18,710
+there&#39;s a lot of coefficients.
+
+158
+00:08:18,710 --> 00:08:21,990
+And they each get their estimate, their standard
+
+159
+00:08:21,990 --> 00:08:25,280
+error, the t-value, and the p-value.
+
+160
+00:08:25,280 --> 00:08:27,090
+Most of them are significant.
+
+161
+00:08:27,090 --> 00:08:28,470
+Some are not.
+
+162
+00:08:28,470 --> 00:08:31,450
+Age, now, is no longer significant.
+
+163
+00:08:31,450 --> 00:08:36,190
+So age, when it was in the model just with lstat, was
+
+164
+00:08:36,190 --> 00:08:37,390
+significant.
+
+165
+00:08:37,390 --> 00:08:42,340
+But now it&#39;s in the model with all these other predictors.
+
+166
+00:08:42,340 --> 00:08:45,270
+And it&#39;s no longer significant.
+
+167
+00:08:45,270 --> 00:08:47,530
+What that means is there&#39;s basically a lot of other
+
+168
+00:08:47,530 --> 00:08:50,660
+predictors that are very correlated with age.
+
+169
+00:08:50,660 --> 00:08:55,990
+And in the presence of them, age is no longer required.
+
+170
+00:08:55,990 --> 00:08:56,860
+Let&#39;s do a plot.
+
+171
+00:08:56,860 --> 00:08:58,930
+You can plot linear models.
+
+172
+00:08:58,930 --> 00:09:03,930
+I made a two by two layout, because I know that four plots
+
+173
+00:09:03,930 --> 00:09:06,600
+get produced when you do a plot.
+
+174
+00:09:06,600 --> 00:09:07,720
+These are a little small here.
+
+175
+00:09:07,720 --> 00:09:10,350
+But we can see what&#39;s going on.
+
+176
+00:09:10,350 --> 00:09:13,520
+These give you various views of the linear model.
+
+177
+00:09:13,520 --> 00:09:17,810
+The first one is the residuals against the fitted values.
+
+178
+00:09:17,810 --> 00:09:20,210
+The vector fitted values is just a single vector.
+
+179
+00:09:20,210 --> 00:09:22,910
+So we can plot the residuals against that.
+
+180
+00:09:22,910 --> 00:09:25,090
+And the reason we do that is we are looking for
+
+181
+00:09:25,090 --> 00:09:26,160
+non-linearities.
+
+182
+00:09:26,160 --> 00:09:28,530
+And we kind of know there&#39;s a non-linearity in this one.
+
+183
+00:09:28,530 --> 00:09:30,600
+We saw that in the very first plot.
+
+184
+00:09:30,600 --> 00:09:33,540
+And by the curve in the residuals here, we can see
+
+185
+00:09:33,540 --> 00:09:36,000
+that the model is not quite capturing everything
+
+186
+00:09:36,000 --> 00:09:36,690
+that&#39;s going on.
+
+187
+00:09:36,690 --> 00:09:39,870
+There seems to be some non-linearity.
+
+188
+00:09:39,870 --> 00:09:44,510
+And these other plots, which are somewhat beyond the scope
+
+189
+00:09:44,510 --> 00:09:49,050
+of what we&#39;re doing here today, that give you aspects
+
+190
+00:09:49,050 --> 00:09:52,290
+of the linear model fit.
+
+191
+00:09:52,290 --> 00:09:55,890
+This one here, this lower left one, is the square root of the
+
+192
+00:09:55,890 --> 00:09:58,700
+absolute standardized residuals.
+
+193
+00:09:58,700 --> 00:10:03,390
+One plots this to see, perhaps, if the variance is
+
+194
+00:10:03,390 --> 00:10:06,190
+changing with the mean or the fit.
+
+195
+00:10:06,190 --> 00:10:07,850
+In this case, it looks like there may be some
+
+196
+00:10:07,850 --> 00:10:08,670
+relationship there.
+
+197
+00:10:08,670 --> 00:10:12,170
+But that could be a result of a non-linearity that we seem
+
+198
+00:10:12,170 --> 00:10:14,840
+to have missed in the model.
+
+199
+00:10:14,840 --> 00:10:16,290
+Update is a nice command.
+
+200
+00:10:16,290 --> 00:10:20,840
+You fit a model, fit3, and you can update it.
+
+201
+00:10:20,840 --> 00:10:23,010
+And in this case, we&#39;re going to update.
+
+202
+00:10:23,010 --> 00:10:26,680
+The formula we give is twiddle dot minus age.
+
+203
+00:10:26,680 --> 00:10:27,890
+Twiddle means--
+
+204
+00:10:27,890 --> 00:10:29,160
+nothing on the left means we&#39;re going to
+
+205
+00:10:29,160 --> 00:10:31,090
+use the same response.
+
+206
+00:10:31,090 --> 00:10:34,050
+Dot means whatever the model was in fit3.
+
+207
+00:10:34,050 --> 00:10:36,146
+That&#39;s replaced in dot.
+
+208
+00:10:36,146 --> 00:10:39,110
+And minus age means we want to remove age.
+
+209
+00:10:39,110 --> 00:10:42,520
+And minus indus, we want to remove indus as well.
+
+210
+00:10:42,520 --> 00:10:45,450
+So this will fit the model with those two variables
+
+211
+00:10:45,450 --> 00:10:47,630
+removed, all the others in.
+
+212
+00:10:47,630 --> 00:10:52,090
+And sure enough, if we do the fit, we see that those two
+
+213
+00:10:52,090 --> 00:10:52,880
+variables are out.
+
+214
+00:10:52,880 --> 00:10:55,970
+And now everything that&#39;s left in the model appears to be
+
+215
+00:10:55,970 --> 00:10:58,720
+significant.
+
+216
+00:10:58,720 --> 00:11:04,510
+OK, moving on, non-linearities and interactions.
+
+217
+00:11:04,510 --> 00:11:07,430
+The first thing we&#39;ll do is make a fit where we put an
+
+218
+00:11:07,430 --> 00:11:11,510
+interaction between lstat and age.
+
+219
+00:11:11,510 --> 00:11:14,820
+And that we do with a star, sort of like multiply.
+
+220
+00:11:14,820 --> 00:11:18,690
+But in this formula language, it means an interaction.
+
+221
+00:11:18,690 --> 00:11:20,940
+And we&#39;ve just got those two variables in the model.
+
+222
+00:11:20,940 --> 00:11:26,500
+And so when we do a summary of the fit, we see that we get a
+
+223
+00:11:26,500 --> 00:11:29,930
+main effect for lstat, a main effect for age, and then the
+
+224
+00:11:29,930 --> 00:11:33,830
+interaction, which here is represented as a colon.
+
+225
+00:11:33,830 --> 00:11:37,760
+So that star in the formula means that we&#39;re going to have
+
+226
+00:11:37,760 --> 00:11:39,900
+main effects for each and the interaction.
+
+227
+00:11:39,900 --> 00:11:44,760
+And the pure interaction is indicated by a colon.
+
+228
+00:11:44,760 --> 00:11:49,040
+And while the main effect for age is not significant here,
+
+229
+00:11:49,040 --> 00:11:53,105
+the interaction is somewhat significant.
+
+230
+00:11:53,105 --> 00:11:57,670
+The next thing we do here is we fit lstat.
+
+231
+00:11:57,670 --> 00:12:00,800
+And we saw that there was a non-linear looking scatter
+
+232
+00:12:00,800 --> 00:12:04,110
+plot between medv and lstat.
+
+233
+00:12:04,110 --> 00:12:08,580
+And so here we explicitly put in a quadratic term.
+
+234
+00:12:08,580 --> 00:12:11,630
+And there&#39;s two things going on here.
+
+235
+00:12:11,630 --> 00:12:13,920
+The one is we&#39;ve--
+
+236
+00:12:13,920 --> 00:12:17,640
+the quadratic we indicate by lstat power two.
+
+237
+00:12:17,640 --> 00:12:20,480
+But power has a meaning in this formula language.
+
+238
+00:12:20,480 --> 00:12:24,170
+And so if you want it to mean actually just raise lstat to
+
+239
+00:12:24,170 --> 00:12:26,330
+the power of two, we protect it with
+
+240
+00:12:26,330 --> 00:12:27,710
+this identity function.
+
+241
+00:12:27,710 --> 00:12:30,050
+So the formula language doesn&#39;t dig inside this
+
+242
+00:12:30,050 --> 00:12:31,210
+identity function.
+
+243
+00:12:31,210 --> 00:12:34,720
+So it literally puts in the square of lstat.
+
+244
+00:12:34,720 --> 00:12:37,200
+And the other thing that&#39;s going on here is we&#39;ve put two
+
+245
+00:12:37,200 --> 00:12:39,620
+commands in one line, which you can do in R. But you have
+
+246
+00:12:39,620 --> 00:12:41,930
+to separate them with a semi-colon.
+
+247
+00:12:41,930 --> 00:12:44,690
+So you can have as many commands in one line as you
+
+248
+00:12:44,690 --> 00:12:46,750
+like, but separate them with semi-colons.
+
+249
+00:12:49,560 --> 00:12:52,780
+And so both of those commands got executed now.
+
+250
+00:12:52,780 --> 00:12:57,370
+And sure enough, no surprise, both coefficients are strongly
+
+251
+00:12:57,370 --> 00:13:02,070
+significant, the linear and the quadratic.
+
+252
+00:13:02,070 --> 00:13:05,070
+So now we&#39;re going to plot this.
+
+253
+00:13:05,070 --> 00:13:06,830
+What I do now is attach Boston.
+
+254
+00:13:06,830 --> 00:13:08,200
+We&#39;ve seen this before.
+
+255
+00:13:08,200 --> 00:13:12,340
+That means that the named variables in Boston are
+
+256
+00:13:12,340 --> 00:13:15,180
+available in our data space.
+
+257
+00:13:15,180 --> 00:13:19,800
+It just makes it easier for making nice looking plots.
+
+258
+00:13:19,800 --> 00:13:22,930
+We go back to a single pane plot layout.
+
+259
+00:13:22,930 --> 00:13:25,240
+So par (mf row=c(1,1).
+
+260
+00:13:25,240 --> 00:13:27,600
+That means a one by one layout.
+
+261
+00:13:27,600 --> 00:13:30,820
+And now we&#39;ll plot our two variables.
+
+262
+00:13:30,820 --> 00:13:31,750
+There they are.
+
+263
+00:13:31,750 --> 00:13:33,440
+We&#39;ve seen that plot before.
+
+264
+00:13:33,440 --> 00:13:38,350
+And now we&#39;ll include the quadratic fit.
+
+265
+00:13:38,350 --> 00:13:42,500
+Now, we can&#39;t use abline anymore, because that only
+
+266
+00:13:42,500 --> 00:13:44,880
+works when you&#39;ve got a straight line fit.
+
+267
+00:13:44,880 --> 00:13:47,150
+Now, we need to somehow get the fitted values from our
+
+268
+00:13:47,150 --> 00:13:50,010
+quadratic fit and include them in the plot.
+
+269
+00:13:50,010 --> 00:13:52,450
+And so we do that with a points command.
+
+270
+00:13:52,450 --> 00:13:56,510
+And the first argument is lstat itself.
+
+271
+00:13:56,510 --> 00:13:59,870
+The second argument are the fitted values from fit6.
+
+272
+00:13:59,870 --> 00:14:01,520
+That was our quadratic fit.
+
+273
+00:14:01,520 --> 00:14:04,650
+So the fitted values are for each value of lstat, it&#39;s the
+
+274
+00:14:04,650 --> 00:14:06,000
+fitted value from the model.
+
+275
+00:14:06,000 --> 00:14:07,290
+So that&#39;s exactly what we want.
+
+276
+00:14:07,290 --> 00:14:09,950
+And that will be plotted as a series of points.
+
+277
+00:14:09,950 --> 00:14:13,090
+And we tell it the color should be red.
+
+278
+00:14:13,090 --> 00:14:17,330
+And the pch, which is the plotting
+
+279
+00:14:17,330 --> 00:14:20,480
+character, is to be 20.
+
+280
+00:14:20,480 --> 00:14:22,470
+Let&#39;s see what it does for us first.
+
+281
+00:14:22,470 --> 00:14:26,855
+Well, it puts the quadratic fit in the plot.
+
+282
+00:14:26,855 --> 00:14:30,320
+It looks like the plotting character 20 is a
+
+283
+00:14:30,320 --> 00:14:33,200
+little round ball.
+
+284
+00:14:33,200 --> 00:14:37,130
+We&#39;ll have a little look in a moment and see a bit more
+
+285
+00:14:37,130 --> 00:14:38,290
+about that.
+
+286
+00:14:38,290 --> 00:14:41,200
+Before we do that, there&#39;s an easier way of fitting
+
+287
+00:14:41,200 --> 00:14:42,260
+polynomials.
+
+288
+00:14:42,260 --> 00:14:45,580
+And that&#39;s to use a poly function in R. So here we&#39;re
+
+289
+00:14:45,580 --> 00:14:48,420
+going to fit medv as a polynomial of
+
+290
+00:14:48,420 --> 00:14:51,600
+degree four in lstat.
+
+291
+00:14:51,600 --> 00:14:53,810
+And we&#39;ll add that to the plot with color blue.
+
+292
+00:14:56,490 --> 00:15:01,260
+And you can see that the fourth degree polynomial is
+
+293
+00:15:01,260 --> 00:15:04,240
+getting a little bit too wiggly.
+
+294
+00:15:04,240 --> 00:15:06,710
+It&#39;s starting to over-fit the data a little bit, especially,
+
+295
+00:15:06,710 --> 00:15:11,260
+you can see in the right tail over here, it&#39;s maybe going
+
+296
+00:15:11,260 --> 00:15:19,870
+after these rather isolated points here.
+
+297
+00:15:19,870 --> 00:15:23,200
+So before we end, let&#39;s have a look at what plotting
+
+298
+00:15:23,200 --> 00:15:24,390
+characters are available.
+
+299
+00:15:24,390 --> 00:15:28,700
+So here&#39;s a simple way of seeing them all; plot one to
+
+300
+00:15:28,700 --> 00:15:31,650
+20 and plotting characters one to 20.
+
+301
+00:15:31,650 --> 00:15:33,460
+We can see the whole lot.
+
+302
+00:15:33,460 --> 00:15:35,150
+And there you see them.
+
+303
+00:15:35,150 --> 00:15:37,400
+And so you have available a whole bunch of plotting
+
+304
+00:15:37,400 --> 00:15:38,920
+characters, actually more than these.
+
+305
+00:15:38,920 --> 00:15:42,220
+And number 20 was, sure enough, this one over here.
+
+306
+00:15:42,220 --> 00:15:46,300
+And cx=2 means that we want to enlarge those plotting
+
+307
+00:15:46,300 --> 00:15:50,180
+characters by 2.
+
+308
+00:15:50,180 --> 00:15:51,430
+We want to double the size.
+
+309
+00:15:54,110 --> 00:15:59,230
+Qualitative predictors, so car seats is another
+
+310
+00:15:59,230 --> 00:16:00,480
+one of the data sets.
+
+311
+00:16:09,320 --> 00:16:14,540
+So the command fix is a way of throwing up an editor in R. So
+
+312
+00:16:14,540 --> 00:16:17,075
+you can actually look at the data that you&#39;re about to use.
+
+313
+00:16:17,075 --> 00:16:20,640
+So it will throw up a data frame and allow you to use it.
+
+314
+00:16:20,640 --> 00:16:24,200
+So here&#39;s the car seats data frame thrown up on the screen.
+
+315
+00:16:24,200 --> 00:16:26,600
+It may be a little bit small for you to use.
+
+316
+00:16:26,600 --> 00:16:28,250
+I just wanted to show you that.
+
+317
+00:16:28,250 --> 00:16:32,200
+I&#39;ll quit out of that, get back to our RStudio session.
+
+318
+00:16:35,510 --> 00:16:37,400
+So that&#39;s one way of seeing the data.
+
+319
+00:16:37,400 --> 00:16:41,440
+There&#39;s the names of car seats.
+
+320
+00:16:41,440 --> 00:16:48,120
+And so this was a study on children&#39;s car seats.
+
+321
+00:16:48,120 --> 00:16:50,630
+You can also do a summary of a data frame.
+
+322
+00:16:50,630 --> 00:16:57,360
+And for each variable, it tells you something about the
+
+323
+00:16:57,360 --> 00:17:00,960
+values in the data frame for that variable.
+
+324
+00:17:00,960 --> 00:17:04,200
+And you can see, for quantitative variables, it
+
+325
+00:17:04,200 --> 00:17:07,980
+gives you summaries like the mean, the median, and upper-
+
+326
+00:17:07,980 --> 00:17:13,290
+and lower-quantiles But for categorical or quantitative
+
+327
+00:17:13,290 --> 00:17:15,940
+variables, it actually gives you a table of
+
+328
+00:17:15,940 --> 00:17:17,790
+the distinct values.
+
+329
+00:17:17,790 --> 00:17:22,400
+So ShelveLoc is a qualitative variable in this case.
+
+330
+00:17:32,860 --> 00:17:37,340
+So we&#39;ll fit a model for the car seats&#39; data.
+
+331
+00:17:37,340 --> 00:17:43,270
+And the first call is sales twiddle dot.
+
+332
+00:17:43,270 --> 00:17:45,880
+It means everything in the frame but sales.
+
+333
+00:17:45,880 --> 00:17:49,280
+Plus we&#39;re going to add in interactions between income,
+
+334
+00:17:49,280 --> 00:17:51,485
+and advertising, and age, and price.
+
+335
+00:17:55,460 --> 00:17:57,600
+And we do that.
+
+336
+00:17:57,600 --> 00:18:01,180
+And sure enough, there we get the model.
+
+337
+00:18:01,180 --> 00:18:06,260
+And there&#39;s, again, a bunch of significant variables.
+
+338
+00:18:06,260 --> 00:18:08,690
+And there&#39;s those two interactions we put in.
+
+339
+00:18:08,690 --> 00:18:12,590
+And income and advertising appears to be strongly
+
+340
+00:18:12,590 --> 00:18:12,960
+significant.
+
+341
+00:18:12,960 --> 00:18:15,340
+But price and age is not.
+
+342
+00:18:24,410 --> 00:18:31,290
+ShelveLoc was a qualitative variable.
+
+343
+00:18:31,290 --> 00:18:37,220
+If you look at contrasts function, it shows you how R
+
+344
+00:18:37,220 --> 00:18:41,840
+will code that variable when it&#39;s put in a linear model.
+
+345
+00:18:41,840 --> 00:18:44,880
+And in this case, it&#39;s a three-level factor.
+
+346
+00:18:44,880 --> 00:18:49,100
+And so it puts in two dummy variables.
+
+347
+00:18:49,100 --> 00:18:55,080
+And the values are, if ShelveLoc is
+
+348
+00:18:55,080 --> 00:18:57,240
+bad, zero for both.
+
+349
+00:18:57,240 --> 00:19:00,150
+If it&#39;s good, the first one is one.
+
+350
+00:19:00,150 --> 00:19:02,560
+And the second one is zero.
+
+351
+00:19:02,560 --> 00:19:04,840
+If it&#39;s medium, see they&#39;re named actually good and
+
+352
+00:19:04,840 --> 00:19:07,450
+medium, zero and one.
+
+353
+00:19:07,450 --> 00:19:09,940
+And so bad is not neither good nor medium.
+
+354
+00:19:09,940 --> 00:19:11,780
+So that&#39;s zero on both.
+
+355
+00:19:11,780 --> 00:19:15,820
+So that you can actually find out how R codes
+
+356
+00:19:15,820 --> 00:19:18,340
+quantitative variables.
+
+357
+00:19:18,340 --> 00:19:22,610
+So the final thing we&#39;ll do here is see some examples of
+
+358
+00:19:22,610 --> 00:19:24,650
+writing R functions.
+
+359
+00:19:24,650 --> 00:19:27,650
+So let&#39;s write a little R function to fit a regression
+
+360
+00:19:27,650 --> 00:19:29,830
+model and make a plot.
+
+361
+00:19:29,830 --> 00:19:33,990
+So we start off by saying regplot is equal to function
+
+362
+00:19:33,990 --> 00:19:36,345
+of xy, open curly brace.
+
+363
+00:19:39,160 --> 00:19:41,880
+So that open curly brace indicates that we&#39;re going to
+
+364
+00:19:41,880 --> 00:19:44,070
+start giving the code in our function.
+
+365
+00:19:44,070 --> 00:19:46,430
+And the x and y says our function is going to take
+
+366
+00:19:46,430 --> 00:19:49,870
+arguments x and y.
+
+367
+00:19:49,870 --> 00:19:52,030
+And so the first thing we do is we&#39;re going to fit a linear
+
+368
+00:19:52,030 --> 00:19:53,960
+model between y and x.
+
+369
+00:19:53,960 --> 00:19:55,970
+Then we&#39;re going to plot xy.
+
+370
+00:19:55,970 --> 00:19:59,610
+And then we&#39;re going to abline the fit with color equals red.
+
+371
+00:19:59,610 --> 00:20:02,280
+And then close curly brace, that&#39;s
+
+372
+00:20:02,280 --> 00:20:04,910
+the end of our function.
+
+373
+00:20:04,910 --> 00:20:06,200
+OK, so that&#39;s a very simple little
+
+374
+00:20:06,200 --> 00:20:08,360
+function, which we&#39;ve written.
+
+375
+00:20:08,360 --> 00:20:09,730
+And so now, let&#39;s try it out.
+
+376
+00:20:09,730 --> 00:20:11,280
+We&#39;ll attach car seats.
+
+377
+00:20:11,280 --> 00:20:14,500
+And we&#39;ll do a regplot of price and sales.
+
+378
+00:20:14,500 --> 00:20:16,090
+So it takes two arguments, we&#39;ve given
+
+379
+00:20:16,090 --> 00:20:18,220
+it price and sales.
+
+380
+00:20:18,220 --> 00:20:21,920
+And you see the plot on the right, red plot silently went
+
+381
+00:20:21,920 --> 00:20:26,440
+off and did that and produced the plot and put in the line.
+
+382
+00:20:26,440 --> 00:20:29,760
+Well, let&#39;s make our function a little bit more useful.
+
+383
+00:20:29,760 --> 00:20:34,070
+And you can see I&#39;m defining with essentially the same
+
+384
+00:20:34,070 --> 00:20:40,860
+commands, but I&#39;ve added a dot dot dot in the argument.
+
+385
+00:20:40,860 --> 00:20:42,860
+And this is a very useful construct in R
+
+386
+00:20:42,860 --> 00:20:45,150
+when writing functions.
+
+387
+00:20:45,150 --> 00:20:48,220
+Dot dot dot means these are unnamed arguments.
+
+388
+00:20:48,220 --> 00:20:50,540
+But you&#39;re allowed to add extra arguments.
+
+389
+00:20:50,540 --> 00:20:54,170
+And they&#39;ll get passed on exactly as they supplied
+
+390
+00:20:54,170 --> 00:20:56,640
+wherever they are used inside the function.
+
+391
+00:20:56,640 --> 00:20:59,080
+And here I have passed them on to the plot function.
+
+392
+00:20:59,080 --> 00:21:01,890
+And what that does is it allows us to add extra
+
+393
+00:21:01,890 --> 00:21:06,190
+arguments to the plot function via our regplot.
+
+394
+00:21:06,190 --> 00:21:10,050
+And so now when we make the call, we call regplot price
+
+395
+00:21:10,050 --> 00:21:14,540
+and sales, and we give it x lab and y lab.
+
+396
+00:21:14,540 --> 00:21:18,260
+So that tells it how to annotate the labels, the axes
+
+397
+00:21:18,260 --> 00:21:19,230
+of the plot.
+
+398
+00:21:19,230 --> 00:21:22,950
+And we add some color and other information.
+
+399
+00:21:22,950 --> 00:21:26,160
+So regplot just called the axes x and y.
+
+400
+00:21:26,160 --> 00:21:28,925
+Meanwhile, our variables were price and sales.
+
+401
+00:21:31,770 --> 00:21:34,185
+Now, when we make the plot, you see the plot points were
+
+402
+00:21:34,185 --> 00:21:35,770
+colored in blue.
+
+403
+00:21:35,770 --> 00:21:41,600
+And the axes were labelled.
+
+404
+00:21:41,600 --> 00:21:44,990
+So that&#39;s a little introduction to some of the
+
+405
+00:21:44,990 --> 00:21:50,150
+linear model software in R. The scope is really large.
+
+406
+00:21:50,150 --> 00:21:52,470
+And there&#39;s many other things you can do.
+
+407
+00:21:52,470 --> 00:21:55,420
+But as always, with software, you&#39;ve got to start at the
+
+408
+00:21:55,420 --> 00:21:57,680
+beginning and get your hands dirty.
+
+409
+00:21:57,680 --> 00:21:59,720
+And so we&#39;ve done that a little bit here.
+
+410
+00:21:59,720 --> 00:22:03,730
+And I encourage you to play with this yourself and explore
+
+411
+00:22:03,730 --> 00:22:06,520
+the functions, use the help files, and see
+
+412
+00:22:06,520 --> 00:22:07,770
+how far you can get.
+
