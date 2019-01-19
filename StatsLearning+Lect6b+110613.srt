@@ -1,0 +1,748 @@
+0
+00:00:00,190 --> 00:00:01,700
+OK, logistic regression.
+
+1
+00:00:01,700 --> 00:00:04,990
+So now we&#39;re going to get a little bit more mathy.
+
+2
+00:00:04,990 --> 00:00:08,730
+Let&#39;s, for shorthand, write p of X for the probability that
+
+3
+00:00:08,730 --> 00:00:15,650
+y is 1 given X. And we&#39;re going to consider our simple
+
+4
+00:00:15,650 --> 00:00:20,690
+model for predicting default, yes or no, using balance--
+
+5
+00:00:20,690 --> 00:00:21,410
+one of the variables.
+
+6
+00:00:21,410 --> 00:00:23,660
+So single variable.
+
+7
+00:00:23,660 --> 00:00:28,060
+So here&#39;s the form of logistic regression.
+
+8
+00:00:28,060 --> 00:00:36,020
+So that e is the scientific constant, the exponential
+
+9
+00:00:36,020 --> 00:00:41,400
+value, and we raise e to the power of a linear model.
+
+10
+00:00:41,400 --> 00:00:44,940
+We&#39;ve got a beta 0, which is the intercept, and beta 1 is
+
+11
+00:00:44,940 --> 00:00:47,200
+the coefficient of x.
+
+12
+00:00:47,200 --> 00:00:50,410
+And you see that appears in the numerator and in the
+
+13
+00:00:50,410 --> 00:00:54,090
+denominator, but there&#39;s 1 plus in the denominator.
+
+14
+00:00:54,090 --> 00:01:00,920
+So it&#39;s a somewhat complicated expression, but you can see
+
+15
+00:01:00,920 --> 00:01:07,030
+straight away that the values have to lie between 0 and 1.
+
+16
+00:01:07,030 --> 00:01:11,630
+Because in the numerator, e to anything is positive.
+
+17
+00:01:11,630 --> 00:01:18,030
+And the denominator is bigger than the numerator, so it&#39;s
+
+18
+00:01:18,030 --> 00:01:20,620
+always got to be bigger than 0.
+
+19
+00:01:20,620 --> 00:01:23,310
+And you can show that&#39;s it&#39;s got to be less than 1.
+
+20
+00:01:23,310 --> 00:01:28,550
+When beta 0 plus beta x gets very large, this approaches 1.
+
+21
+00:01:28,550 --> 00:01:31,940
+So this is a special construct, a transformation of
+
+22
+00:01:31,940 --> 00:01:36,690
+a linear model to guarantee that what we get out is a
+
+23
+00:01:36,690 --> 00:01:39,290
+probability.
+
+24
+00:01:39,290 --> 00:01:42,860
+So that&#39;s called the logistic regression model.
+
+25
+00:01:42,860 --> 00:01:45,530
+And actually, the name &quot;logistic&quot; comes from the
+
+26
+00:01:45,530 --> 00:01:47,400
+transformation of this model.
+
+27
+00:01:47,400 --> 00:01:50,940
+So this is a monotone transformation.
+
+28
+00:01:50,940 --> 00:01:56,410
+We take log of p of X over 1 minus p of X and out pops our
+
+29
+00:01:56,410 --> 00:01:57,420
+linear model.
+
+30
+00:01:57,420 --> 00:02:00,600
+And that transformation is called the log odds or the
+
+31
+00:02:00,600 --> 00:02:04,830
+logit transformation of the probability.
+
+32
+00:02:04,830 --> 00:02:06,630
+And this is the model that we&#39;re going to
+
+33
+00:02:06,630 --> 00:02:08,130
+talk about right now.
+
+34
+00:02:08,130 --> 00:02:10,750
+To summarize, we got a linear model still.
+
+35
+00:02:10,750 --> 00:02:13,020
+But it&#39;s modeling the probabilities on
+
+36
+00:02:13,020 --> 00:02:15,260
+a non-linear scale.
+
+37
+00:02:15,260 --> 00:02:18,320
+And so back to our picture again.
+
+38
+00:02:18,320 --> 00:02:21,020
+The picture on the right was produced by a logistic
+
+39
+00:02:21,020 --> 00:02:23,930
+regression model and that&#39;s why the probabilities lie
+
+40
+00:02:23,930 --> 00:02:25,640
+between 0 and 1.
+
+41
+00:02:25,640 --> 00:02:29,060
+So we&#39;ve written down the model, how do we estimate the
+
+42
+00:02:29,060 --> 00:02:32,590
+model from data?
+
+43
+00:02:32,590 --> 00:02:36,330
+Well, the popular way is to use maximum likelihood.
+
+44
+00:02:36,330 --> 00:02:40,290
+Maximum likelihood was introduced by who, Rob?
+
+45
+00:02:40,290 --> 00:02:41,530
+Me, actually.
+
+46
+00:02:41,530 --> 00:02:42,530
+Oh, you?
+
+47
+00:02:42,530 --> 00:02:43,430
+Yes, just last week.
+
+48
+00:02:43,430 --> 00:02:44,550
+Did you reinvent it?
+
+49
+00:02:44,550 --> 00:02:45,720
+I didn&#39;t realize--
+
+50
+00:02:45,720 --> 00:02:46,840
+actually, yeah.
+
+51
+00:02:46,840 --> 00:02:49,660
+Because the correct answer is Fisher back in the 1920s,
+
+52
+00:02:49,660 --> 00:02:50,420
+Ronald Fisher.
+
+53
+00:02:50,420 --> 00:02:51,530
+Fisher.
+
+54
+00:02:51,530 --> 00:02:55,590
+Ronald Fisher, a very famous statistician, invented a lot
+
+55
+00:02:55,590 --> 00:02:59,000
+of the tools that we use in modern applied statistics, and
+
+56
+00:02:59,000 --> 00:03:02,410
+maximum likelihood is one of them.
+
+57
+00:03:02,410 --> 00:03:05,340
+Well, the way maximum likelihood works is you&#39;ve got
+
+58
+00:03:05,340 --> 00:03:09,750
+a data series of observed 0&#39;s and 1&#39;s and you&#39;ve got a model
+
+59
+00:03:09,750 --> 00:03:11,000
+for the probabilities.
+
+60
+00:03:11,000 --> 00:03:12,800
+And that model involves parameters.
+
+61
+00:03:12,800 --> 00:03:15,600
+In this case, beta 0 and beta.
+
+62
+00:03:15,600 --> 00:03:18,820
+So for any values of the parameters, we can write down
+
+63
+00:03:18,820 --> 00:03:21,660
+the probability of the observed data.
+
+64
+00:03:21,660 --> 00:03:24,290
+And since each observation is meant to be independent of
+
+65
+00:03:24,290 --> 00:03:27,610
+each other one, the probability of observed data
+
+66
+00:03:27,610 --> 00:03:30,770
+is the probability of the observed
+
+67
+00:03:30,770 --> 00:03:33,690
+string of 0&#39;s and 1&#39;s.
+
+68
+00:03:33,690 --> 00:03:37,170
+So wherever we observed a 1, we write down the probability
+
+69
+00:03:37,170 --> 00:03:39,140
+of a 1, which is p of x.
+
+70
+00:03:39,140 --> 00:03:44,350
+So if xi, i f observation i was a 1, the probability is p
+
+71
+00:03:44,350 --> 00:03:47,400
+of xi, and we write that down.
+
+72
+00:03:47,400 --> 00:03:49,800
+And since they&#39;re all independent, we just multiply
+
+73
+00:03:49,800 --> 00:03:51,200
+these probabilities.
+
+74
+00:03:51,200 --> 00:03:53,440
+And these are the probabilities of a 0, which is
+
+75
+00:03:53,440 --> 00:03:55,880
+1 minus the probability of a 1.
+
+76
+00:03:55,880 --> 00:03:58,880
+So this is the joint probability of the observed
+
+77
+00:03:58,880 --> 00:04:01,240
+sequence of 0&#39;s and 1&#39;s.
+
+78
+00:04:01,240 --> 00:04:03,670
+And of course, it involves the parameters.
+
+79
+00:04:03,670 --> 00:04:06,010
+And so the idea of maximum likelihood is pick the
+
+80
+00:04:06,010 --> 00:04:07,600
+parameters to make that
+
+81
+00:04:07,600 --> 00:04:09,590
+probability as large as possible.
+
+82
+00:04:09,590 --> 00:04:11,240
+Because after all, you did observe the
+
+83
+00:04:11,240 --> 00:04:13,820
+sequence of 0&#39;s and 1&#39;s.
+
+84
+00:04:13,820 --> 00:04:15,660
+And so that&#39;s the idea.
+
+85
+00:04:15,660 --> 00:04:19,769
+Simple to say, not always simple to execute.
+
+86
+00:04:19,769 --> 00:04:22,520
+But likely, we have programs that can do this.
+
+87
+00:04:22,520 --> 00:04:27,470
+And for example, in R, we&#39;ve got the glm function, which in
+
+88
+00:04:27,470 --> 00:04:30,180
+a snap of a finger will fit this model for you and
+
+89
+00:04:30,180 --> 00:04:32,130
+estimate the parameters.
+
+90
+00:04:32,130 --> 00:04:35,230
+And in this case, this is what it produced.
+
+91
+00:04:35,230 --> 00:04:38,890
+The coefficient estimates were minus 10 for the intercept and
+
+92
+00:04:38,890 --> 00:04:43,710
+0.0055 for the slope for balance.
+
+93
+00:04:43,710 --> 00:04:45,260
+That&#39;s beta and beta 0.
+
+94
+00:04:48,000 --> 00:04:49,580
+So there are the coefficient estimates.
+
+95
+00:04:49,580 --> 00:04:51,590
+It also gives you standard errors for each of the
+
+96
+00:04:51,590 --> 00:04:53,786
+coefficient estimates.
+
+97
+00:04:53,786 --> 00:04:58,420
+It computes a Z-statistic and it also gives you P-values.
+
+98
+00:04:58,420 --> 00:04:59,585
+I think I just realized something.
+
+99
+00:04:59,585 --> 00:05:03,020
+So you had a picture a couple slides ago of a curve?
+
+100
+00:05:03,020 --> 00:05:03,340
+Yes.
+
+101
+00:05:03,340 --> 00:05:04,400
+And is that how you found--
+
+102
+00:05:04,400 --> 00:05:07,080
+I was wondering how you found the parameters for that curve.
+
+103
+00:05:07,080 --> 00:05:07,400
+Is that how you found--
+
+104
+00:05:07,400 --> 00:05:09,370
+That&#39;s exactly right, Rob.
+
+105
+00:05:09,370 --> 00:05:14,480
+So this curve over here is the curve corresponding to those
+
+106
+00:05:14,480 --> 00:05:17,370
+estimates that we just produced in the table.
+
+107
+00:05:17,370 --> 00:05:20,010
+And you might be surprised because the slope is very
+
+108
+00:05:20,010 --> 00:05:22,510
+small here.
+
+109
+00:05:22,510 --> 00:05:25,840
+Yet, it seemed to produce such a big change in the
+
+110
+00:05:25,840 --> 00:05:27,260
+probabilities.
+
+111
+00:05:27,260 --> 00:05:28,490
+That may be a typo?
+
+112
+00:05:28,490 --> 00:05:30,560
+Or, is it?
+
+113
+00:05:30,560 --> 00:05:32,300
+I certainly hope not.
+
+114
+00:05:32,300 --> 00:05:34,100
+But let&#39;s look a bit closer.
+
+115
+00:05:34,100 --> 00:05:36,315
+Look at the units of balance.
+
+116
+00:05:36,315 --> 00:05:38,390
+They&#39;re in dollars.
+
+117
+00:05:38,390 --> 00:05:42,890
+So we got $2,000, $2,500.
+
+118
+00:05:42,890 --> 00:05:46,110
+And so the values of the coefficients, which are going
+
+119
+00:05:46,110 --> 00:05:50,050
+to multiply that balance variable, they sort of take
+
+120
+00:05:50,050 --> 00:05:53,120
+into account the units that are used.
+
+121
+00:05:53,120 --> 00:06:00,180
+So this is 0.005 per dollar, but it would be 5
+
+122
+00:06:00,180 --> 00:06:02,040
+per thousand dollars.
+
+123
+00:06:02,040 --> 00:06:05,860
+So slopes, you have to take the units into account.
+
+124
+00:06:05,860 --> 00:06:08,850
+And so the Z-statistic, which is a kind of standardized
+
+125
+00:06:08,850 --> 00:06:10,650
+slope, does that.
+
+126
+00:06:10,650 --> 00:06:15,340
+And then if we look at the P-value, we see that the
+
+127
+00:06:15,340 --> 00:06:18,080
+chance that actually this balance slope
+
+128
+00:06:18,080 --> 00:06:19,720
+is 0 is very small.
+
+129
+00:06:19,720 --> 00:06:21,350
+Less than 0.001.
+
+130
+00:06:21,350 --> 00:06:23,770
+So both intercept and slope strongly
+
+131
+00:06:23,770 --> 00:06:25,050
+significant in this case.
+
+132
+00:06:25,050 --> 00:06:26,840
+How do I interpret that P-value for the intercept?
+
+133
+00:06:26,840 --> 00:06:28,780
+Do I care about that?
+
+134
+00:06:28,780 --> 00:06:30,740
+We usually don&#39;t care so much about the
+
+135
+00:06:30,740 --> 00:06:33,120
+P-value for the intercept.
+
+136
+00:06:33,120 --> 00:06:38,650
+The intercept&#39;s largely to do with the preponderance of 0&#39;s
+
+137
+00:06:38,650 --> 00:06:40,820
+and 1&#39;s in the data set.
+
+138
+00:06:40,820 --> 00:06:45,950
+And so that&#39;s of less importance.
+
+139
+00:06:45,950 --> 00:06:47,600
+That&#39;s just inherent in the data set.
+
+140
+00:06:47,600 --> 00:06:49,680
+It&#39;s the slope that&#39;s really important.
+
+141
+00:06:49,680 --> 00:06:51,850
+What do we do with this model?
+
+142
+00:06:51,850 --> 00:06:54,500
+We can predict probabilities.
+
+143
+00:06:54,500 --> 00:06:56,930
+And so let&#39;s suppose we take a person with
+
+144
+00:06:56,930 --> 00:06:59,290
+a balance of $1,000.
+
+145
+00:06:59,290 --> 00:07:01,380
+Well, we can estimate their probability.
+
+146
+00:07:01,380 --> 00:07:06,220
+So we just plug in the $1,000 into this formula over here.
+
+147
+00:07:06,220 --> 00:07:10,570
+And notice I&#39;ve put hats on beta 0 and beta 1 to indicate
+
+148
+00:07:10,570 --> 00:07:13,410
+that they&#39;re now being estimated from the data.
+
+149
+00:07:13,410 --> 00:07:16,750
+Put a hat on the probability.
+
+150
+00:07:16,750 --> 00:07:19,900
+And yeah, we&#39;ve plugged in the numbers and we use our
+
+151
+00:07:19,900 --> 00:07:24,590
+calculator or computer and we get 0.006.
+
+152
+00:07:24,590 --> 00:07:29,520
+So somebody with a balance of $1,000 has a probability or
+
+153
+00:07:29,520 --> 00:07:31,710
+0.006 of defaulting.
+
+154
+00:07:31,710 --> 00:07:33,740
+In other words, pretty small.
+
+155
+00:07:33,740 --> 00:07:37,550
+What if they&#39;ve got a credit card balance of $2,000?
+
+156
+00:07:37,550 --> 00:07:41,310
+That means they owe $2,000 rather than $1,000.
+
+157
+00:07:41,310 --> 00:07:43,760
+Well, if we go through the same procedure, now the
+
+158
+00:07:43,760 --> 00:07:46,510
+probability has jumped up to 0.586.
+
+159
+00:07:46,510 --> 00:07:48,200
+So it&#39;s got much higher.
+
+160
+00:07:48,200 --> 00:07:50,940
+And you can imagine if we put in $3,000,
+
+161
+00:07:50,940 --> 00:07:53,150
+we&#39;d get even higher.
+
+162
+00:07:53,150 --> 00:07:56,000
+Let&#39;s do this again using some of the other variables.
+
+163
+00:07:56,000 --> 00:07:58,150
+We haven&#39;t seen student yet, but one of our
+
+164
+00:07:58,150 --> 00:07:59,740
+predictors is student.
+
+165
+00:07:59,740 --> 00:08:01,990
+And it&#39;s a binary variable in this case.
+
+166
+00:08:01,990 --> 00:08:03,230
+It&#39;s a yes or no variable.
+
+167
+00:08:03,230 --> 00:08:09,530
+Is the credit card owner a student or not?
+
+168
+00:08:09,530 --> 00:08:13,410
+And so we code that as a 0, 1 variable and we fit a simple
+
+169
+00:08:13,410 --> 00:08:15,200
+logistic regression model.
+
+170
+00:08:15,200 --> 00:08:20,580
+And it gets a coefficient of 0.4049.
+
+171
+00:08:20,580 --> 00:08:22,820
+And that&#39;s also significant.
+
+172
+00:08:22,820 --> 00:08:25,170
+OK, let&#39;s do it again using the variable
+
+173
+00:08:25,170 --> 00:08:26,410
+student as a predictor.
+
+174
+00:08:26,410 --> 00:08:28,610
+This is a binary variable.
+
+175
+00:08:28,610 --> 00:08:31,420
+Is the credit card holder a student or not?
+
+176
+00:08:31,420 --> 00:08:35,789
+And we find we get a coefficient of 0.4049 in this
+
+177
+00:08:35,789 --> 00:08:38,220
+case, which is also significant.
+
+178
+00:08:38,220 --> 00:08:40,840
+So this is another variable in our database.
+
+179
+00:08:40,840 --> 00:08:43,630
+And just like before, we can evaluate the probability of
+
+180
+00:08:43,630 --> 00:08:46,860
+default is yes.
+
+181
+00:08:46,860 --> 00:08:49,440
+Given that the card holder is a student, it
+
+182
+00:08:49,440 --> 00:08:52,280
+comes out to 0.04.
+
+183
+00:08:52,280 --> 00:08:54,230
+And if they&#39;re not a student, it comes out to be a bit
+
+184
+00:08:54,230 --> 00:08:59,330
+lower, 0.029, close to 0.03.
+
+185
+00:08:59,330 --> 00:09:03,350
+And we&#39;re going to examine the interactions between student
+
+186
+00:09:03,350 --> 00:09:06,470
+and balance and the other variables in a little while.
+

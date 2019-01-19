@@ -1,0 +1,852 @@
+0
+00:00:00,210 --> 00:00:01,640
+Welcome back.
+
+1
+00:00:01,640 --> 00:00:03,960
+So in the last section of the course, we talked about the
+
+2
+00:00:03,960 --> 00:00:06,790
+situation where the response was quantitative, a
+
+3
+00:00:06,790 --> 00:00:08,170
+regression.
+
+4
+00:00:08,170 --> 00:00:10,170
+In this section, we&#39;re going to talk about classification
+
+5
+00:00:10,170 --> 00:00:12,550
+where the response variable has got two or more values.
+
+6
+00:00:12,550 --> 00:00:15,170
+And this is actually a very commonly occurring problem--
+
+7
+00:00:15,170 --> 00:00:16,590
+actually, probably more commonly occurring than
+
+8
+00:00:16,590 --> 00:00:17,760
+regression.
+
+9
+00:00:17,760 --> 00:00:19,860
+In machine learning, especially, there&#39;s a big
+
+10
+00:00:19,860 --> 00:00:21,910
+concentration on classification where, for
+
+11
+00:00:21,910 --> 00:00:24,810
+example, we&#39;re trying to predict whether an email is a
+
+12
+00:00:24,810 --> 00:00:27,710
+good email or spam, or in a medical area, trying to
+
+13
+00:00:27,710 --> 00:00:30,600
+predict whether a patient is going to survivor or die with
+
+14
+00:00:30,600 --> 00:00:31,860
+a given disease.
+
+15
+00:00:31,860 --> 00:00:32,980
+So it&#39;s a very commonly occurring
+
+16
+00:00:32,980 --> 00:00:34,130
+problem, and very important.
+
+17
+00:00:34,130 --> 00:00:37,260
+So we&#39;re going to spend some time today on this, actually
+
+18
+00:00:37,260 --> 00:00:41,400
+in the next set of lectures, on classification.
+
+19
+00:00:41,400 --> 00:00:42,770
+And Trevor and I are both here.
+
+20
+00:00:42,770 --> 00:00:44,860
+Trevor&#39;s going to give most of the talk.
+
+21
+00:00:44,860 --> 00:00:47,120
+And I&#39;m going to pipe in and correct him when he makes
+
+22
+00:00:47,120 --> 00:00:49,720
+mistakes and make fun of his accent and things like that.
+
+23
+00:00:49,720 --> 00:00:52,150
+That means we won&#39;t hear much from you, no?
+
+24
+00:00:52,150 --> 00:00:52,790
+We&#39;ll see.
+
+25
+00:00:52,790 --> 00:00:56,500
+Anyway, let&#39;s go to the slides.
+
+26
+00:00:56,500 --> 00:00:59,480
+The first thing we do is just show you what categorical
+
+27
+00:00:59,480 --> 00:01:00,370
+variables look like.
+
+28
+00:01:00,370 --> 00:01:03,300
+I&#39;m sure you know-- so for example, eye color.
+
+29
+00:01:03,300 --> 00:01:06,930
+That takes on three values-- brown, blue, and green.
+
+30
+00:01:06,930 --> 00:01:08,780
+Those are discrete values.
+
+31
+00:01:08,780 --> 00:01:09,580
+There&#39;s no ordering.
+
+32
+00:01:09,580 --> 00:01:12,310
+They&#39;re just three different values.
+
+33
+00:01:12,310 --> 00:01:13,780
+Email we&#39;ve talked about already.
+
+34
+00:01:13,780 --> 00:01:14,936
+There&#39;s spam and ham.
+
+35
+00:01:14,936 --> 00:01:16,800
+I like that word, ham.
+
+36
+00:01:16,800 --> 00:01:18,586
+I like ham myself.
+
+37
+00:01:18,586 --> 00:01:20,360
+I wish I had thought of it.
+
+38
+00:01:20,360 --> 00:01:21,740
+Anyway, ham is good email.
+
+39
+00:01:21,740 --> 00:01:29,010
+So spam filters need to classify into spam or ham.
+
+40
+00:01:29,010 --> 00:01:31,210
+So what is a classifier?
+
+41
+00:01:31,210 --> 00:01:35,390
+Well, you&#39;ve got a feature vector X, just like we had in
+
+42
+00:01:35,390 --> 00:01:36,040
+regression.
+
+43
+00:01:36,040 --> 00:01:39,030
+And now, you have one of these qualitative response variables
+
+44
+00:01:39,030 --> 00:01:41,310
+like those above.
+
+45
+00:01:41,310 --> 00:01:46,130
+And here&#39;s the mathy description of a classifier.
+
+46
+00:01:46,130 --> 00:01:50,520
+The response takes values in a set C, which is a set of
+
+47
+00:01:50,520 --> 00:01:51,800
+discrete values.
+
+48
+00:01:51,800 --> 00:01:55,140
+And the classification task is to build a function that takes
+
+49
+00:01:55,140 --> 00:01:59,880
+X as input and delivers one of the elements of the set C. And
+
+50
+00:01:59,880 --> 00:02:04,370
+so this is how we write it in math language--
+
+51
+00:02:04,370 --> 00:02:08,330
+C of X gives you values in the set C.
+
+52
+00:02:08,330 --> 00:02:11,630
+So for example, in the spam/ham problem, C of X would
+
+53
+00:02:11,630 --> 00:02:15,960
+either come back as spam or ham.
+
+54
+00:02:15,960 --> 00:02:20,530
+Now, although classification problems are always couched in
+
+55
+00:02:20,530 --> 00:02:23,650
+this form, we&#39;re often more interested in estimating the
+
+56
+00:02:23,650 --> 00:02:30,380
+probabilities that X belongs to each category C. So for
+
+57
+00:02:30,380 --> 00:02:34,840
+example, it&#39;s more valuable for an insurance company to
+
+58
+00:02:34,840 --> 00:02:38,020
+have an estimate of the probability that an insurance
+
+59
+00:02:38,020 --> 00:02:40,580
+claim is fraudulent than a classification
+
+60
+00:02:40,580 --> 00:02:42,460
+fraudulent or not.
+
+61
+00:02:42,460 --> 00:02:46,180
+You can imagine, in the one situation, you might have a
+
+62
+00:02:46,180 --> 00:02:54,770
+probability of 0.9 the claim is fraudulent.
+
+63
+00:02:54,770 --> 00:02:59,740
+And in another case, it might be 0.98.
+
+64
+00:02:59,740 --> 00:03:03,990
+Now in both cases, those might both be above the threshold of
+
+65
+00:03:03,990 --> 00:03:07,790
+raising the flag that this is a fraudulent insurance claim.
+
+66
+00:03:07,790 --> 00:03:09,620
+But if you&#39;re going to look into the claim, and you&#39;re
+
+67
+00:03:09,620 --> 00:03:12,820
+going to spend some hours investigating, you&#39;ll probably
+
+68
+00:03:12,820 --> 00:03:16,150
+go for the 0.98 first before the 0.9.
+
+69
+00:03:16,150 --> 00:03:18,960
+So estimating the probabilities is also key.
+
+70
+00:03:18,960 --> 00:03:22,560
+OK, so here&#39;s some data.
+
+71
+00:03:22,560 --> 00:03:23,830
+Two variables--
+
+72
+00:03:23,830 --> 00:03:26,630
+this is the credit card default data set that we&#39;re
+
+73
+00:03:26,630 --> 00:03:28,830
+going to use in this section.
+
+74
+00:03:28,830 --> 00:03:34,300
+And the part on the left here is a scatter plot of balance
+
+75
+00:03:34,300 --> 00:03:35,460
+against income.
+
+76
+00:03:35,460 --> 00:03:37,560
+So those are two of the variables.
+
+77
+00:03:37,560 --> 00:03:40,020
+And as we can with classification problems, we
+
+78
+00:03:40,020 --> 00:03:43,630
+can code the response variable into the plot as a color.
+
+79
+00:03:43,630 --> 00:03:48,046
+And so here, we have the blue points and the brown points.
+
+80
+00:03:48,046 --> 00:03:51,570
+And the brown points are going to be those that defaulted.
+
+81
+00:03:51,570 --> 00:03:53,720
+And the blue points are those that did not.
+
+82
+00:03:53,720 --> 00:03:55,995
+Now, this is a fictitious data set.
+
+83
+00:03:55,995 --> 00:03:59,270
+Typically, you don&#39;t expect to see that many defaulters.
+
+84
+00:03:59,270 --> 00:04:04,230
+But we&#39;ll talk about balance in classification tasks a
+
+85
+00:04:04,230 --> 00:04:06,970
+little bit later as well.
+
+86
+00:04:06,970 --> 00:04:09,050
+So in this plot, it looks like balance is
+
+87
+00:04:09,050 --> 00:04:10,620
+the important variable.
+
+88
+00:04:10,620 --> 00:04:16,339
+Notice that there&#39;s a big separation between the blues
+
+89
+00:04:16,339 --> 00:04:20,560
+and the browns, the defaulters and those that didn&#39;t, OK?
+
+90
+00:04:20,560 --> 00:04:22,300
+Whereas with income, there doesn&#39;t seem to be much
+
+91
+00:04:22,300 --> 00:04:25,410
+separation at all, OK?
+
+92
+00:04:25,410 --> 00:04:27,460
+In the right, we actually show box plots
+
+93
+00:04:27,460 --> 00:04:29,660
+of these two variables.
+
+94
+00:04:29,660 --> 00:04:33,620
+And so we see, for example, for default, there&#39;s--
+
+95
+00:04:37,590 --> 00:04:38,590
+oh, I beg your pardon.
+
+96
+00:04:38,590 --> 00:04:41,810
+Default is at the bottom-- no or yes, no, yes in both cases.
+
+97
+00:04:41,810 --> 00:04:45,960
+We&#39;ve got balance, and we&#39;ve got income.
+
+98
+00:04:45,960 --> 00:04:49,310
+And here, we also clearly see that there&#39;s a big difference
+
+99
+00:04:49,310 --> 00:04:50,800
+in the distributions--
+
+100
+00:04:50,800 --> 00:04:58,010
+balance default or not, whereas for income, there
+
+101
+00:04:58,010 --> 00:04:59,210
+hardly seems to be any difference.
+
+102
+00:04:59,210 --> 00:05:00,810
+I&#39;ve never seen a box plot before.
+
+103
+00:05:00,810 --> 00:05:03,068
+What is that?
+
+104
+00:05:03,068 --> 00:05:04,970
+Oh, you tell me, Rob.
+
+105
+00:05:04,970 --> 00:05:08,380
+OK, well, a box plot, what&#39;s indicated there--
+
+106
+00:05:08,380 --> 00:05:09,730
+Trevor, you can point--
+
+107
+00:05:09,730 --> 00:05:11,430
+the black line is the median.
+
+108
+00:05:11,430 --> 00:05:13,040
+There&#39;s a black line.
+
+109
+00:05:13,040 --> 00:05:13,840
+That&#39;s a median.
+
+110
+00:05:13,840 --> 00:05:19,680
+So that&#39;s the median for the S, the median income for
+
+111
+00:05:19,680 --> 00:05:21,240
+people who have defaulted.
+
+112
+00:05:21,240 --> 00:05:24,090
+And then, the top of the box are the quartiles.
+
+113
+00:05:24,090 --> 00:05:28,620
+That&#39;s the 75th quartile, 75th percentile, quartile.
+
+114
+00:05:28,620 --> 00:05:32,060
+And the 25th is the bottom of the box.
+
+115
+00:05:32,060 --> 00:05:36,480
+So really, it&#39;s a good summary of the distribution of income
+
+116
+00:05:36,480 --> 00:05:37,970
+for those in category yes.
+
+117
+00:05:37,970 --> 00:05:40,545
+What about these things at the end, Rob?
+
+118
+00:05:40,545 --> 00:05:41,860
+OK, I think they&#39;re called hinges.
+
+119
+00:05:41,860 --> 00:05:42,900
+They are called hinges.
+
+120
+00:05:42,900 --> 00:05:46,160
+And those are the ranges, are they, or approximately the
+
+121
+00:05:46,160 --> 00:05:47,345
+ranges of the data?
+
+122
+00:05:47,345 --> 00:05:52,690
+Yeah, I think a hinge is defined to be a fraction of
+
+123
+00:05:52,690 --> 00:05:54,730
+the interquartile range.
+
+124
+00:05:54,730 --> 00:05:57,650
+And so it gives you an idea of the spread of the data.
+
+125
+00:05:57,650 --> 00:06:00,760
+And if data points fall outside the hinges, they&#39;re
+
+126
+00:06:00,760 --> 00:06:02,650
+considered to be outliers.
+
+127
+00:06:02,650 --> 00:06:04,250
+By the way, it&#39;s a very useful data display.
+
+128
+00:06:04,250 --> 00:06:06,130
+Almost one of the first things you should do when you get
+
+129
+00:06:06,130 --> 00:06:09,410
+some data to analyze is do some scatter plots and create
+
+130
+00:06:09,410 --> 00:06:10,140
+some box plots.
+
+131
+00:06:10,140 --> 00:06:12,100
+Who invented the box plot, Rob?
+
+132
+00:06:12,100 --> 00:06:12,380
+John Tukey.
+
+133
+00:06:12,380 --> 00:06:15,640
+John Tukey, one of the most famous statisticians--
+
+134
+00:06:15,640 --> 00:06:18,670
+he&#39;s no longer with us, but he&#39;s left a big legacy behind.
+
+135
+00:06:21,390 --> 00:06:26,410
+OK, well, one question we can ask is, can we use linear
+
+136
+00:06:26,410 --> 00:06:29,590
+regression to solve classification problems?
+
+137
+00:06:29,590 --> 00:06:31,790
+It seems like we may be able to.
+
+138
+00:06:31,790 --> 00:06:35,330
+So supposed for the default classification task that we
+
+139
+00:06:35,330 --> 00:06:38,610
+code the response 0 if no default, 1 if
+
+140
+00:06:38,610 --> 00:06:40,480
+yes default, right?
+
+141
+00:06:40,480 --> 00:06:44,220
+It&#39;s somewhat arbitrary, but 0 and 1 seem sufficient.
+
+142
+00:06:44,220 --> 00:06:46,850
+And then, we could simply perform a linear regression of
+
+143
+00:06:46,850 --> 00:06:51,270
+Y on X with X being the two predictors in this case, and
+
+144
+00:06:51,270 --> 00:06:58,260
+classify as yes if Y hat is bigger than 0.5, 50%, right?
+
+145
+00:06:58,260 --> 00:07:00,910
+0.5 is halfway between 0 and 1.
+
+146
+00:07:00,910 --> 00:07:04,708
+It seems like a reasonable idea.
+
+147
+00:07:04,708 --> 00:07:07,190
+It turns out that you actually can do this.
+
+148
+00:07:07,190 --> 00:07:09,910
+For a binary outcome, linear regression does a pretty good
+
+149
+00:07:09,910 --> 00:07:14,650
+job and is equivalent to linear discriminant analysis.
+
+150
+00:07:14,650 --> 00:07:16,740
+And that&#39;s something we&#39;re going to discuss later.
+
+151
+00:07:16,740 --> 00:07:19,500
+So for a two class classification problem like
+
+152
+00:07:19,500 --> 00:07:21,820
+this, it doesn&#39;t do a bad job at all.
+
+153
+00:07:21,820 --> 00:07:25,950
+And there&#39;s even some theoretical justification.
+
+154
+00:07:25,950 --> 00:07:29,650
+In the population, remember, in the population, we think of
+
+155
+00:07:29,650 --> 00:07:34,560
+regression as estimating the conditional mean of Y given X.
+
+156
+00:07:34,560 --> 00:07:39,310
+Well, in our coding here of 0 and 1, the conditional mean of
+
+157
+00:07:39,310 --> 00:07:43,055
+the 0, 1 variable given X is simply the probability that Y
+
+158
+00:07:43,055 --> 00:07:46,310
+is 1 given X just by simple probability theory.
+
+159
+00:07:46,310 --> 00:07:49,110
+So for that reason, you might think that regression is
+
+160
+00:07:49,110 --> 00:07:52,620
+perfect for this task.
+
+161
+00:07:52,620 --> 00:07:54,660
+What we&#39;re going to see, however, is that linear
+
+162
+00:07:54,660 --> 00:07:57,590
+regression might actually produce probabilities that
+
+163
+00:07:57,590 --> 00:08:01,150
+could be less than 0, or even bigger than 1.
+
+164
+00:08:01,150 --> 00:08:03,900
+And for this reason, we&#39;re going to introduce you to
+
+165
+00:08:03,900 --> 00:08:06,670
+logistic regression, which is more appropriate.
+
+166
+00:08:06,670 --> 00:08:09,025
+And here&#39;s a little picture that illustrates it.
+
+167
+00:08:09,025 --> 00:08:12,540
+Here, we&#39;ve got out balance variable.
+
+168
+00:08:12,540 --> 00:08:14,380
+Now, we&#39;ve plotted against balance.
+
+169
+00:08:14,380 --> 00:08:17,240
+We&#39;ve plotted the 0&#39;s at the bottom as little dashes here,
+
+170
+00:08:17,240 --> 00:08:18,170
+the browns.
+
+171
+00:08:18,170 --> 00:08:22,730
+And the little brown spikes are all clumped together at
+
+172
+00:08:22,730 --> 00:08:23,600
+the bottom.
+
+173
+00:08:23,600 --> 00:08:25,810
+And the 1&#39;s are plotted at the top here.
+
+174
+00:08:25,810 --> 00:08:27,460
+And we see the separation.
+
+175
+00:08:27,460 --> 00:08:32,190
+The brown 0&#39;s are towards the left of balance.
+
+176
+00:08:32,190 --> 00:08:35,159
+And the 1&#39;s are towards the right.
+
+177
+00:08:35,159 --> 00:08:37,740
+And the blue line is a linear regression line.
+
+178
+00:08:37,740 --> 00:08:41,380
+And lo and behold, it goes below 0.
+
+179
+00:08:41,380 --> 00:08:47,230
+So that&#39;s not a very good estimate of a probability.
+
+180
+00:08:47,230 --> 00:08:50,040
+It also seems not to go high enough on the right-hand side
+
+181
+00:08:50,040 --> 00:08:54,170
+where it seems clear that there&#39;s a preponderance of
+
+182
+00:08:54,170 --> 00:08:57,080
+yeses on the right-hand side.
+
+183
+00:08:57,080 --> 00:08:59,240
+In the right-hand plot, we&#39;ve got the foot of logistic
+
+184
+00:08:59,240 --> 00:09:00,280
+regression.
+
+185
+00:09:00,280 --> 00:09:03,460
+And it seems to do a pretty good job in this case.
+
+186
+00:09:03,460 --> 00:09:07,030
+It never gets outside of 0 and 1, and it seems to go up high
+
+187
+00:09:07,030 --> 00:09:09,350
+where it&#39;s meant to go up high.
+
+188
+00:09:09,350 --> 00:09:12,530
+So it seems things aren&#39;t looking terrific for linear
+
+189
+00:09:12,530 --> 00:09:15,890
+regression in terms of estimating probabilities.
+
+190
+00:09:15,890 --> 00:09:17,640
+So now, what happens if we have a
+
+191
+00:09:17,640 --> 00:09:19,050
+three category variable?
+
+192
+00:09:19,050 --> 00:09:23,360
+So here&#39;s a variable that measures the patient&#39;s
+
+193
+00:09:23,360 --> 00:09:27,300
+condition at an emergency room and takes on three levels.
+
+194
+00:09:27,300 --> 00:09:31,000
+So it&#39;s 1 if it&#39;s a stroke, 2 if it&#39;s a drug overdose, and 3
+
+195
+00:09:31,000 --> 00:09:34,170
+if it&#39;s an epileptic seizure.
+
+196
+00:09:34,170 --> 00:09:40,100
+So if we code those as, say, 1, 2, and 3, which would be an
+
+197
+00:09:40,100 --> 00:09:43,540
+arbitrary but natural choice, this coding might suggest an
+
+198
+00:09:43,540 --> 00:09:46,840
+ordering when in fact there&#39;s not necessarily an ordering
+
+199
+00:09:46,840 --> 00:09:48,260
+here at all.
+
+200
+00:09:48,260 --> 00:09:50,440
+And it might in fact imply that the difference between
+
+201
+00:09:50,440 --> 00:09:54,720
+stroke and drug overdose, which is one unit, is the same
+
+202
+00:09:54,720 --> 00:09:56,420
+as the difference between drug overdose
+
+203
+00:09:56,420 --> 00:09:59,040
+and epileptic seizure.
+
+204
+00:09:59,040 --> 00:10:03,120
+So when you have more than two categories, assigning numbers
+
+205
+00:10:03,120 --> 00:10:06,200
+to the categories just arbitrarily seems a little
+
+206
+00:10:06,200 --> 00:10:08,360
+dangerous, and especially if you&#39;re going to use it in
+
+207
+00:10:08,360 --> 00:10:10,960
+linear regression.
+
+208
+00:10:10,960 --> 00:10:12,780
+And it turns out linear regression is
+
+209
+00:10:12,780 --> 00:10:14,610
+not appropriate here.
+
+210
+00:10:14,610 --> 00:10:19,780
+And for problems like this, we&#39;re going to prefer
+
+211
+00:10:19,780 --> 00:10:23,190
+multiclass logistic regression or discriminant analysis.
+
+212
+00:10:23,190 --> 00:10:24,440
+And both of those we will discuss.
+
