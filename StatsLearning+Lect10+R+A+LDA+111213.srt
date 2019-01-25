@@ -1,0 +1,620 @@
+0
+00:00:00,770 --> 00:00:02,460
+OK, well, welcome back.
+
+1
+00:00:02,460 --> 00:00:04,780
+We&#39;re going to have a conversation now.
+
+2
+00:00:04,780 --> 00:00:08,850
+And once again, we&#39;ll use RStudio, which is a very
+
+3
+00:00:08,850 --> 00:00:12,140
+convenient platform for running R, and for
+
+4
+00:00:12,140 --> 00:00:17,500
+demonstrating R. So we&#39;ll go to our screen now, and we&#39;ll
+
+5
+00:00:17,500 --> 00:00:21,170
+do an RStudio session on linear discriminant analysis
+
+6
+00:00:21,170 --> 00:00:24,470
+first of all, and then followed by nearest neighbor
+
+7
+00:00:24,470 --> 00:00:26,810
+classification.
+
+8
+00:00:26,810 --> 00:00:33,770
+So here we are right now, RStudio session window.
+
+9
+00:00:33,770 --> 00:00:36,910
+And the first thing we do is we require ISLR.
+
+10
+00:00:36,910 --> 00:00:40,500
+That&#39;s our package with some of our data sets.
+
+11
+00:00:40,500 --> 00:00:42,930
+So I&#39;ll hit the Control button and return,
+
+12
+00:00:42,930 --> 00:00:44,600
+and it loads a package.
+
+13
+00:00:44,600 --> 00:00:50,130
+And then we require the math package, which is available in
+
+14
+00:00:50,130 --> 00:00:54,080
+Ripley&#39;s package of useful functions, including the
+
+15
+00:00:54,080 --> 00:00:57,560
+function for doing linear discriminant analysis.
+
+16
+00:00:57,560 --> 00:00:59,670
+You&#39;ll see in the right-hand panel, I&#39;ve got a help file
+
+17
+00:00:59,670 --> 00:01:02,000
+for linear discriminant analysis.
+
+18
+00:01:02,000 --> 00:01:05,550
+So as always in R, if you don&#39;t know or if you&#39;re not
+
+19
+00:01:05,550 --> 00:01:08,500
+too familiar with the new procedure, you do Help, and
+
+20
+00:01:08,500 --> 00:01:10,910
+make sure you understand the syntax and all the
+
+21
+00:01:10,910 --> 00:01:13,010
+options, and so on.
+
+22
+00:01:13,010 --> 00:01:17,000
+So the first thing we do, we&#39;re going to use the stock
+
+23
+00:01:17,000 --> 00:01:21,520
+market data here, and the response is going to be the
+
+24
+00:01:21,520 --> 00:01:26,270
+direction that the market took on a particular day.
+
+25
+00:01:26,270 --> 00:01:29,770
+And we&#39;re going to use the returns on the previous two
+
+26
+00:01:29,770 --> 00:01:32,630
+days to try and predict the direction on
+
+27
+00:01:32,630 --> 00:01:34,500
+this particular day.
+
+28
+00:01:34,500 --> 00:01:38,630
+OK, and so there, we use a command, [? LDA.fct. ?]
+
+29
+00:01:38,630 --> 00:01:42,315
+And it takes a formula, so the response is direction.
+
+30
+00:01:42,315 --> 00:01:43,745
+There are the two predictors.
+
+31
+00:01:43,745 --> 00:01:46,830
+It&#39;s telling you the data comes from s
+
+32
+00:01:46,830 --> 00:01:48,730
+market, stock market.
+
+33
+00:01:48,730 --> 00:01:53,600
+And we&#39;re going to use the subset, which is years less
+
+34
+00:01:53,600 --> 00:01:57,390
+than 2005, because later on, we&#39;re going to make
+
+35
+00:01:57,390 --> 00:01:59,990
+predictions for year 2005.
+
+36
+00:01:59,990 --> 00:02:03,360
+So you can put that directly in the formula, subset equals
+
+37
+00:02:03,360 --> 00:02:06,000
+year less than 2005.
+
+38
+00:02:06,000 --> 00:02:08,889
+And this variable, year, of course is referenced in s
+
+39
+00:02:08,889 --> 00:02:11,590
+market, as well as these variables over here.
+
+40
+00:02:11,590 --> 00:02:14,410
+OK, so off we go, and we fit it.
+
+41
+00:02:14,410 --> 00:02:18,600
+And it fits it so very quickly, and we print it by
+
+42
+00:02:18,600 --> 00:02:20,280
+just typing its name.
+
+43
+00:02:20,280 --> 00:02:23,520
+And there&#39;s a little summary printed below here.
+
+44
+00:02:23,520 --> 00:02:26,990
+And you see, typically you get the formula that was used to
+
+45
+00:02:26,990 --> 00:02:29,870
+create it, and then it gives a summary of the linear
+
+46
+00:02:29,870 --> 00:02:31,560
+discriminant analysis.
+
+47
+00:02:31,560 --> 00:02:34,930
+So the prior probabilities are just the proportions of ups
+
+48
+00:02:34,930 --> 00:02:36,120
+and downs in the data set.
+
+49
+00:02:36,120 --> 00:02:39,780
+It&#39;s roughly 50%, which says something
+
+50
+00:02:39,780 --> 00:02:41,730
+about the market, right?
+
+51
+00:02:41,730 --> 00:02:44,280
+It&#39;s kind of a random walk.
+
+52
+00:02:44,280 --> 00:02:48,360
+Half the time it goes up, half the time it goes down.
+
+53
+00:02:48,360 --> 00:02:52,140
+It summarizes the group means for the two groups, for the
+
+54
+00:02:52,140 --> 00:02:53,595
+downs and the ups.
+
+55
+00:02:53,595 --> 00:02:57,700
+It looks like there may be a slight difference
+
+56
+00:02:57,700 --> 00:02:58,820
+in these two groups.
+
+57
+00:02:58,820 --> 00:03:02,840
+The means seem to be separated a little bit.
+
+58
+00:03:02,840 --> 00:03:05,270
+And then it gives the LDA coefficients.
+
+59
+00:03:05,270 --> 00:03:08,260
+So if you remember the LDA function fits a linear
+
+60
+00:03:08,260 --> 00:03:10,950
+function for separating the two groups.
+
+61
+00:03:10,950 --> 00:03:14,150
+And so, it&#39;s got two coefficients.
+
+62
+00:03:14,150 --> 00:03:18,420
+OK, well there&#39;s some methods that work for the LDA.
+
+63
+00:03:18,420 --> 00:03:20,690
+For example, you can plot a [? LDA.fct ?],
+
+64
+00:03:20,690 --> 00:03:21,990
+which we&#39;ll do here.
+
+65
+00:03:21,990 --> 00:03:24,790
+And it gives a very convenient plot.
+
+66
+00:03:24,790 --> 00:03:28,920
+It plots a linear discriminant function separately, the
+
+67
+00:03:28,920 --> 00:03:31,150
+values of the linear discriminant function,
+
+68
+00:03:31,150 --> 00:03:35,280
+separately for the up group and the down group.
+
+69
+00:03:35,280 --> 00:03:38,250
+And when we look at this, it looks to the eye like there&#39;s
+
+70
+00:03:38,250 --> 00:03:39,370
+really not much difference.
+
+71
+00:03:39,370 --> 00:03:41,740
+Those two histograms look pretty much on top of each
+
+72
+00:03:41,740 --> 00:03:46,030
+other, which of course, is not a big surprise, because if we
+
+73
+00:03:46,030 --> 00:03:48,990
+could very easily like this predict the movement of the
+
+74
+00:03:48,990 --> 00:03:51,650
+stock market, we&#39;d be making lots of money, and we wouldn&#39;t
+
+75
+00:03:51,650 --> 00:03:55,370
+be sitting here giving R demonstrations.
+
+76
+00:03:55,370 --> 00:03:59,460
+So now we&#39;re going to see how well our rule predicts on the
+
+77
+00:03:59,460 --> 00:04:02,250
+year 2005, OK?
+
+78
+00:04:02,250 --> 00:04:06,360
+So now, I&#39;m doing this in a slightly different way to what
+
+79
+00:04:06,360 --> 00:04:10,430
+was described in the book.
+
+80
+00:04:10,430 --> 00:04:14,220
+We first will make a subset of the data frame, s market, and
+
+81
+00:04:14,220 --> 00:04:17,880
+we&#39;ll call it s market dot 2005.
+
+82
+00:04:17,880 --> 00:04:20,200
+And we use a command in R-- a useful command--
+
+83
+00:04:20,200 --> 00:04:21,829
+called subset.
+
+84
+00:04:21,829 --> 00:04:24,670
+And so the first argument is the data frame that you&#39;re
+
+85
+00:04:24,670 --> 00:04:27,000
+going to subset, which is s market.
+
+86
+00:04:27,000 --> 00:04:31,360
+And then following that are some logical expressions that
+
+87
+00:04:31,360 --> 00:04:34,710
+can use variables in that data frame to define the subset.
+
+88
+00:04:34,710 --> 00:04:39,500
+And so, here it is year equals equals 2005, OK?
+
+89
+00:04:39,500 --> 00:04:44,260
+And that will create a data frame with just the 2005
+
+90
+00:04:44,260 --> 00:04:46,790
+observations.
+
+91
+00:04:46,790 --> 00:04:51,740
+And so now we can use that as the test data, or the place
+
+92
+00:04:51,740 --> 00:04:53,750
+where we want to make our predictions.
+
+93
+00:04:53,750 --> 00:05:02,000
+So we&#39;d call the predict method for an LDA fit, and we
+
+94
+00:05:02,000 --> 00:05:05,790
+give it our fit, and we give it this new data frame, s
+
+95
+00:05:05,790 --> 00:05:08,120
+market dot 2005.
+
+96
+00:05:08,120 --> 00:05:10,930
+And it&#39;ll produce some predictions for us.
+
+97
+00:05:10,930 --> 00:05:14,920
+And let&#39;s just print the first five of these, and oops-- it
+
+98
+00:05:14,920 --> 00:05:15,940
+didn&#39;t like that.
+
+99
+00:05:15,940 --> 00:05:22,380
+So I was assuming it was in a matrix format, and it&#39;s not.
+
+100
+00:05:22,380 --> 00:05:23,830
+So what format is it?
+
+101
+00:05:23,830 --> 00:05:27,420
+So we don&#39;t throw up our hands and run away when we get an
+
+102
+00:05:27,420 --> 00:05:29,380
+error, we just investigate.
+
+103
+00:05:29,380 --> 00:05:32,450
+So let&#39;s look at the class of [? LDA.prd. ?]
+
+104
+00:05:32,450 --> 00:05:35,620
+Well, it&#39;s a list.
+
+105
+00:05:35,620 --> 00:05:38,240
+Now I happen to know what kind of list it is.
+
+106
+00:05:38,240 --> 00:05:42,180
+And when you have a list of variables, and each of the
+
+107
+00:05:42,180 --> 00:05:46,270
+variables have the same number of observations, a convenient
+
+108
+00:05:46,270 --> 00:05:49,330
+way of looking at such a list is through data frame.
+
+109
+00:05:49,330 --> 00:05:53,590
+And so we can do data frame of [? LDA.prd, ?]
+
+110
+00:05:53,590 --> 00:05:56,670
+and then look at the first five rows.
+
+111
+00:05:56,670 --> 00:05:58,910
+And this is what we get.
+
+112
+00:05:58,910 --> 00:06:01,780
+And you&#39;ll see what this gives us.
+
+113
+00:06:01,780 --> 00:06:06,900
+It gives a row name, it gives the classification--
+
+114
+00:06:06,900 --> 00:06:09,280
+the first five are all up.
+
+115
+00:06:09,280 --> 00:06:13,710
+And one of the components of the list was a matrix of
+
+116
+00:06:13,710 --> 00:06:15,750
+posterior probabilities, which actually have
+
+117
+00:06:15,750 --> 00:06:16,740
+a two-column matrix.
+
+118
+00:06:16,740 --> 00:06:23,020
+But data frame is smart enough to understand that these can
+
+119
+00:06:23,020 --> 00:06:24,360
+fit into the data frame.
+
+120
+00:06:24,360 --> 00:06:28,720
+And so it makes two columns, one for up and one for down--
+
+121
+00:06:28,720 --> 00:06:30,500
+the posterior probabilities.
+
+122
+00:06:30,500 --> 00:06:35,400
+And then there&#39;s the actual values of the LDA score, OK?
+
+123
+00:06:35,400 --> 00:06:41,970
+And so now, now we realize that the output of print has
+
+124
+00:06:41,970 --> 00:06:43,610
+these different components.
+
+125
+00:06:43,610 --> 00:06:45,320
+The thing we&#39;re really interested in here is the
+
+126
+00:06:45,320 --> 00:06:47,650
+classification, so that&#39;s class.
+
+127
+00:06:47,650 --> 00:06:51,840
+So we&#39;re going to do a table of [? LDAprd$class. ?]
+
+128
+00:06:51,840 --> 00:06:54,660
+That&#39;s a true class label for the 2005--
+
+129
+00:06:54,660 --> 00:06:55,910
+versus the prediction--
+
+130
+00:06:58,240 --> 00:07:00,660
+sorry, that is the prediction--
+
+131
+00:07:00,660 --> 00:07:02,230
+versus the true value, right?
+
+132
+00:07:02,230 --> 00:07:04,520
+So this is the predicted class, and this is the true
+
+133
+00:07:04,520 --> 00:07:07,010
+value over here in the data frame.
+
+134
+00:07:07,010 --> 00:07:11,520
+We&#39;ll do a table of that, and we get the little confusion
+
+135
+00:07:11,520 --> 00:07:15,120
+matrix, which tells us which downs were classified as down,
+
+136
+00:07:15,120 --> 00:07:18,430
+which downs are classified as up, and so on.
+
+137
+00:07:18,430 --> 00:07:21,520
+And it&#39;s the off-diagonal elements of those that are the
+
+138
+00:07:21,520 --> 00:07:26,010
+mistakes, and the diagonal elements which are the correct
+
+139
+00:07:26,010 --> 00:07:27,570
+classifications.
+
+140
+00:07:27,570 --> 00:07:31,480
+And so, one simple command tells us our current
+
+141
+00:07:31,480 --> 00:07:35,540
+classification rate, which is we&#39;ve got a conditional here,
+
+142
+00:07:35,540 --> 00:07:39,900
+which is the predicted class is equal to the true class.
+
+143
+00:07:39,900 --> 00:07:43,440
+So that&#39;ll be true if they&#39;re equal, and it&#39;ll be false if
+
+144
+00:07:43,440 --> 00:07:44,540
+they&#39;re not.
+
+145
+00:07:44,540 --> 00:07:49,770
+And since trues and falses can be coerces to be zeros and
+
+146
+00:07:49,770 --> 00:07:52,440
+ones, we can just take the mean of that, and it&#39;ll give
+
+147
+00:07:52,440 --> 00:07:57,195
+us our current classification rate, which in this case is
+
+148
+00:07:57,195 --> 00:07:59,290
+about 0.56.
+
+149
+00:07:59,290 --> 00:08:04,080
+So it&#39;s not huge, but again, in this kind of industry, any
+
+150
+00:08:04,080 --> 00:08:08,224
+little edge like that, that actually helps.
+
+151
+00:08:08,224 --> 00:08:12,870
+And so, that&#39;s a little session using linear
+
+152
+00:08:12,870 --> 00:08:16,980
+discriminant analysis, and there&#39;s many other approaches.
+
+153
+00:08:16,980 --> 00:08:20,620
+There&#39;s some more examples in the book, and you should have
+
+154
+00:08:20,620 --> 00:08:21,870
+a look there.
+

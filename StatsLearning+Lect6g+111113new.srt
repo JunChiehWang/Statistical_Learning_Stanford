@@ -1,0 +1,1336 @@
+0
+00:00:00,940 --> 00:00:06,280
+OK, so that was with a single variable, and usually when you
+
+1
+00:00:06,280 --> 00:00:09,110
+do classification, we&#39;ve got more than one variable.
+
+2
+00:00:09,110 --> 00:00:13,370
+So now we&#39;re going to go to multi-variant Gaussians.
+
+3
+00:00:13,370 --> 00:00:16,460
+So here&#39;s a picture of the Gaussian density when we&#39;ve
+
+4
+00:00:16,460 --> 00:00:18,140
+got two variables.
+
+5
+00:00:18,140 --> 00:00:21,600
+So it&#39;s one of these fancy-looking three
+
+6
+00:00:21,600 --> 00:00:22,455
+dimensional plots.
+
+7
+00:00:22,455 --> 00:00:23,300
+It&#39;s beautiful.
+
+8
+00:00:23,300 --> 00:00:26,410
+Beautiful, isn&#39;t it?
+
+9
+00:00:26,410 --> 00:00:30,040
+The height&#39;s color coded, could you make a plot like
+
+10
+00:00:30,040 --> 00:00:31,920
+this, [INAUDIBLE]?
+
+11
+00:00:31,920 --> 00:00:35,880
+I could try, and then you&#39;d criticize it.
+
+12
+00:00:35,880 --> 00:00:38,670
+You do criticize it.
+
+13
+00:00:38,670 --> 00:00:41,640
+The beautiful thing is that R made this plot with very
+
+14
+00:00:41,640 --> 00:00:44,530
+little work from us.
+
+15
+00:00:44,530 --> 00:00:48,150
+So there&#39;s two variables, x1 and x2, and you can see the
+
+16
+00:00:48,150 --> 00:00:50,350
+Gaussian density in two dimensions
+
+17
+00:00:50,350 --> 00:00:52,910
+looks like a bell function.
+
+18
+00:00:52,910 --> 00:00:56,805
+And this is-- left hand case is the case when two variables
+
+19
+00:00:56,805 --> 00:01:00,760
+are uncorrelated, so it&#39;s just really like a bell.
+
+20
+00:01:00,760 --> 00:01:03,380
+And the right hand case is when there&#39;s correlation, so
+
+21
+00:01:03,380 --> 00:01:05,269
+now it&#39;s like a stretched bell.
+
+22
+00:01:05,269 --> 00:01:09,410
+See there&#39;s positive correlation between x1 and x2.
+
+23
+00:01:09,410 --> 00:01:11,620
+So those are pictures of the densities.
+
+24
+00:01:11,620 --> 00:01:14,340
+The formula for the density doesn&#39;t look nearly as pretty,
+
+25
+00:01:14,340 --> 00:01:16,570
+and here it is over here.
+
+26
+00:01:16,570 --> 00:01:18,960
+And it&#39;s somewhat complex.
+
+27
+00:01:18,960 --> 00:01:21,990
+We should go over this in great detail.
+
+28
+00:01:21,990 --> 00:01:25,320
+Excruciating detail, please.
+
+29
+00:01:25,320 --> 00:01:27,260
+I have a feeling that&#39;s a hint not to go
+
+30
+00:01:27,260 --> 00:01:29,490
+into it in great detail.
+
+31
+00:01:29,490 --> 00:01:32,270
+Anyway, this is just a generalization of the formula
+
+32
+00:01:32,270 --> 00:01:33,730
+we had for a single variable.
+
+33
+00:01:33,730 --> 00:01:38,160
+This is called a covariance matrix, and if you stare at
+
+34
+00:01:38,160 --> 00:01:40,240
+this formula, and you stare at the previous formula, you will
+
+35
+00:01:40,240 --> 00:01:41,840
+see that they&#39;re somewhat similar.
+
+36
+00:01:41,840 --> 00:01:44,505
+Especially if you know a bit of vector algebra.
+
+37
+00:01:47,430 --> 00:01:50,780
+If you go through the simplifications, if you know
+
+38
+00:01:50,780 --> 00:01:55,360
+your linear algebra, you can to do and do the cancellation
+
+39
+00:01:55,360 --> 00:01:58,950
+similar to what we did before, you can the discriminant
+
+40
+00:01:58,950 --> 00:02:03,180
+function which is given over here.
+
+41
+00:02:03,180 --> 00:02:06,990
+And it looks complex, but important thing to note is
+
+42
+00:02:06,990 --> 00:02:08,979
+that it&#39;s, again, linear in x.
+
+43
+00:02:08,979 --> 00:02:14,710
+Here&#39;s x alone multiplied by a coefficient vector, and these
+
+44
+00:02:14,710 --> 00:02:16,020
+are all just constants.
+
+45
+00:02:16,020 --> 00:02:17,605
+So this, again, is a linear function.
+
+46
+00:02:20,220 --> 00:02:22,780
+If the math&#39;s beyond you, don&#39;t let it bother you.
+
+47
+00:02:22,780 --> 00:02:25,240
+This is a linear function, and we&#39;ll make that more clear a
+
+48
+00:02:25,240 --> 00:02:26,520
+little bit later on, as well, that
+
+49
+00:02:26,520 --> 00:02:30,270
+this is a linear function.
+
+50
+00:02:30,270 --> 00:02:32,210
+In fact, we make it clear right here.
+
+51
+00:02:32,210 --> 00:02:35,300
+It might look complex, but this can just be written in
+
+52
+00:02:35,300 --> 00:02:37,880
+this form over here.
+
+53
+00:02:37,880 --> 00:02:39,520
+It&#39;s a linear function.
+
+54
+00:02:39,520 --> 00:02:41,290
+So the ck0--
+
+55
+00:02:41,290 --> 00:02:44,400
+so this is a function for class k--
+
+56
+00:02:44,400 --> 00:02:48,410
+ck0 is built up of all these pieces over here.
+
+57
+00:02:48,410 --> 00:02:51,980
+And then each of the coefficients of x1, x2, up to
+
+58
+00:02:51,980 --> 00:02:55,230
+xp come from this part over here.
+
+59
+00:02:55,230 --> 00:02:57,780
+Remember, x is a vector in this case.
+
+60
+00:02:57,780 --> 00:03:00,152
+And so you can expand this expression and get
+
+61
+00:03:00,152 --> 00:03:02,880
+this term over here.
+
+62
+00:03:02,880 --> 00:03:05,470
+And I think I forgot to mention it before.
+
+63
+00:03:05,470 --> 00:03:07,540
+What the idea of the discriminant function is, you
+
+64
+00:03:07,540 --> 00:03:10,710
+compute one of these for each of the classes, and then you
+
+65
+00:03:10,710 --> 00:03:13,550
+classify it to the class for which it&#39;s largest.
+
+66
+00:03:13,550 --> 00:03:15,365
+You pick the discriminant function that&#39;s largest.
+
+67
+00:03:19,110 --> 00:03:21,650
+Well, we can draw other nice pictures for discriminant
+
+68
+00:03:21,650 --> 00:03:25,410
+analysis similar to the one-dimensional picture we
+
+69
+00:03:25,410 --> 00:03:27,020
+drew before.
+
+70
+00:03:27,020 --> 00:03:31,420
+So here, we&#39;ve got two variables and three classes.
+
+71
+00:03:31,420 --> 00:03:36,400
+And instead of showing those density plots, what we do is
+
+72
+00:03:36,400 --> 00:03:39,950
+show contours, in this case, of the density.
+
+73
+00:03:39,950 --> 00:03:41,150
+So here&#39;s the blue class.
+
+74
+00:03:41,150 --> 00:03:44,290
+And we show the contour of a particular level of
+
+75
+00:03:44,290 --> 00:03:49,690
+probability for the blue class, for the green class,
+
+76
+00:03:49,690 --> 00:03:53,440
+and for the orange class.
+
+77
+00:03:53,440 --> 00:03:55,120
+And lo and behold--
+
+78
+00:03:55,120 --> 00:03:59,290
+and the decision boundary is the dotted line here.
+
+79
+00:03:59,290 --> 00:04:02,290
+And it&#39;s really very pretty.
+
+80
+00:04:02,290 --> 00:04:05,610
+It shows you where you classify to blue versus
+
+81
+00:04:05,610 --> 00:04:09,490
+orange, and it&#39;s exactly where it cuts--
+
+82
+00:04:09,490 --> 00:04:11,850
+the line goes exactly through the points where the contours
+
+83
+00:04:11,850 --> 00:04:17,230
+are cut, both for the orange to blue, for the blue to
+
+84
+00:04:17,230 --> 00:04:20,070
+green, and for the green to orange.
+
+85
+00:04:20,070 --> 00:04:23,720
+And you can see they all meet in the middle over here, right
+
+86
+00:04:23,720 --> 00:04:25,481
+in the center over here.
+
+87
+00:04:25,481 --> 00:04:29,200
+And so if you knew the true densities, it
+
+88
+00:04:29,200 --> 00:04:30,770
+would tell you exactly--
+
+89
+00:04:30,770 --> 00:04:33,110
+and in this case, the Gaussian--
+
+90
+00:04:33,110 --> 00:04:35,490
+you get the exact decision boundaries.
+
+91
+00:04:35,490 --> 00:04:37,760
+Again, these are called the Bayes decision boundaries.
+
+92
+00:04:37,760 --> 00:04:40,510
+These are the true decision boundaries.
+
+93
+00:04:40,510 --> 00:04:42,320
+Now, of course, we don&#39;t.
+
+94
+00:04:42,320 --> 00:04:45,550
+But we go ahead and estimate the parameters for the
+
+95
+00:04:45,550 --> 00:04:48,830
+Gaussians in each of the class using formulas similar to what
+
+96
+00:04:48,830 --> 00:04:51,950
+we had before, but appropriate for this multivariate case.
+
+97
+00:04:51,950 --> 00:04:56,250
+So in this case, we&#39;ve got to get the mean for x1 and x2 for
+
+98
+00:04:56,250 --> 00:04:57,575
+the blue class--
+
+99
+00:04:57,575 --> 00:05:00,460
+it&#39;s about there-- for the green class, with data points
+
+100
+00:05:00,460 --> 00:05:04,110
+about there, for the orange class, say there.
+
+101
+00:05:04,110 --> 00:05:06,690
+And then we plug them into the formula.
+
+102
+00:05:06,690 --> 00:05:11,800
+Instead of getting the dotted lines, we get the solid lines.
+
+103
+00:05:11,800 --> 00:05:14,940
+And in this case, it&#39;s remarkably close.
+
+104
+00:05:14,940 --> 00:05:17,270
+Now, these data were actually generated from a Gaussian
+
+105
+00:05:17,270 --> 00:05:20,440
+distribution, so it&#39;s not too surprising that we got close.
+
+106
+00:05:20,440 --> 00:05:22,780
+But with relatively few points, we get decision
+
+107
+00:05:22,780 --> 00:05:27,070
+boundaries that look pretty close to the real ones.
+
+108
+00:05:27,070 --> 00:05:29,540
+You cannot learn about discriminant analysis without
+
+109
+00:05:29,540 --> 00:05:31,110
+seeing Fisher&#39;s iris data.
+
+110
+00:05:31,110 --> 00:05:36,380
+It&#39;s maybe one of the most famous datasets around.
+
+111
+00:05:36,380 --> 00:05:40,300
+It studies three species of iris.
+
+112
+00:05:40,300 --> 00:05:45,080
+These species are setosa, versicolor, and virginica, and
+
+113
+00:05:45,080 --> 00:05:48,020
+they&#39;re color-coded in a scatter plot matrix again,
+
+114
+00:05:48,020 --> 00:05:50,520
+with three colors in this case.
+
+115
+00:05:50,520 --> 00:05:53,380
+And the four variables that are going to be used to try
+
+116
+00:05:53,380 --> 00:05:58,970
+and automatically classify these three classes, sepal
+
+117
+00:05:58,970 --> 00:06:03,530
+length, sepal width, petal length, and petal width.
+
+118
+00:06:03,530 --> 00:06:07,710
+So these are aspects of the flower.
+
+119
+00:06:07,710 --> 00:06:11,960
+And there&#39;s 50 samples in each class.
+
+120
+00:06:11,960 --> 00:06:14,160
+Now, if you look at these scatter plots, you can see
+
+121
+00:06:14,160 --> 00:06:16,300
+that there&#39;s some really good separation.
+
+122
+00:06:16,300 --> 00:06:19,050
+For example, in this plot of petal length and petal width,
+
+123
+00:06:19,050 --> 00:06:22,930
+the blue class really stands out as being different from
+
+124
+00:06:22,930 --> 00:06:24,500
+the other two classes.
+
+125
+00:06:24,500 --> 00:06:30,200
+They seem to be more confused in some of the plots, and in
+
+126
+00:06:30,200 --> 00:06:32,240
+some, there&#39;s slightly more separation.
+
+127
+00:06:32,240 --> 00:06:34,770
+But the idea here is to use all of these variables
+
+128
+00:06:34,770 --> 00:06:35,830
+together to come up with a
+
+129
+00:06:35,830 --> 00:06:40,590
+discriminant rule and classify.
+
+130
+00:06:40,590 --> 00:06:44,960
+And so this was a motivating example that Fisher used in
+
+131
+00:06:44,960 --> 00:06:49,020
+his first description of linear discriminant analysis.
+
+132
+00:06:49,020 --> 00:06:51,880
+And in fact, it&#39;s often known as Fisher&#39;s linear
+
+133
+00:06:51,880 --> 00:06:53,130
+discriminant analysis.
+
+134
+00:06:55,340 --> 00:06:57,220
+Importantly, what comes with discriminant
+
+135
+00:06:57,220 --> 00:07:00,320
+analysis is a nice plot.
+
+136
+00:07:00,320 --> 00:07:04,020
+In this previous picture, there&#39;s four variables, so we
+
+137
+00:07:04,020 --> 00:07:05,800
+showed a scatter plot matrix of each
+
+138
+00:07:05,800 --> 00:07:07,600
+variable against the rest.
+
+139
+00:07:07,600 --> 00:07:11,720
+But it turns out that there&#39;s a single plot that captures
+
+140
+00:07:11,720 --> 00:07:15,220
+the classification information for all of them.
+
+141
+00:07:15,220 --> 00:07:17,310
+And here it is.
+
+142
+00:07:17,310 --> 00:07:20,750
+And I&#39;ve got discriminant variable one and discriminant
+
+143
+00:07:20,750 --> 00:07:24,700
+variable two as the horizontal and vertical axes.
+
+144
+00:07:24,700 --> 00:07:27,180
+And it turns out these are linear combinations of the
+
+145
+00:07:27,180 --> 00:07:29,840
+original variables.
+
+146
+00:07:29,840 --> 00:07:32,760
+But they&#39;re special linear combinations.
+
+147
+00:07:32,760 --> 00:07:34,970
+And when you plot the variables against these two,
+
+148
+00:07:34,970 --> 00:07:38,420
+you see really good separation.
+
+149
+00:07:38,420 --> 00:07:41,380
+And these arise from actually performing the linear
+
+150
+00:07:41,380 --> 00:07:43,800
+discriminant analysis.
+
+151
+00:07:43,800 --> 00:07:46,610
+Because you&#39;ve got three classes, what Fisher&#39;s linear
+
+152
+00:07:46,610 --> 00:07:48,740
+discriminant analysis is really doing--
+
+153
+00:07:48,740 --> 00:07:52,120
+or Gaussian LDA is really doing--
+
+154
+00:07:52,120 --> 00:07:54,630
+is it&#39;s measuring which centroid is the closest.
+
+155
+00:07:57,160 --> 00:08:00,350
+But it&#39;s measured in a distance that takes into
+
+156
+00:08:00,350 --> 00:08:02,195
+account the covariance of the variables.
+
+157
+00:08:04,790 --> 00:08:10,930
+But ignoring the covariance for a moment, the three
+
+158
+00:08:10,930 --> 00:08:15,760
+centroids actually line in a plane, a subspace of the
+
+159
+00:08:15,760 --> 00:08:18,170
+four-dimensional space.
+
+160
+00:08:18,170 --> 00:08:19,450
+And it&#39;s really distance.
+
+161
+00:08:19,450 --> 00:08:21,710
+So if you have three points, they span a
+
+162
+00:08:21,710 --> 00:08:23,710
+two-dimensional subspace.
+
+163
+00:08:23,710 --> 00:08:25,570
+And that&#39;s essentially what we plot in here, is the
+
+164
+00:08:25,570 --> 00:08:27,320
+two-dimensional subspace.
+
+165
+00:08:27,320 --> 00:08:30,780
+So seeing which class is closest really amounts to
+
+166
+00:08:30,780 --> 00:08:33,260
+distance in that subspace.
+
+167
+00:08:33,260 --> 00:08:36,799
+And that leads to these nicely dimensional plots.
+
+168
+00:08:36,799 --> 00:08:38,799
+And so we have three classes here.
+
+169
+00:08:38,799 --> 00:08:41,780
+We can make a two-dimensional plot, and it captures exactly
+
+170
+00:08:41,780 --> 00:08:46,750
+what&#39;s important in terms of the classification.
+
+171
+00:08:46,750 --> 00:08:50,030
+And when we have more than three classes, we can still
+
+172
+00:08:50,030 --> 00:08:51,490
+find two-dimensional plots.
+
+173
+00:08:51,490 --> 00:08:54,100
+But in that case, it doesn&#39;t capture all the information,
+
+174
+00:08:54,100 --> 00:08:55,130
+the two-dimensional plot.
+
+175
+00:08:55,130 --> 00:08:57,130
+But you can find the base two-dimensional plot for
+
+176
+00:08:57,130 --> 00:08:59,750
+visualizing the discriminant rule.
+
+177
+00:08:59,750 --> 00:09:02,580
+And that&#39;s another important reason why linear discriminant
+
+178
+00:09:02,580 --> 00:09:06,490
+analysis is very popular for multi-class classification.
+
+179
+00:09:06,490 --> 00:09:08,850
+Keep in mind, this case, we only four features, four
+
+180
+00:09:08,850 --> 00:09:10,250
+variables, right?
+
+181
+00:09:10,250 --> 00:09:11,855
+Discriminant analysis was a very attractive method.
+
+182
+00:09:11,855 --> 00:09:14,680
+But imagine we had 4,000 features.
+
+183
+00:09:14,680 --> 00:09:17,300
+Then in [INAUDIBLE], what we just did was
+
+184
+00:09:17,300 --> 00:09:18,140
+the covariance matrix.
+
+185
+00:09:18,140 --> 00:09:20,280
+We had to plug in an estimate of the covariance matrix.
+
+186
+00:09:20,280 --> 00:09:23,020
+If you have 4,000 features, that covariance matrix would
+
+187
+00:09:23,020 --> 00:09:25,290
+be of size 4,000 by 4,000.
+
+188
+00:09:25,290 --> 00:09:27,470
+Yes, that&#39;s a great point, Rob.
+
+189
+00:09:27,470 --> 00:09:33,570
+And we just can&#39;t carry out discriminant analysis without
+
+190
+00:09:33,570 --> 00:09:35,260
+other modifications if the number of
+
+191
+00:09:35,260 --> 00:09:36,550
+variables are very large.
+
+192
+00:09:36,550 --> 00:09:38,550
+And we can talk about some ways of doing that.
+
+193
+00:09:38,550 --> 00:09:40,120
+And later on in the class, we&#39;ll talk
+
+194
+00:09:40,120 --> 00:09:41,370
+about it in more ways.
+
+195
+00:09:45,360 --> 00:09:47,660
+We&#39;ve talked about discriminant functions, which
+
+196
+00:09:47,660 --> 00:09:49,520
+is telling you how you classify.
+
+197
+00:09:49,520 --> 00:09:52,170
+But it turns out that you can turn these into probabilities
+
+198
+00:09:52,170 --> 00:09:53,610
+very easily.
+
+199
+00:09:53,610 --> 00:09:57,060
+And here&#39;s the expression over here.
+
+200
+00:09:57,060 --> 00:10:00,020
+And so remember we got the dks by doing a lot of
+
+201
+00:10:00,020 --> 00:10:01,350
+simplification.
+
+202
+00:10:01,350 --> 00:10:04,030
+Well, it turns out that those simplifications and
+
+203
+00:10:04,030 --> 00:10:08,340
+cancellations hold exactly for computing the probabilities.
+
+204
+00:10:08,340 --> 00:10:12,540
+So in other words, those expressions we had earlier for
+
+205
+00:10:12,540 --> 00:10:14,700
+computing the probabilities--
+
+206
+00:10:14,700 --> 00:10:17,250
+let&#39;s go back to it-- for example, here&#39;s an expression
+
+207
+00:10:17,250 --> 00:10:21,760
+here that&#39;s used for computing the probabilities.
+
+208
+00:10:21,760 --> 00:10:22,230
+Where is it?
+
+209
+00:10:22,230 --> 00:10:25,810
+This is the expression for the single variable case, with all
+
+210
+00:10:25,810 --> 00:10:27,950
+these constants in there.
+
+211
+00:10:27,950 --> 00:10:33,300
+All the cancellation happens, and we get to this nice simple
+
+212
+00:10:33,300 --> 00:10:35,040
+expression over here, which just involves the
+
+213
+00:10:35,040 --> 00:10:37,650
+discriminant functions.
+
+214
+00:10:37,650 --> 00:10:40,180
+So see, you can see if you can actually show that as well.
+
+215
+00:10:40,180 --> 00:10:41,860
+It&#39;s not that hard to show.
+
+216
+00:10:41,860 --> 00:10:47,210
+And so not only does discriminant analysis give us
+
+217
+00:10:47,210 --> 00:10:47,620
+a classified.
+
+218
+00:10:47,620 --> 00:10:49,015
+It also gives us the probabilities.
+
+219
+00:10:52,540 --> 00:10:55,050
+When K is 2, we&#39;ll classify to class two if these
+
+220
+00:10:55,050 --> 00:10:58,560
+probabilities are bigger than 0.5, else to class one, just
+
+221
+00:10:58,560 --> 00:11:01,860
+like in logistic regression.
+
+222
+00:11:01,860 --> 00:11:05,150
+Here&#39;s the credit data.
+
+223
+00:11:05,150 --> 00:11:12,080
+And we produce, in this case, misclassification table.
+
+224
+00:11:12,080 --> 00:11:16,860
+So this table, along the horizontal, it&#39;s
+
+225
+00:11:16,860 --> 00:11:18,480
+got the true status.
+
+226
+00:11:18,480 --> 00:11:23,710
+So it&#39;s a true default status, which is no or yes.
+
+227
+00:11:23,710 --> 00:11:27,650
+You can see we have 10,000 samples in the credit data.
+
+228
+00:11:27,650 --> 00:11:30,610
+And in the vertical, we&#39;ve got the predicted
+
+229
+00:11:30,610 --> 00:11:32,926
+status, no or yes.
+
+230
+00:11:32,926 --> 00:11:34,910
+So of course, we&#39;d like everything
+
+231
+00:11:34,910 --> 00:11:37,310
+to lie on the diagonal.
+
+232
+00:11:37,310 --> 00:11:42,440
+It turns out we got a lot of the no&#39;s right and not that
+
+233
+00:11:42,440 --> 00:11:45,560
+many of the yes&#39;s right.
+
+234
+00:11:45,560 --> 00:11:47,320
+So on the diagonal is what you got correct.
+
+235
+00:11:47,320 --> 00:11:50,600
+On the off diagonals is what you got incorrect.
+
+236
+00:11:50,600 --> 00:11:53,440
+Nevertheless, overall we make 2.75%
+
+237
+00:11:53,440 --> 00:11:56,210
+misclassification errors here.
+
+238
+00:11:56,210 --> 00:11:59,050
+So this is called a confusion matrix.
+
+239
+00:11:59,050 --> 00:12:02,280
+It tells how well you did.
+
+240
+00:12:02,280 --> 00:12:03,450
+Now, there&#39;s some caveats.
+
+241
+00:12:03,450 --> 00:12:05,990
+This is training error.
+
+242
+00:12:05,990 --> 00:12:08,690
+We fit the rule to these data, and now we see how well it
+
+243
+00:12:08,690 --> 00:12:10,280
+performs on these data.
+
+244
+00:12:10,280 --> 00:12:12,780
+So we may be over-fitting.
+
+245
+00:12:12,780 --> 00:12:15,800
+Well, we&#39;ve got 10,000 training samples here, and
+
+246
+00:12:15,800 --> 00:12:19,070
+we&#39;ve only fit a handful of parameters.
+
+247
+00:12:19,070 --> 00:12:22,100
+So it&#39;s very unlikely in this case that we&#39;re over-fitting.
+
+248
+00:12:22,100 --> 00:12:24,335
+For small training sets, that would be an issue, and you
+
+249
+00:12:24,335 --> 00:12:25,740
+would need to have a separate test set.
+
+250
+00:12:33,730 --> 00:12:40,440
+Another thing to note is that although 2.75% seems a really
+
+251
+00:12:40,440 --> 00:12:42,710
+goodness misclassification, right?
+
+252
+00:12:42,710 --> 00:12:46,430
+If we just use a very naive classification rule and say
+
+253
+00:12:46,430 --> 00:12:49,590
+always classify to the largest class-- in other words,
+
+254
+00:12:49,590 --> 00:12:52,710
+classify according to the prior--
+
+255
+00:12:52,710 --> 00:12:58,830
+we&#39;d only make 3.33% errors because there&#39;s a predominance
+
+256
+00:12:58,830 --> 00:13:02,360
+of no&#39;s in this dataset.
+
+257
+00:13:02,360 --> 00:13:09,140
+The total number of no&#39;s is 333 out of 10,000.
+
+258
+00:13:09,140 --> 00:13:11,240
+So this we call the null rate.
+
+259
+00:13:11,240 --> 00:13:16,840
+And so you always bear in mind the null rate when getting
+
+260
+00:13:16,840 --> 00:13:18,830
+excited about a misclassification error rate.
+
+261
+00:13:21,910 --> 00:13:25,080
+The other thing to look at, though, is you can break the
+
+262
+00:13:25,080 --> 00:13:26,700
+errors into different kinds.
+
+263
+00:13:26,700 --> 00:13:31,890
+So of the true no&#39;s, we make 0.02% errors.
+
+264
+00:13:31,890 --> 00:13:34,650
+So we hardly ever misclassify a no.
+
+265
+00:13:34,650 --> 00:13:39,880
+But of the yes&#39;s, we make a whopping 75.7% errors.
+
+266
+00:13:39,880 --> 00:13:43,050
+So the errors are very lopsided in this case.
+
+267
+00:13:43,050 --> 00:13:45,210
+And that&#39;s maybe not such a good idea.
+
+268
+00:13:47,880 --> 00:13:53,560
+So we break down these errors into finer categories.
+
+269
+00:13:53,560 --> 00:13:57,830
+So we call the false positive rate the fraction of negative
+
+270
+00:13:57,830 --> 00:14:00,660
+examples that are classified as positive.
+
+271
+00:14:00,660 --> 00:14:01,790
+So they&#39;re false positives.
+
+272
+00:14:01,790 --> 00:14:05,920
+In that case, that was the 0.02% in this case.
+
+273
+00:14:05,920 --> 00:14:09,160
+And the false negative rate, that&#39;s a fraction of positive
+
+274
+00:14:09,160 --> 00:14:11,680
+examples that are classified as negative,
+
+275
+00:14:11,680 --> 00:14:15,520
+75.7% in this case.
+
+276
+00:14:15,520 --> 00:14:19,480
+Now we produce the classification table by
+
+277
+00:14:19,480 --> 00:14:24,810
+intuitively correct classifying default as yes if
+
+278
+00:14:24,810 --> 00:14:29,680
+the probability of default was bigger than 0.5.
+
+279
+00:14:29,680 --> 00:14:32,300
+But it gave us this very lopsided false positive and
+
+280
+00:14:32,300 --> 00:14:35,650
+false negative rate.
+
+281
+00:14:35,650 --> 00:14:38,340
+In some cases, especially for these kinds of screen-in
+
+282
+00:14:38,340 --> 00:14:44,250
+examples, you may want to change the false positive and
+
+283
+00:14:44,250 --> 00:14:48,500
+false negative rates and skew them to one side or the other.
+
+284
+00:14:48,500 --> 00:14:50,800
+And you can do this by changing this threshold.
+
+285
+00:14:50,800 --> 00:14:52,560
+Instead of classifying--
+
+286
+00:14:52,560 --> 00:14:55,550
+in this case, to default if it&#39;s bigger than 0.5, you can
+
+287
+00:14:55,550 --> 00:14:58,200
+change the threshold and maybe make the threshold in this
+
+288
+00:14:58,200 --> 00:15:02,060
+case smaller so that you can catch more of the high risk
+
+289
+00:15:02,060 --> 00:15:03,310
+cases for default.
+
+290
+00:15:06,470 --> 00:15:09,670
+And so here we&#39;ve done it as a function of the threshold.
+
+291
+00:15:09,670 --> 00:15:11,870
+And we&#39;ve just looked at negative thresholds, or
+
+292
+00:15:11,870 --> 00:15:15,010
+decreasing thresholds.
+
+293
+00:15:15,010 --> 00:15:17,140
+And so in this plot, we&#39;ve got in black the
+
+294
+00:15:17,140 --> 00:15:19,430
+overall error rate.
+
+295
+00:15:19,430 --> 00:15:24,750
+In orange, we&#39;ve got the false positive rate, and in blue,
+
+296
+00:15:24,750 --> 00:15:26,960
+we&#39;ve got the false negative rate.
+
+297
+00:15:26,960 --> 00:15:31,140
+And so as we decrease the threshold, the false positive
+
+298
+00:15:31,140 --> 00:15:35,040
+rate increases because now we&#39;re going to classify more
+
+299
+00:15:35,040 --> 00:15:37,500
+and more negatives as positive.
+
+300
+00:15:37,500 --> 00:15:42,600
+But it increases very slowly, you&#39;ll see, for a long part of
+
+301
+00:15:42,600 --> 00:15:46,710
+the threshold going down, the decrease in threshold, the
+
+302
+00:15:46,710 --> 00:15:49,710
+false positive rate doesn&#39;t increase very fast.
+
+303
+00:15:49,710 --> 00:15:52,950
+Of course, the false negative rate increases as we do that.
+
+304
+00:15:52,950 --> 00:16:03,920
+And so even at 0.1, the false positive rate hasn&#39;t increased
+
+305
+00:16:03,920 --> 00:16:05,330
+a huge amount.
+
+306
+00:16:05,330 --> 00:16:07,960
+And the false negative hasn&#39;t increased a huge amount.
+
+307
+00:16:07,960 --> 00:16:12,570
+But we&#39;ve changed the balance of classification.
+
+308
+00:16:12,570 --> 00:16:14,840
+And so you can change the threshold.
+
+309
+00:16:14,840 --> 00:16:18,310
+Well, you can capture that change in threshold in what&#39;s
+
+310
+00:16:18,310 --> 00:16:21,190
+known as an ROC curve.
+
+311
+00:16:21,190 --> 00:16:27,170
+So what this shows is the two error rates, in this case,
+
+312
+00:16:27,170 --> 00:16:33,040
+false positive rate and true positive rate, as we change
+
+313
+00:16:33,040 --> 00:16:34,290
+the threshold.
+
+314
+00:16:38,210 --> 00:16:41,150
+And we&#39;d like the false positive rate to be low and
+
+315
+00:16:41,150 --> 00:16:43,560
+the true positive rate to be high.
+
+316
+00:16:43,560 --> 00:16:46,480
+And so this ROC curve traces out as
+
+317
+00:16:46,480 --> 00:16:48,690
+we change the threshold.
+
+318
+00:16:48,690 --> 00:16:54,470
+And the 45 degree line is the kind of no information line.
+
+319
+00:16:54,470 --> 00:16:58,550
+And what you&#39;d like is you&#39;d like this curve to be right up
+
+320
+00:16:58,550 --> 00:17:02,360
+as far as possible into the top left hand corner, so if
+
+321
+00:17:02,360 --> 00:17:05,900
+you had a true positive rate of one and a false positive
+
+322
+00:17:05,900 --> 00:17:07,160
+rate of zero.
+
+323
+00:17:07,160 --> 00:17:09,180
+If you flipped a coin, you&#39;d be on the straight line.
+
+324
+00:17:09,180 --> 00:17:12,660
+You&#39;d be on the straight line.
+
+325
+00:17:12,660 --> 00:17:16,880
+And so this is a single curve that sort of captures the
+
+326
+00:17:16,880 --> 00:17:19,480
+behavior of the classification rule for all possible
+
+327
+00:17:19,480 --> 00:17:19,990
+thresholds.
+
+328
+00:17:19,990 --> 00:17:23,900
+And you can compare different classifiers by comparing the
+
+329
+00:17:23,900 --> 00:17:25,150
+ROC curves.
+
+330
+00:17:27,380 --> 00:17:31,230
+And to summarize it even more, we sometimes use the area
+
+331
+00:17:31,230 --> 00:17:35,220
+under the curve, or AUC, which captures the extent to which
+
+332
+00:17:35,220 --> 00:17:38,140
+you&#39;re up in the northwest corner.
+
+333
+00:17:38,140 --> 00:17:39,790
+And higher AUC is good.
+

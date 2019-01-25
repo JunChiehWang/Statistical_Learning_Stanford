@@ -1,0 +1,368 @@
+0
+00:00:00,387 --> 00:00:01,161
+OK.
+
+1
+00:00:01,161 --> 00:00:04,100
+Another R session also on classification.
+
+2
+00:00:04,100 --> 00:00:05,870
+This time, we&#39;re going to look at k-nearest neighbor
+
+3
+00:00:05,870 --> 00:00:09,560
+classification, which it&#39;s one of those tools that&#39;s a very
+
+4
+00:00:09,560 --> 00:00:12,440
+simple classification rule, but it&#39;s effective
+
+5
+00:00:12,440 --> 00:00:15,190
+a lot of the time.
+
+6
+00:00:15,190 --> 00:00:18,810
+Some experts have written that k-nearest neighbors do the
+
+7
+00:00:18,810 --> 00:00:21,070
+best about one third of the time.
+
+8
+00:00:21,070 --> 00:00:24,830
+And it&#39;s so simple that, in the game of doing
+
+9
+00:00:24,830 --> 00:00:27,020
+classification, you always want to have k-nearest
+
+10
+00:00:27,020 --> 00:00:28,940
+neighbors in your toolbox.
+
+11
+00:00:28,940 --> 00:00:29,280
+OK.
+
+12
+00:00:29,280 --> 00:00:32,720
+So we&#39;ve got a little session here that we&#39;ll run.
+
+13
+00:00:32,720 --> 00:00:36,850
+And if we go into our RStudio session, you see we&#39;ve got it
+
+14
+00:00:36,850 --> 00:00:39,350
+set up here for k-nearest neighbors.
+
+15
+00:00:39,350 --> 00:00:42,180
+And for that we&#39;ll use the Class Library.
+
+16
+00:00:42,180 --> 00:00:47,660
+So we go to Library Class, and that sets us up for doing
+
+17
+00:00:47,660 --> 00:00:50,090
+k-nearest neighbors classification.
+
+18
+00:00:50,090 --> 00:00:53,920
+And let&#39;s ask for help on k-nearest neighbors, and we
+
+19
+00:00:53,920 --> 00:00:56,950
+see the Help file, which, again, is always a useful
+
+20
+00:00:56,950 --> 00:00:59,590
+thing to do.
+
+21
+00:00:59,590 --> 00:01:02,500
+And it tells us it&#39;s got a slightly different format to
+
+22
+00:01:02,500 --> 00:01:05,830
+the previous session, where we used LDA.
+
+23
+00:01:05,830 --> 00:01:07,900
+It doesn&#39;t take a formula.
+
+24
+00:01:07,900 --> 00:01:13,530
+It asks for the training x variables, the test x
+
+25
+00:01:13,530 --> 00:01:17,680
+variables, and the class label for the training.
+
+26
+00:01:17,680 --> 00:01:20,265
+And then it asks for what value of k you want, and then
+
+27
+00:01:20,265 --> 00:01:21,930
+the sum of the arguments.
+
+28
+00:01:21,930 --> 00:01:23,050
+OK?
+
+29
+00:01:23,050 --> 00:01:26,440
+So we&#39;ll use this again on our stock market example.
+
+30
+00:01:26,440 --> 00:01:30,580
+So in this case, since we&#39;re going to have to list all
+
+31
+00:01:30,580 --> 00:01:33,380
+these variables by name in the call, we&#39;ll just
+
+32
+00:01:33,380 --> 00:01:36,300
+attach stock market.
+
+33
+00:01:36,300 --> 00:01:42,200
+And recall when you attach a data frame, it makes available
+
+34
+00:01:42,200 --> 00:01:46,090
+the variables on the data frame by name in your frame.
+
+35
+00:01:46,090 --> 00:01:54,360
+So if I go down into the session window and say LS--
+
+36
+00:01:54,360 --> 00:01:59,920
+well, that didn&#39;t do it actually.
+
+37
+00:01:59,920 --> 00:02:05,420
+I can say objects 2 because stock market is in position 2.
+
+38
+00:02:05,420 --> 00:02:06,110
+There we go.
+
+39
+00:02:06,110 --> 00:02:10,400
+So they&#39;re available in location 2 on the search list.
+
+40
+00:02:10,400 --> 00:02:15,760
+And there&#39;s all the variables in s market available by name.
+
+41
+00:02:15,760 --> 00:02:17,630
+OK.
+
+42
+00:02:17,630 --> 00:02:22,400
+So what we&#39;ll do is we&#39;ll make a matrix of lag1 and lag2.
+
+43
+00:02:22,400 --> 00:02:24,520
+We can use the same two variables we used in the
+
+44
+00:02:24,520 --> 00:02:25,810
+previous session.
+
+45
+00:02:25,810 --> 00:02:29,980
+So we&#39;ll say x lag is C bind that makes a matrix of two
+
+46
+00:02:29,980 --> 00:02:32,920
+columns, in this case, of lag1 and lag2.
+
+47
+00:02:32,920 --> 00:02:34,080
+OK?
+
+48
+00:02:34,080 --> 00:02:38,100
+And let&#39;s just make sure that actually did what we want.
+
+49
+00:02:38,100 --> 00:02:43,080
+I mean, I know it did, but let&#39;s look at the first five
+
+50
+00:02:43,080 --> 00:02:45,470
+rows of that matrix.
+
+51
+00:02:45,470 --> 00:02:48,970
+And there they are, so it did what we wanted.
+
+52
+00:02:48,970 --> 00:02:53,840
+And then we&#39;ll make a indicator variable Train which
+
+53
+00:02:53,840 --> 00:02:56,210
+is year less than 2005.
+
+54
+00:02:56,210 --> 00:02:58,880
+So that&#39;s just going to be a binary variable of trues and
+
+55
+00:02:58,880 --> 00:03:01,860
+falses depending on whether the variable year
+
+56
+00:03:01,860 --> 00:03:04,350
+was less than 2005.
+
+57
+00:03:04,350 --> 00:03:09,300
+OK, now we&#39;re ready to call k and n, so we give our matrix x
+
+58
+00:03:09,300 --> 00:03:13,450
+lag, and right in line there we index it by Train which is
+
+59
+00:03:13,450 --> 00:03:14,860
+just using the training observations.
+
+60
+00:03:20,380 --> 00:03:23,550
+And then, for the test observations, we give
+
+61
+00:03:23,550 --> 00:03:25,180
+it x lag not Train.
+
+62
+00:03:25,180 --> 00:03:28,830
+So those not train will be, therefore, those that are
+
+63
+00:03:28,830 --> 00:03:31,660
+equal to 2005--
+
+64
+00:03:31,660 --> 00:03:33,920
+for year equal to 2005.
+
+65
+00:03:33,920 --> 00:03:35,710
+So Train and Not Train.
+
+66
+00:03:35,710 --> 00:03:38,580
+That exclamation mark means not.
+
+67
+00:03:38,580 --> 00:03:42,740
+And the response is direction, again, indexed by Train.
+
+68
+00:03:42,740 --> 00:03:45,620
+And k equals 1 says we want one nearest neighbor
+
+69
+00:03:45,620 --> 00:03:47,190
+classification.
+
+70
+00:03:47,190 --> 00:03:50,120
+And, again, just to remind you, that means what the
+
+71
+00:03:50,120 --> 00:03:54,430
+algorithm does is, it says to classify a new observation,
+
+72
+00:03:54,430 --> 00:03:58,850
+you go into the training set in the x space, the feature
+
+73
+00:03:58,850 --> 00:04:01,530
+space, and you look for the training observation that&#39;s
+
+74
+00:04:01,530 --> 00:04:05,330
+closest to your test point in Euclidean distance and you
+
+75
+00:04:05,330 --> 00:04:08,400
+classify to its class.
+
+76
+00:04:08,400 --> 00:04:11,350
+And so this will do it.
+
+77
+00:04:11,350 --> 00:04:13,870
+And we can look at the--
+
+78
+00:04:13,870 --> 00:04:17,200
+we put the results in knn.pred, and we can do a
+
+79
+00:04:17,200 --> 00:04:20,890
+table of knn.pred and the true response, which is Direction
+
+80
+00:04:20,890 --> 00:04:22,860
+at Not Train.
+
+81
+00:04:22,860 --> 00:04:25,930
+And we get a little confusion matrix again, and we can look
+
+82
+00:04:25,930 --> 00:04:28,680
+at the classification performance there.
+
+83
+00:04:28,680 --> 00:04:30,980
+And it&#39;s exactly 0.5.
+
+84
+00:04:30,980 --> 00:04:32,870
+So it was useless.
+
+85
+00:04:32,870 --> 00:04:36,170
+One nearest neighbor did no better than flipping a coin.
+
+86
+00:04:39,800 --> 00:04:42,910
+So, what to do next?
+
+87
+00:04:42,910 --> 00:04:47,980
+Well, one could proceed further and try nearest
+
+88
+00:04:47,980 --> 00:04:51,470
+neighbors with multiple values of k.
+
+89
+00:04:51,470 --> 00:04:54,160
+We haven&#39;t done that in this session, but we leave it up to
+
+90
+00:04:54,160 --> 00:04:57,920
+you and you can look in the end of the chapter and you
+
+91
+00:04:57,920 --> 00:05:00,140
+will see that there&#39;s examples of this.
+

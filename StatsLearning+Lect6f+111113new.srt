@@ -1,0 +1,640 @@
+0
+00:00:00,620 --> 00:00:03,710
+So let&#39;s look again in the simple case when we&#39;ve got one
+
+1
+00:00:03,710 --> 00:00:07,280
+variable, one x.
+
+2
+00:00:07,280 --> 00:00:09,920
+Again, we&#39;re going to get a bit more math-y now.
+
+3
+00:00:09,920 --> 00:00:13,220
+This is the form, the mathematical form, of the
+
+4
+00:00:13,220 --> 00:00:17,370
+Gaussian density function for class k when you&#39;ve
+
+5
+00:00:17,370 --> 00:00:19,290
+got a single x.
+
+6
+00:00:19,290 --> 00:00:21,850
+So there&#39;s some constants over here.
+
+7
+00:00:21,850 --> 00:00:24,150
+The important part that depends on x is in this
+
+8
+00:00:24,150 --> 00:00:26,800
+exponential form over here.
+
+9
+00:00:26,800 --> 00:00:30,630
+And we see there is a mu sub-k, which is the mean for
+
+10
+00:00:30,630 --> 00:00:33,700
+the observations in class k, or the population
+
+11
+00:00:33,700 --> 00:00:34,740
+meaning class k.
+
+12
+00:00:34,740 --> 00:00:37,690
+And sigma sub-k is the variance for that
+
+13
+00:00:37,690 --> 00:00:39,350
+variable in class k.
+
+14
+00:00:41,970 --> 00:00:46,410
+Now, in the first instance, we can assume that the variance,
+
+15
+00:00:46,410 --> 00:00:48,900
+sigma sub-k, is actually just sigma, the same
+
+16
+00:00:48,900 --> 00:00:50,690
+in each of the classes.
+
+17
+00:00:50,690 --> 00:00:52,820
+Now, that&#39;s a convenience.
+
+18
+00:00:52,820 --> 00:00:55,100
+It turns out this is an important convenience.
+
+19
+00:00:55,100 --> 00:00:57,620
+And it&#39;s going to determine whether the discriminant
+
+20
+00:00:57,620 --> 00:01:00,560
+function that we get, the discriminant analysis, gives
+
+21
+00:01:00,560 --> 00:01:02,890
+us linear functions or quadratic functions.
+
+22
+00:01:05,410 --> 00:01:10,990
+So, if we could plug into Bayes&#39; formula, the formula we
+
+23
+00:01:10,990 --> 00:01:15,330
+had two slides back, we get a rather complicated expression.
+
+24
+00:01:15,330 --> 00:01:17,350
+So we&#39;ve just plugged in a form of the
+
+25
+00:01:17,350 --> 00:01:18,530
+density in the numerator.
+
+26
+00:01:18,530 --> 00:01:22,360
+And there&#39;s the sum of the classes in the denominator.
+
+27
+00:01:22,360 --> 00:01:24,520
+And it looks pretty nasty.
+
+28
+00:01:24,520 --> 00:01:27,130
+Well, luckily there&#39;s some simplifications and
+
+29
+00:01:27,130 --> 00:01:28,380
+cancellations.
+
+30
+00:01:31,570 --> 00:01:35,300
+Now, we get this, because to classify an observation to a
+
+31
+00:01:35,300 --> 00:01:38,240
+class, we don&#39;t need to initially evaluate the
+
+32
+00:01:38,240 --> 00:01:38,960
+probabilities.
+
+33
+00:01:38,960 --> 00:01:42,000
+We just need to see which is the largest.
+
+34
+00:01:42,000 --> 00:01:43,610
+So if we take logs--
+
+35
+00:01:43,610 --> 00:01:45,930
+whenever you see exponentials the first thing you want to do
+
+36
+00:01:45,930 --> 00:01:47,820
+is take the logs.
+
+37
+00:01:47,820 --> 00:01:53,960
+And if you discard terms that do not depend on k, that
+
+38
+00:01:53,960 --> 00:01:57,960
+amounts to doing a lot of cancellation of terms that
+
+39
+00:01:57,960 --> 00:02:00,460
+don&#39;t count.
+
+40
+00:02:00,460 --> 00:02:03,120
+This is equivalent to assigning to the class with
+
+41
+00:02:03,120 --> 00:02:05,590
+the largest discriminant score.
+
+42
+00:02:05,590 --> 00:02:08,300
+And so that complicated expression boils down to a
+
+43
+00:02:08,300 --> 00:02:11,570
+much simpler expression of here.
+
+44
+00:02:11,570 --> 00:02:17,640
+And notice it involves x, a single variable in this case.
+
+45
+00:02:17,640 --> 00:02:21,020
+And then it involves the mean and variance for the
+
+46
+00:02:21,020 --> 00:02:21,810
+distribution.
+
+47
+00:02:21,810 --> 00:02:25,240
+And it involves the prior.
+
+48
+00:02:25,240 --> 00:02:27,540
+And importantly, in this case, this is a
+
+49
+00:02:27,540 --> 00:02:28,870
+linear function of x.
+
+50
+00:02:28,870 --> 00:02:31,375
+So there&#39;s a single coefficient for x.
+
+51
+00:02:31,375 --> 00:02:32,460
+There&#39;s a constant.
+
+52
+00:02:32,460 --> 00:02:36,010
+And then there&#39;s a constant term, which consists of these
+
+53
+00:02:36,010 --> 00:02:39,100
+two pieces over here.
+
+54
+00:02:39,100 --> 00:02:40,620
+And so we get one of those functions
+
+55
+00:02:40,620 --> 00:02:43,170
+for each of the classes.
+
+56
+00:02:43,170 --> 00:02:47,620
+If there are two classes, you can simplify even further.
+
+57
+00:02:47,620 --> 00:02:51,870
+And let&#39;s suppose now that the probability of class one is
+
+58
+00:02:51,870 --> 00:02:56,630
+equal to the probability of class two, which is 0.05.
+
+59
+00:02:56,630 --> 00:02:58,490
+Then you can see, in this case, that the decision
+
+60
+00:02:58,490 --> 00:03:04,320
+boundary is exactly at mu1 plus mu2 over 2.
+
+61
+00:03:04,320 --> 00:03:06,680
+So it&#39;s back to this picture.
+
+62
+00:03:10,420 --> 00:03:13,740
+In the previous slide, in this case, the priors were equal.
+
+63
+00:03:13,740 --> 00:03:16,820
+These are actually two Gaussian distributions.
+
+64
+00:03:16,820 --> 00:03:19,510
+And the decision boundary here is at zero.
+
+65
+00:03:19,510 --> 00:03:22,250
+In this case, the two means were exactly the equal amount
+
+66
+00:03:22,250 --> 00:03:23,440
+on the opposite side of zero.
+
+67
+00:03:23,440 --> 00:03:25,890
+So the average is at zero.
+
+68
+00:03:25,890 --> 00:03:29,520
+So intuitively, that&#39;s the right value for the decision
+
+69
+00:03:29,520 --> 00:03:32,560
+boundary, which is the point at which we classify to one
+
+70
+00:03:32,560 --> 00:03:35,330
+class, the boundary at which we switch from classifying to
+
+71
+00:03:35,330 --> 00:03:38,790
+one class versus the other.
+
+72
+00:03:38,790 --> 00:03:40,000
+It&#39;s not that hard to show.
+
+73
+00:03:40,000 --> 00:03:41,930
+So see if you can show that.
+
+74
+00:03:41,930 --> 00:03:45,030
+You basically use this expression for each of the two
+
+75
+00:03:45,030 --> 00:03:48,760
+classes and look to see when the one is
+
+76
+00:03:48,760 --> 00:03:49,690
+bigger than the other.
+
+77
+00:03:49,690 --> 00:03:51,120
+It&#39;s not that hard to do.
+
+78
+00:03:51,120 --> 00:03:51,760
+I&#39;m confused.
+
+79
+00:03:51,760 --> 00:03:54,665
+There was a square term in the previous expression.
+
+80
+00:03:54,665 --> 00:03:55,610
+And it&#39;s gone.
+
+81
+00:03:55,610 --> 00:04:00,010
+Oh, Rob, are you causing trouble here again?
+
+82
+00:04:00,010 --> 00:04:02,870
+I was hoping to avoid that nasty bit.
+
+83
+00:04:02,870 --> 00:04:04,400
+Rob&#39;s right.
+
+84
+00:04:04,400 --> 00:04:08,260
+If you expand out this squared term here, there&#39;s going to be
+
+85
+00:04:08,260 --> 00:04:10,500
+an x squared.
+
+86
+00:04:10,500 --> 00:04:14,270
+But, you know, there&#39;s an x squared in the numerator.
+
+87
+00:04:14,270 --> 00:04:16,720
+And there&#39;s x squareds in each of the terms in the
+
+88
+00:04:16,720 --> 00:04:17,870
+denominator.
+
+89
+00:04:17,870 --> 00:04:21,029
+And there&#39;s no coefficients in front of that x squared that&#39;s
+
+90
+00:04:21,029 --> 00:04:22,670
+specific to a class.
+
+91
+00:04:22,670 --> 00:04:26,036
+So that&#39;s one of the things that cancel out in this ratio.
+
+92
+00:04:26,036 --> 00:04:29,390
+You knew that, didn&#39;t you, Rob?
+
+93
+00:04:29,390 --> 00:04:31,770
+Rob knew that.
+
+94
+00:04:31,770 --> 00:04:34,440
+All right, this is with populations.
+
+95
+00:04:34,440 --> 00:04:36,010
+What happens if we have data?
+
+96
+00:04:36,010 --> 00:04:38,610
+We can&#39;t draw nice density functions like
+
+97
+00:04:38,610 --> 00:04:39,960
+we&#39;ve done over here.
+
+98
+00:04:39,960 --> 00:04:41,640
+But we just estimate them.
+
+99
+00:04:41,640 --> 00:04:43,770
+So here&#39;s a picture where we&#39;ve actually got data.
+
+100
+00:04:43,770 --> 00:04:47,960
+So we&#39;ve drawn histograms instead of density functions.
+
+101
+00:04:47,960 --> 00:04:52,910
+Now, what we do is we actually need to estimate, for the
+
+102
+00:04:52,910 --> 00:04:56,930
+Gaussian rule, the means, and the two populations, and the
+
+103
+00:04:56,930 --> 00:04:59,250
+common standard deviation.
+
+104
+00:04:59,250 --> 00:05:09,430
+Well, in this case, the true means are minus 1.5 and 1.5,
+
+105
+00:05:09,430 --> 00:05:11,510
+which means the average mean is zero.
+
+106
+00:05:11,510 --> 00:05:16,200
+And the probabilities were 0.05.
+
+107
+00:05:16,200 --> 00:05:17,230
+But we don&#39;t know these.
+
+108
+00:05:17,230 --> 00:05:20,790
+So we&#39;re going to estimate them from the observed data
+
+109
+00:05:20,790 --> 00:05:23,350
+and then plug them into the rule.
+
+110
+00:05:23,350 --> 00:05:26,180
+So this is how we estimate them.
+
+111
+00:05:26,180 --> 00:05:27,990
+The priors, we need to estimate them.
+
+112
+00:05:27,990 --> 00:05:30,620
+So that&#39;s just the number in each class divided by their
+
+113
+00:05:30,620 --> 00:05:31,300
+total number.
+
+114
+00:05:31,300 --> 00:05:32,770
+That&#39;s obvious.
+
+115
+00:05:32,770 --> 00:05:35,770
+The means in each class, we just compute the sample mean
+
+116
+00:05:35,770 --> 00:05:37,390
+in each of the classes.
+
+117
+00:05:37,390 --> 00:05:39,450
+This is a tricky little notation here.
+
+118
+00:05:39,450 --> 00:05:44,160
+This is one over nk, that&#39;s the number in class k.
+
+119
+00:05:44,160 --> 00:05:49,360
+And this is the sum over i such that yi is equal to k.
+
+120
+00:05:49,360 --> 00:05:52,320
+So yi is recording the class label.
+
+121
+00:05:52,320 --> 00:05:56,380
+So this will just sum those xi&#39;s that are in class k.
+
+122
+00:05:56,380 --> 00:05:58,570
+And clearly that&#39;s the right thing to do to
+
+123
+00:05:58,570 --> 00:06:01,500
+get the sample mean.
+
+124
+00:06:01,500 --> 00:06:04,120
+The sigma squared is a little trickier.
+
+125
+00:06:04,120 --> 00:06:06,960
+We&#39;re assuming that the variance is the same in each
+
+126
+00:06:06,960 --> 00:06:08,480
+of the classes.
+
+127
+00:06:08,480 --> 00:06:11,510
+And so this is a formula, it&#39;s called a
+
+128
+00:06:11,510 --> 00:06:14,090
+pooled variance estimate.
+
+129
+00:06:14,090 --> 00:06:20,520
+So we subtract from each xi the mean for its class.
+
+130
+00:06:20,520 --> 00:06:22,670
+So this is what we do if we were computing the
+
+131
+00:06:22,670 --> 00:06:25,040
+variance in class k.
+
+132
+00:06:25,040 --> 00:06:28,250
+But we sum all those square differences.
+
+133
+00:06:28,250 --> 00:06:30,855
+And we sum them over all the classes and then divide
+
+134
+00:06:30,855 --> 00:06:33,260
+it by n minus k.
+
+135
+00:06:35,820 --> 00:06:40,780
+So if that doesn&#39;t make too much sense, another way of
+
+136
+00:06:40,780 --> 00:06:44,970
+writing that is in this form over here, which says we
+
+137
+00:06:44,970 --> 00:06:48,380
+estimate the sample variance separately
+
+138
+00:06:48,380 --> 00:06:50,390
+in each of the classes.
+
+139
+00:06:50,390 --> 00:06:54,180
+And then we average them using this formula over here.
+
+140
+00:06:54,180 --> 00:06:56,820
+So this is just like a weight on each of those variances.
+
+141
+00:06:56,820 --> 00:06:59,340
+And that weight is to do with how many observations were in
+
+142
+00:06:59,340 --> 00:07:04,160
+that class relative to the total number of observations.
+
+143
+00:07:04,160 --> 00:07:07,720
+And then the minus 1 and the minus k, that&#39;s a detail.
+
+144
+00:07:07,720 --> 00:07:10,960
+And it&#39;s to do with how many parameters we&#39;ve estimated for
+
+145
+00:07:10,960 --> 00:07:12,740
+each of these estimates.
+
+146
+00:07:12,740 --> 00:07:13,670
+It&#39;s one parameter.
+
+147
+00:07:13,670 --> 00:07:14,190
+It&#39;s a mean.
+
+148
+00:07:14,190 --> 00:07:15,640
+[SNORING]
+
+149
+00:07:15,640 --> 00:07:16,526
+Rob&#39;s falling asleep.
+
+150
+00:07:16,526 --> 00:07:17,900
+Sorry.
+
+151
+00:07:17,900 --> 00:07:19,010
+Too much detail, Rob?
+
+152
+00:07:19,010 --> 00:07:19,220
+Exactly.
+
+153
+00:07:19,220 --> 00:07:21,440
+Way too much detail, OK.
+
+154
+00:07:21,440 --> 00:07:22,080
+So there we have it.
+
+155
+00:07:22,080 --> 00:07:23,630
+Those are the formulas.
+
+156
+00:07:23,630 --> 00:07:27,190
+You plug those back in, you&#39;ll now get
+
+157
+00:07:27,190 --> 00:07:31,520
+estimated decision boundary.
+
+158
+00:07:31,520 --> 00:07:34,170
+And instead of being exactly zero, it&#39;s, in this case,
+
+159
+00:07:34,170 --> 00:07:36,220
+slightly to the left of zero, but pretty close.
+

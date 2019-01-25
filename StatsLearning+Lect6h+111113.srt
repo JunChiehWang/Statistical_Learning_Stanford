@@ -1,0 +1,768 @@
+0
+00:00:00,460 --> 00:00:02,410
+OK.
+
+1
+00:00:02,410 --> 00:00:04,500
+That&#39;s discriminant analysis when we
+
+2
+00:00:04,500 --> 00:00:07,540
+use Gaussian densities.
+
+3
+00:00:07,540 --> 00:00:10,510
+But now the form that we wrote down is quite general.
+
+4
+00:00:10,510 --> 00:00:15,500
+And you can use other estimates of densities and
+
+5
+00:00:15,500 --> 00:00:22,270
+plug them into this rule and get classification rules.
+
+6
+00:00:22,270 --> 00:00:24,430
+Up till now we&#39;ve been using Gaussian densities with the
+
+7
+00:00:24,430 --> 00:00:29,210
+same variance for the X&#39;s in each class.
+
+8
+00:00:29,210 --> 00:00:33,110
+What if the variances are different in each class?
+
+9
+00:00:33,110 --> 00:00:35,410
+Well, you can plug those forms in.
+
+10
+00:00:35,410 --> 00:00:38,770
+And then remember we had that magic cancellation because of
+
+11
+00:00:38,770 --> 00:00:40,120
+the equal variances?
+
+12
+00:00:40,120 --> 00:00:44,610
+Well, when the variances are different in each class, the
+
+13
+00:00:44,610 --> 00:00:46,740
+quadratic terms don&#39;t cancel.
+
+14
+00:00:46,740 --> 00:00:48,720
+And so now your discriminant functions are going to be
+
+15
+00:00:48,720 --> 00:00:54,180
+quadratic functions of X. OK?
+
+16
+00:00:54,180 --> 00:00:55,100
+That&#39;s one form.
+
+17
+00:00:55,100 --> 00:00:59,130
+It&#39;s called quadratic discriminant analysis.
+
+18
+00:00:59,130 --> 00:01:02,400
+Another thing you can do--
+
+19
+00:01:02,400 --> 00:01:04,989
+and especially this is useful when you have a large number
+
+20
+00:01:04,989 --> 00:01:09,070
+of features, like the 4,000 or so that Rob mentioned, when
+
+21
+00:01:09,070 --> 00:01:13,200
+you really wouldn&#39;t want to estimate these large
+
+22
+00:01:13,200 --> 00:01:15,170
+covariance matrices--
+
+23
+00:01:15,170 --> 00:01:18,820
+you can assume that in each class the density factors into
+
+24
+00:01:18,820 --> 00:01:21,090
+a product of densities.
+
+25
+00:01:21,090 --> 00:01:23,800
+That amounts to saying that the variables are
+
+26
+00:01:23,800 --> 00:01:27,670
+conditionally independent in each of the classes.
+
+27
+00:01:27,670 --> 00:01:32,130
+And if you do that and plug it into this formula over here,
+
+28
+00:01:32,130 --> 00:01:36,790
+you get something known as the naive Bayes classifier.
+
+29
+00:01:36,790 --> 00:01:39,320
+For linear discriminant analysis, this means that the
+
+30
+00:01:39,320 --> 00:01:41,585
+covariances, sigma sub k are diagonal.
+
+31
+00:01:45,020 --> 00:01:50,580
+And instead of estimating the covariance matrix, if you&#39;ve
+
+32
+00:01:50,580 --> 00:01:53,720
+got P variables it&#39;s got P squared parameters.
+
+33
+00:01:53,720 --> 00:01:57,860
+But if you assume that it&#39;s diagonal, then you need to
+
+34
+00:01:57,860 --> 00:01:59,420
+estimate P parameters again.
+
+35
+00:01:59,420 --> 00:02:01,390
+And although the assumption seems very crude--
+
+36
+00:02:01,390 --> 00:02:03,650
+the assumption is wrong--
+
+37
+00:02:03,650 --> 00:02:05,680
+this naive Bayes classifier is actually very useful in
+
+38
+00:02:05,680 --> 00:02:07,280
+high-dimensional problems.
+
+39
+00:02:07,280 --> 00:02:09,145
+And it&#39;s one actually we&#39;ll return to later
+
+40
+00:02:09,145 --> 00:02:10,759
+in different forms.
+
+41
+00:02:10,758 --> 00:02:13,020
+Right.
+
+42
+00:02:13,020 --> 00:02:15,690
+In fact, we&#39;d probably think it&#39;s always wrong, wouldn&#39;t
+
+43
+00:02:15,690 --> 00:02:16,060
+[? we, Rob? ?]
+
+44
+00:02:16,060 --> 00:02:16,520
+Right.
+
+45
+00:02:16,520 --> 00:02:17,500
+Yeah.
+
+46
+00:02:17,500 --> 00:02:23,640
+And so what happens is we end up with quiet flattened and
+
+47
+00:02:23,640 --> 00:02:26,370
+maybe biased estimates for the probabilities.
+
+48
+00:02:26,370 --> 00:02:28,320
+But in terms of classification, you just need
+
+49
+00:02:28,320 --> 00:02:31,610
+to know which probability&#39;s the largest to classify it.
+
+50
+00:02:31,610 --> 00:02:35,170
+So you can tolerate quite a lot of bias and still get good
+
+51
+00:02:35,170 --> 00:02:37,150
+classification performance.
+
+52
+00:02:37,150 --> 00:02:40,300
+And what you get in return is much reduced variance from
+
+53
+00:02:40,300 --> 00:02:41,875
+having to estimate far fewer parameters.
+
+54
+00:02:44,980 --> 00:02:47,830
+Then there&#39;s much more other general forms where we don&#39;t
+
+55
+00:02:47,830 --> 00:02:49,855
+assume Gaussian at all.
+
+56
+00:02:49,855 --> 00:02:53,500
+We can estimate the densities using our favorite density
+
+57
+00:02:53,500 --> 00:02:56,460
+estimation technique and then go and plug them back into
+
+58
+00:02:56,460 --> 00:02:59,820
+this formula, and that&#39;ll give you a classification rule.
+
+59
+00:02:59,820 --> 00:03:02,960
+That&#39;s a very general approach that can be used.
+
+60
+00:03:02,960 --> 00:03:06,120
+And in fact, many of the classifiers that we know we
+
+61
+00:03:06,120 --> 00:03:09,640
+can understand from this point of view.
+
+62
+00:03:09,640 --> 00:03:10,410
+So here we have it.
+
+63
+00:03:10,410 --> 00:03:13,170
+Quadratic discriminant analysis uses a different
+
+64
+00:03:13,170 --> 00:03:15,300
+covariance matrix for each class.
+
+65
+00:03:15,300 --> 00:03:18,310
+And so there&#39;s no cancellation of the sigmas.
+
+66
+00:03:18,310 --> 00:03:24,280
+The discriminant functions now have this distance term that
+
+67
+00:03:24,280 --> 00:03:28,460
+involves sigma sub k, which is for the kth class.
+
+68
+00:03:28,460 --> 00:03:32,650
+There&#39;s a term to do with the prior probability, and there&#39;s
+
+69
+00:03:32,650 --> 00:03:36,870
+a determinant term that comes from the covariance matrix.
+
+70
+00:03:36,870 --> 00:03:42,880
+And you can see it gives you a curved discriminant boundary.
+
+71
+00:03:42,880 --> 00:03:45,550
+And the quadratic terms matter here,
+
+72
+00:03:45,550 --> 00:03:47,360
+because they&#39;re different.
+
+73
+00:03:49,890 --> 00:03:56,190
+In the left plot here, we see a case when the true boundary
+
+74
+00:03:56,190 --> 00:03:57,510
+really should be linear.
+
+75
+00:03:57,510 --> 00:03:59,190
+That&#39;s the dotted curve.
+
+76
+00:03:59,190 --> 00:04:02,690
+And in this case, of course linear discriminant analysis
+
+77
+00:04:02,690 --> 00:04:03,760
+does a good job.
+
+78
+00:04:03,760 --> 00:04:07,120
+Quadratic discriminant analysis curves somewhat and
+
+79
+00:04:07,120 --> 00:04:08,760
+gives a slight bent boundary.
+
+80
+00:04:08,760 --> 00:04:11,390
+But it won&#39;t really affect most classification
+
+81
+00:04:11,390 --> 00:04:13,150
+performance much.
+
+82
+00:04:13,150 --> 00:04:17,660
+In the right hand plot, on the other hand, the true data came
+
+83
+00:04:17,660 --> 00:04:21,990
+from a situation where the covariance were different.
+
+84
+00:04:21,990 --> 00:04:25,800
+The Bayes decision boundary is curved, and the quadratic
+
+85
+00:04:25,800 --> 00:04:28,840
+discriminant analysis pretty much got it, whereas linear
+
+86
+00:04:28,840 --> 00:04:31,150
+discriminant analysis gives you quite a different boundary
+
+87
+00:04:31,150 --> 00:04:32,400
+in that case.
+
+88
+00:04:35,160 --> 00:04:38,160
+Quadratic discriminant analysis is attractive if the
+
+89
+00:04:38,160 --> 00:04:39,660
+number of variables is small.
+
+90
+00:04:39,660 --> 00:04:43,490
+When the number of variables or features is large, you&#39;ve
+
+91
+00:04:43,490 --> 00:04:46,550
+got to estimate these big covariance matrices, and
+
+92
+00:04:46,550 --> 00:04:48,180
+things can break down.
+
+93
+00:04:48,180 --> 00:04:51,150
+And even for LDA it can break down.
+
+94
+00:04:51,150 --> 00:04:54,070
+Here&#39;s where naive Bayes becomes attractive.
+
+95
+00:04:54,070 --> 00:04:55,870
+It makes a much stronger assumption.
+
+96
+00:04:55,870 --> 00:04:59,180
+It assumes that the covariance in each of the classes,
+
+97
+00:04:59,180 --> 00:05:01,710
+although different, are diagonal.
+
+98
+00:05:01,710 --> 00:05:04,720
+And so that&#39;s much fewer parameters.
+
+99
+00:05:04,720 --> 00:05:08,270
+Now when you look at the discriminant functions,
+
+100
+00:05:08,270 --> 00:05:12,750
+because diagonal and Gaussian means that the densities are
+
+101
+00:05:12,750 --> 00:05:16,230
+independent and so we have this product here, when we
+
+102
+00:05:16,230 --> 00:05:21,920
+take logs we get a relatively simple expression, which is in
+
+103
+00:05:21,920 --> 00:05:24,840
+each class there&#39;s a contribution of the feature
+
+104
+00:05:24,840 --> 00:05:28,560
+from the mean for the class scaled by the variance,
+
+105
+00:05:28,560 --> 00:05:31,060
+there&#39;s the determinant term, and there&#39;s the prior term.
+
+106
+00:05:34,326 --> 00:05:36,940
+This is the discriminant function for the kth class for
+
+107
+00:05:36,940 --> 00:05:37,720
+naive Bayes.
+
+108
+00:05:37,720 --> 00:05:39,870
+And you compute one of these for each of the classes, then
+
+109
+00:05:39,870 --> 00:05:42,560
+you classify it.
+
+110
+00:05:42,560 --> 00:05:46,080
+You can use mixed features for naive Bayes.
+
+111
+00:05:46,080 --> 00:05:51,040
+And in that case, what we mean by that is some qualitative
+
+112
+00:05:51,040 --> 00:05:53,300
+and some quantitative futures.
+
+113
+00:05:53,300 --> 00:05:55,770
+For the quantitative ones, we&#39;d use the Gaussian.
+
+114
+00:05:55,770 --> 00:06:00,710
+And for the qualitative ones, we replace the Gaussian
+
+115
+00:06:00,710 --> 00:06:05,430
+densities by just histograms or probability mass functions,
+
+116
+00:06:05,430 --> 00:06:09,960
+in this case, over the discrete categories.
+
+117
+00:06:09,960 --> 00:06:14,560
+Naive Bayes is very handy from this point of view.
+
+118
+00:06:14,560 --> 00:06:18,150
+And even though it has strong assumptions, it often produces
+
+119
+00:06:18,150 --> 00:06:21,110
+good classification results.
+
+120
+00:06:21,110 --> 00:06:24,050
+Because also, once again in classification, we&#39;re mainly
+
+121
+00:06:24,050 --> 00:06:27,240
+concerned about which class has the highest probability
+
+122
+00:06:27,240 --> 00:06:31,660
+and not whether we got the probabilities exactly right.
+
+123
+00:06:31,660 --> 00:06:33,890
+OK.
+
+124
+00:06:33,890 --> 00:06:38,500
+We&#39;ve seen two forms of classification, logistic
+
+125
+00:06:38,500 --> 00:06:41,610
+regression and linear discriminant analysis.
+
+126
+00:06:41,610 --> 00:06:42,860
+And we saw its generalizations.
+
+127
+00:06:49,310 --> 00:06:52,100
+How do they differ?
+
+128
+00:06:52,100 --> 00:06:56,590
+It seems there may be similarities between the two.
+
+129
+00:06:56,590 --> 00:06:58,850
+Now it turns out you can show for linear discriminant
+
+130
+00:06:58,850 --> 00:07:01,540
+analysis that if you take its--
+
+131
+00:07:01,540 --> 00:07:03,500
+We had expression for the probabilities
+
+132
+00:07:03,500 --> 00:07:04,530
+for each of the classes.
+
+133
+00:07:04,530 --> 00:07:07,280
+So if you have two classes, we can show that if you take the
+
+134
+00:07:07,280 --> 00:07:12,060
+log odds, just like we did in logistic regression, which is
+
+135
+00:07:12,060 --> 00:07:15,040
+the log of the probability for class one versus the
+
+136
+00:07:15,040 --> 00:07:20,700
+probability for class two, it&#39;s a linear function of X
+
+137
+00:07:20,700 --> 00:07:23,070
+for two classes.
+
+138
+00:07:23,070 --> 00:07:27,720
+It&#39;s got exactly the same form as logistic regression.
+
+139
+00:07:27,720 --> 00:07:31,740
+They both give you linear logistic models.
+
+140
+00:07:31,740 --> 00:07:34,590
+So the difference is in how the parameters are estimated.
+
+141
+00:07:37,180 --> 00:07:40,380
+Logistic regression uses the conditional likelihood based
+
+142
+00:07:40,380 --> 00:07:44,460
+on probability of Y given X. Remember, it was using the
+
+143
+00:07:44,460 --> 00:07:50,360
+probabilities of a 1 or a 0 given X
+
+144
+00:07:50,360 --> 00:07:52,380
+in each of the classes.
+
+145
+00:07:52,380 --> 00:07:55,340
+And in machine learning, this is known as discriminative
+
+146
+00:07:55,340 --> 00:08:00,860
+learning using the conditional distribution of Y given X.
+
+147
+00:08:00,860 --> 00:08:03,960
+Discriminant analysis, it turns out it&#39;s estimating
+
+148
+00:08:03,960 --> 00:08:09,530
+these parameters over here using the full likelihood.
+
+149
+00:08:09,530 --> 00:08:14,140
+Because it&#39;s using the distribution of X&#39;s and Y&#39;s,
+
+150
+00:08:14,140 --> 00:08:16,750
+whereas logistic regression was only using the
+
+151
+00:08:16,750 --> 00:08:19,750
+distribution of Y&#39;s.
+
+152
+00:08:19,750 --> 00:08:23,070
+And in that case, it&#39;s known as generative learning.
+
+153
+00:08:23,070 --> 00:08:27,070
+Remember, we modelled the means and variances of X in
+
+154
+00:08:27,070 --> 00:08:29,920
+each of the classes, and we modeled the prior probability.
+
+155
+00:08:29,920 --> 00:08:31,980
+So that can be seen as modelling the joint
+
+156
+00:08:31,980 --> 00:08:36,270
+distribution of X and Y. That&#39;s one way of seeing
+
+157
+00:08:36,270 --> 00:08:38,940
+what&#39;s different between the two.
+
+158
+00:08:38,940 --> 00:08:41,490
+But despite these differences, in practice the results are
+
+159
+00:08:41,490 --> 00:08:43,210
+often very similar.
+
+160
+00:08:43,210 --> 00:08:45,360
+And you can use one method with the other, and you&#39;re
+
+161
+00:08:45,360 --> 00:08:46,610
+going to get very similar results.
+
+162
+00:08:51,200 --> 00:08:54,610
+As a footnote, logistic regression can also fit
+
+163
+00:08:54,610 --> 00:08:56,160
+quadratic boundaries.
+
+164
+00:08:56,160 --> 00:08:59,180
+We used quadratic discriminant analysis to get quadratic
+
+165
+00:08:59,180 --> 00:09:00,600
+boundaries.
+
+166
+00:09:00,600 --> 00:09:03,570
+But we can fit quadratic boundaries by explicitly
+
+167
+00:09:03,570 --> 00:09:06,180
+including quadratic terms in the model.
+
+168
+00:09:06,180 --> 00:09:08,680
+Just like we did in linear regression, in logistic
+
+169
+00:09:08,680 --> 00:09:13,200
+regression we can put in X squareds and XI&#39;s times XJ&#39;s
+
+170
+00:09:13,200 --> 00:09:15,190
+and terms like that and just explicitly
+
+171
+00:09:15,190 --> 00:09:18,000
+get a quadratic boundary.
+
+172
+00:09:18,000 --> 00:09:19,430
+OK.
+
+173
+00:09:19,430 --> 00:09:21,820
+That&#39;s the end of this section.
+
+174
+00:09:21,820 --> 00:09:24,850
+That&#39;s an introduction to classification using these two
+
+175
+00:09:24,850 --> 00:09:26,440
+very popular methods.
+
+176
+00:09:26,440 --> 00:09:28,490
+And later on in the class, you&#39;re going to see that we&#39;re
+
+177
+00:09:28,490 --> 00:09:31,470
+going to come back to some of these methods and look at more
+
+178
+00:09:31,470 --> 00:09:35,050
+general versions of them and build richer
+
+179
+00:09:35,050 --> 00:09:36,390
+classification rules.
+
+180
+00:09:36,390 --> 00:09:39,870
+And importantly, we&#39;ll discuss another very popular method
+
+181
+00:09:39,870 --> 00:09:42,580
+called the support vector machine, which is another
+
+182
+00:09:42,580 --> 00:09:44,160
+approach to classification.
+
+183
+00:09:44,160 --> 00:09:46,070
+And by way of coming attractions, the next section
+
+184
+00:09:46,070 --> 00:09:46,600
+is going to be on
+
+185
+00:09:46,600 --> 00:09:49,080
+cross-validation and bootstrap.
+
+186
+00:09:49,080 --> 00:09:52,150
+In that section, we&#39;ll get to meet Brad Efron, who&#39;s our
+
+187
+00:09:52,150 --> 00:09:56,990
+colleague and also was my PhD supervisor many years ago.
+
+188
+00:09:56,990 --> 00:09:58,780
+And he was the person who invented the bootstraps.
+
+189
+00:09:58,780 --> 00:10:03,660
+So he&#39;ll tell us a bit about the bootstrap and how he
+
+190
+00:10:03,660 --> 00:10:05,530
+proposed it in his 1980 paper.
+
+191
+00:10:05,530 --> 00:10:06,780
+Oh, fantastic.
+

@@ -1,0 +1,788 @@
+0
+00:00:00,780 --> 00:00:04,500
+So that&#39;s a good segue into what do we do when we have
+
+1
+00:00:04,500 --> 00:00:05,810
+more than one variable.
+
+2
+00:00:05,810 --> 00:00:09,590
+The two models we&#39;ve considered so far just perform
+
+3
+00:00:09,590 --> 00:00:11,460
+logistic regression with single variables.
+
+4
+00:00:11,460 --> 00:00:15,640
+But of course, if we&#39;ve got a collection of variables, we
+
+5
+00:00:15,640 --> 00:00:18,190
+want to take them all into account.
+
+6
+00:00:18,190 --> 00:00:22,100
+And so, in that case, we&#39;re going to build a multi-variant
+
+7
+00:00:22,100 --> 00:00:24,330
+logistic regression model.
+
+8
+00:00:24,330 --> 00:00:27,660
+So the transformation of the probability is the same as we
+
+9
+00:00:27,660 --> 00:00:30,715
+had before, except now we&#39;ve got a general linear model
+
+10
+00:00:30,715 --> 00:00:32,810
+with an intercept and a coefficient
+
+11
+00:00:32,810 --> 00:00:35,270
+for each of the variables.
+
+12
+00:00:35,270 --> 00:00:37,980
+And if you invert that transformation, that, again,
+
+13
+00:00:37,980 --> 00:00:40,300
+gives you a form for the probability that&#39;s guaranteed
+
+14
+00:00:40,300 --> 00:00:41,710
+to be between zero and one.
+
+15
+00:00:44,370 --> 00:00:46,740
+Well, we can fit that using glm and r
+
+16
+00:00:46,740 --> 00:00:48,720
+just like we did before.
+
+17
+00:00:48,720 --> 00:00:51,830
+And we&#39;ll through in our variable balance as well, and
+
+18
+00:00:51,830 --> 00:00:54,730
+income, and the student variable.
+
+19
+00:00:54,730 --> 00:00:58,810
+And now, we get three coefficients, three standard
+
+20
+00:00:58,810 --> 00:01:08,330
+errors, three z statistics, and three p values.
+
+21
+00:01:08,330 --> 00:01:12,190
+And the first thing we see here is that as they were in
+
+22
+00:01:12,190 --> 00:01:16,010
+the single variable case, balance and student are
+
+23
+00:01:16,010 --> 00:01:18,470
+significant.
+
+24
+00:01:18,470 --> 00:01:20,730
+Income is not significant.
+
+25
+00:01:20,730 --> 00:01:22,745
+So it seems like two of the variables are important.
+
+26
+00:01:25,290 --> 00:01:27,700
+But here&#39;s something rather striking.
+
+27
+00:01:27,700 --> 00:01:30,000
+We know this at the coefficient for student is
+
+28
+00:01:30,000 --> 00:01:35,020
+negative while it was positive before.
+
+29
+00:01:35,020 --> 00:01:38,510
+So before, when we just measured student on its own,
+
+30
+00:01:38,510 --> 00:01:40,700
+it had a positive coefficient.
+
+31
+00:01:40,700 --> 00:01:43,090
+But when we fit it in a multivariate model, the
+
+32
+00:01:43,090 --> 00:01:44,595
+coefficient is negative.
+
+33
+00:01:44,595 --> 00:01:47,930
+Do you think this is an error, Rob?
+
+34
+00:01:47,930 --> 00:01:50,660
+I don&#39;t think so.
+
+35
+00:01:50,660 --> 00:01:53,070
+So how could that happen?
+
+36
+00:01:53,070 --> 00:01:55,380
+Well, remember the last time we talked about in regression
+
+37
+00:01:55,380 --> 00:01:58,690
+models how difficult it is to interpret coefficients in a
+
+38
+00:01:58,690 --> 00:02:02,150
+multiple regression model, because the correlations
+
+39
+00:02:02,150 --> 00:02:05,130
+between the variables can affect the signs.
+
+40
+00:02:05,130 --> 00:02:06,770
+So there&#39;s going to be--
+
+41
+00:02:06,770 --> 00:02:08,080
+we&#39;re going to see now the role of
+
+42
+00:02:08,080 --> 00:02:11,440
+correlations in the variables.
+
+43
+00:02:11,440 --> 00:02:14,080
+So here&#39;s a picture.
+
+44
+00:02:14,080 --> 00:02:18,320
+There we see credit card balance.
+
+45
+00:02:18,320 --> 00:02:26,460
+And we see the default rate the vertical axis.
+
+46
+00:02:26,460 --> 00:02:32,480
+And the student center of, let&#39;s see--
+
+47
+00:02:32,480 --> 00:02:40,280
+so students status, brown is yes and blue is no.
+
+48
+00:02:40,280 --> 00:02:42,510
+So students tend to have higher balances than
+
+49
+00:02:42,510 --> 00:02:43,670
+non-students.
+
+50
+00:02:43,670 --> 00:02:46,730
+So their marginal default rate is higher than for
+
+51
+00:02:46,730 --> 00:02:49,390
+non-students.
+
+52
+00:02:49,390 --> 00:02:50,720
+Because we just saw that.
+
+53
+00:02:50,720 --> 00:02:53,420
+Balance plays a role.
+
+54
+00:02:53,420 --> 00:02:56,130
+But what we see in this plot on the left is that for each
+
+55
+00:02:56,130 --> 00:02:59,260
+level of balance, students default less than
+
+56
+00:02:59,260 --> 00:03:00,510
+non-students.
+
+57
+00:03:02,850 --> 00:03:06,370
+So when you just look at student on its own, it&#39;s
+
+58
+00:03:06,370 --> 00:03:09,420
+confounded with balance.
+
+59
+00:03:09,420 --> 00:03:13,710
+And the strong effect of balance makes it looks like
+
+60
+00:03:13,710 --> 00:03:16,990
+students are worse defaulters.
+
+61
+00:03:16,990 --> 00:03:18,910
+But this plot explains it all.
+
+62
+00:03:18,910 --> 00:03:23,520
+For each level of credit card balance, if we look separately
+
+63
+00:03:23,520 --> 00:03:27,250
+for students and non-students, students tend to have a lower
+
+64
+00:03:27,250 --> 00:03:30,080
+default rate.
+
+65
+00:03:30,080 --> 00:03:33,520
+And so that we can tease out by multiple logistic
+
+66
+00:03:33,520 --> 00:03:38,280
+regression, which takes these correlations into account.
+
+67
+00:03:38,280 --> 00:03:42,290
+Let&#39;s move on to another example with more variables.
+
+68
+00:03:42,290 --> 00:03:45,730
+We talked about this example in the introduction.
+
+69
+00:03:45,730 --> 00:03:49,180
+This is a South African heart disease data set.
+
+70
+00:03:49,180 --> 00:03:51,535
+Remember, South Africans eat a lot of meat.
+
+71
+00:03:51,535 --> 00:03:54,580
+Rob, did I ever tell you the story about the
+
+72
+00:03:54,580 --> 00:03:55,930
+South Africans and--
+
+73
+00:03:55,930 --> 00:03:56,770
+More than once.
+
+74
+00:03:56,770 --> 00:03:57,980
+More than once.
+
+75
+00:03:57,980 --> 00:04:01,460
+I think Rob doesn&#39;t want to hear the story again.
+
+76
+00:04:01,460 --> 00:04:03,160
+Any way, they do eat a lot of meat.
+
+77
+00:04:03,160 --> 00:04:05,842
+So they did a study in South Africa.
+
+78
+00:04:05,842 --> 00:04:08,420
+It was a retrospective study.
+
+79
+00:04:08,420 --> 00:04:14,710
+They went and found 160 cases of white males who&#39;d had
+
+80
+00:04:14,710 --> 00:04:17,220
+myocardial infarction, which is a fancy
+
+81
+00:04:17,220 --> 00:04:19,200
+name for a heart attack.
+
+82
+00:04:19,200 --> 00:04:22,910
+And amongst the many people who hadn&#39;t had a heart attack,
+
+83
+00:04:22,910 --> 00:04:25,670
+they took a sample of 302 controls.
+
+84
+00:04:25,670 --> 00:04:28,440
+It&#39;s called a case control sample.
+
+85
+00:04:28,440 --> 00:04:30,930
+And for these people, they were all white males in the
+
+86
+00:04:30,930 --> 00:04:33,030
+age range 15 to 64.
+
+87
+00:04:33,030 --> 00:04:35,110
+And they were from this Western Cape
+
+88
+00:04:35,110 --> 00:04:36,780
+region of South Africa.
+
+89
+00:04:36,780 --> 00:04:41,460
+This was done in the early 1980s.
+
+90
+00:04:41,460 --> 00:04:46,200
+So in this region, the overall prevalence was very high for
+
+91
+00:04:46,200 --> 00:04:51,620
+heart disease, 5.1%, which is very high risk.
+
+92
+00:04:51,620 --> 00:04:54,810
+So in the study we have measurements on seven
+
+93
+00:04:54,810 --> 00:04:58,610
+predictors or, in this case, known as risk factors.
+
+94
+00:04:58,610 --> 00:05:01,550
+And they show in the scatter plot matrix, which I&#39;ll show
+
+95
+00:05:01,550 --> 00:05:03,420
+you right here.
+
+96
+00:05:03,420 --> 00:05:05,880
+Remember, the scatter plot matrix is a very nice way of
+
+97
+00:05:05,880 --> 00:05:09,290
+plotting every variable against every other variable.
+
+98
+00:05:09,290 --> 00:05:13,160
+And now, because it&#39;s a classification problem, we can
+
+99
+00:05:13,160 --> 00:05:17,300
+code into the plot the heart disease status.
+
+100
+00:05:17,300 --> 00:05:21,850
+And so the brown or red points here are those cases that had
+
+101
+00:05:21,850 --> 00:05:23,110
+heart disease.
+
+102
+00:05:23,110 --> 00:05:28,110
+And the blue points are the controls.
+
+103
+00:05:28,110 --> 00:05:32,040
+And look at the top plot, for example, if you were high in
+
+104
+00:05:32,040 --> 00:05:36,270
+tobacco usage and your systolic blood pressure is
+
+105
+00:05:36,270 --> 00:05:39,950
+high, you tend to be a brown point.
+
+106
+00:05:39,950 --> 00:05:45,470
+To those are the people who tended to have heart attacks.
+
+107
+00:05:45,470 --> 00:05:48,920
+So each of these plots shows a pairwise plot of two of the
+
+108
+00:05:48,920 --> 00:05:51,180
+risk factors and codes in the heart disease status.
+
+109
+00:05:51,180 --> 00:05:52,490
+You forgot one risk factor.
+
+110
+00:05:52,490 --> 00:05:53,660
+What was that?
+
+111
+00:05:53,660 --> 00:05:55,096
+Talking with a funny accent.
+
+112
+00:05:55,096 --> 00:05:56,840
+Talking with a funny accent.
+
+113
+00:05:56,840 --> 00:05:58,090
+We&#39;ve all got that.
+
+114
+00:06:00,680 --> 00:06:01,763
+Very good, Rob.
+
+115
+00:06:01,763 --> 00:06:03,760
+I&#39;m doing all the hard work here.
+
+116
+00:06:03,760 --> 00:06:06,100
+And he&#39;s just sitting here thinking of jokes.
+
+117
+00:06:06,100 --> 00:06:09,200
+The coffee&#39;s good, too.
+
+118
+00:06:09,200 --> 00:06:11,890
+There&#39;s one funny variable here, family history.
+
+119
+00:06:11,890 --> 00:06:13,575
+Well, it&#39;s a categorical variable.
+
+120
+00:06:13,575 --> 00:06:16,880
+It turns out to be an important risk factor, apart
+
+121
+00:06:16,880 --> 00:06:18,740
+from being South African or not.
+
+122
+00:06:18,740 --> 00:06:20,270
+If you have a family history of heart
+
+123
+00:06:20,270 --> 00:06:24,000
+disease, the risk is high.
+
+124
+00:06:24,000 --> 00:06:25,790
+And you can see that it&#39;s a zero-one
+
+125
+00:06:25,790 --> 00:06:26,690
+variable in this case.
+
+126
+00:06:26,690 --> 00:06:29,650
+And you probably can see there&#39;s more browns in the
+
+127
+00:06:29,650 --> 00:06:33,550
+right-hand category than the left-hand category.
+
+128
+00:06:33,550 --> 00:06:37,500
+So in this case, we&#39;re not really trying to predict the
+
+129
+00:06:37,500 --> 00:06:40,410
+probability of getting heart disease.
+
+130
+00:06:40,410 --> 00:06:43,500
+What we&#39;re really trying to do is to understand the role of
+
+131
+00:06:43,500 --> 00:06:50,320
+the risk factors in the risk of heart disease.
+
+132
+00:06:50,320 --> 00:06:53,730
+And actually, this study was an intervention study aimed at
+
+133
+00:06:53,730 --> 00:06:56,210
+educating the public on healthier diets.
+
+134
+00:06:56,210 --> 00:06:57,750
+But that&#39;s a whole other story.
+
+135
+00:06:57,750 --> 00:06:58,950
+Did it work?
+
+136
+00:06:58,950 --> 00:07:01,820
+Um, I think it might have worked a little bit.
+
+137
+00:07:01,820 --> 00:07:03,620
+But this crowd is really hard to get them
+
+138
+00:07:03,620 --> 00:07:06,286
+away from their meat.
+
+139
+00:07:06,286 --> 00:07:08,340
+Do you know that they call a barbecue in South Africa?
+
+140
+00:07:08,340 --> 00:07:09,680
+No.
+
+141
+00:07:09,680 --> 00:07:11,016
+Braaivleis.
+
+142
+00:07:11,016 --> 00:07:12,266
+OK.
+
+143
+00:07:14,130 --> 00:07:16,660
+Every South African loves their braaivleis and their
+
+144
+00:07:16,660 --> 00:07:18,270
+bull tongue.
+
+145
+00:07:18,270 --> 00:07:23,310
+So here&#39;s the result of GLM for the heart disease data.
+
+146
+00:07:23,310 --> 00:07:24,650
+And here I actually show you some of the
+
+147
+00:07:24,650 --> 00:07:26,440
+code used to fit it.
+
+148
+00:07:26,440 --> 00:07:28,560
+We&#39;ll get into the code session later.
+
+149
+00:07:28,560 --> 00:07:32,120
+But it&#39;s just interesting to see that it&#39;s
+
+150
+00:07:32,120 --> 00:07:33,450
+pretty easy to do.
+
+151
+00:07:33,450 --> 00:07:34,700
+Here&#39;s a call to glm.
+
+152
+00:07:37,320 --> 00:07:42,460
+We tell it the response is CHD, which is the name of the
+
+153
+00:07:42,460 --> 00:07:44,080
+response variable.
+
+154
+00:07:44,080 --> 00:07:46,460
+And tilde means to be modeled as.
+
+155
+00:07:46,460 --> 00:07:49,640
+And dot means all the other variables in the data frame
+
+156
+00:07:49,640 --> 00:07:51,020
+which, in this case, is heart.
+
+157
+00:07:51,020 --> 00:07:53,600
+So that&#39;s a data frame that&#39;s got all the
+
+158
+00:07:53,600 --> 00:07:57,060
+variables in the study.
+
+159
+00:07:57,060 --> 00:07:59,140
+And the response here is CHD.
+
+160
+00:07:59,140 --> 00:08:02,390
+And we tell it the family&#39;s binomial, which just tells it
+
+161
+00:08:02,390 --> 00:08:05,480
+to fit the logistic regression model.
+
+162
+00:08:05,480 --> 00:08:07,430
+And then we fit that model.
+
+163
+00:08:07,430 --> 00:08:10,610
+Save it in the object called heartfit.
+
+164
+00:08:10,610 --> 00:08:13,550
+And then we do a summary of heartfit.
+
+165
+00:08:13,550 --> 00:08:16,620
+And we get printed out this summary, which is the same
+
+166
+00:08:16,620 --> 00:08:19,320
+summary that we&#39;ve seen before.
+
+167
+00:08:19,320 --> 00:08:22,530
+And so now we get coefficients for each of the variables.
+
+168
+00:08:22,530 --> 00:08:25,890
+In this column, we get standard errors, c
+
+169
+00:08:25,890 --> 00:08:29,170
+values, and p values.
+
+170
+00:08:29,170 --> 00:08:32,150
+And here the story is a little bit mixed.
+
+171
+00:08:32,150 --> 00:08:33,929
+We&#39;re not too interested in the intercept.
+
+172
+00:08:33,929 --> 00:08:37,720
+Tobacco usage is significant.
+
+173
+00:08:37,720 --> 00:08:41,909
+Low density lipoproteins, that&#39;s a cholesterol measure,
+
+174
+00:08:41,909 --> 00:08:43,900
+that&#39;s significant.
+
+175
+00:08:43,900 --> 00:08:46,550
+Remember, there&#39;s a good and bad cholesterol.
+
+176
+00:08:46,550 --> 00:08:48,590
+This is the bad cholesterol.
+
+177
+00:08:48,590 --> 00:08:52,040
+Family history, very significant.
+
+178
+00:08:52,040 --> 00:08:53,100
+And age is significant.
+
+179
+00:08:53,100 --> 00:08:56,620
+We know the risk of heart disease goes up with age.
+
+180
+00:08:56,620 --> 00:09:01,910
+Now, interest in the obesity and alcohol usage are not
+
+181
+00:09:01,910 --> 00:09:07,758
+significant here, which seems a little surprising, no?
+
+182
+00:09:07,758 --> 00:09:09,174
+Mm hmm.
+
+183
+00:09:09,174 --> 00:09:13,410
+But this is a case, again, of having correlated variables.
+
+184
+00:09:13,410 --> 00:09:17,720
+If we look in the previous plot, you see that there is a
+
+185
+00:09:17,720 --> 00:09:20,790
+lot of correlation between variables.
+
+186
+00:09:20,790 --> 00:09:26,700
+So age and tobacco usage are correlated.
+
+187
+00:09:26,700 --> 00:09:32,860
+Alcohol usage and LDL seem to be negatively correlated.
+
+188
+00:09:32,860 --> 00:09:36,350
+LDL is the good cholesterol.
+
+189
+00:09:36,350 --> 00:09:37,730
+So there&#39;s lots of correlations.
+
+190
+00:09:37,730 --> 00:09:40,690
+And so those are going to play a role.
+
+191
+00:09:40,690 --> 00:09:42,960
+And so, for example, we&#39;ve got LDL is
+
+192
+00:09:42,960 --> 00:09:44,700
+significant in the model.
+
+193
+00:09:44,700 --> 00:09:48,850
+And once LDL is in the model, perhaps alcohol usage is not
+
+194
+00:09:48,850 --> 00:09:49,490
+needed anymore.
+
+195
+00:09:49,490 --> 00:09:51,050
+Because it&#39;s been taken care of.
+
+196
+00:09:51,050 --> 00:09:53,120
+These variables act as surrogates for each other.
+
