@@ -45,6 +45,7 @@ First courses in statistics, linear algebra, and computing.
 ##### Code
 - [Work on Introduction to Statistical Learning](https://github.com/jstjohn/IntroToStatisticalLearningR-)
 - [ISLR-python](https://github.com/JWarmenhoven/ISLR-python)
+- [ttungl/Statistical-Learning](https://github.com/ttungl/Statistical-Learning)
 
 ##### Markdown
 - [Online Markdown Editor - Dillinger, the Last Markdown Editor ever.](https://dillinger.io/) 
