@@ -1,0 +1,548 @@
+0
+00:00:00,670 --> 00:00:02,360
+OK, now we&#39;re going to have an R session to
+
+1
+00:00:02,360 --> 00:00:04,010
+demonstrate the bootstrap.
+
+2
+00:00:04,010 --> 00:00:07,270
+The bootstrap is one of the really powerful tools we have
+
+3
+00:00:07,270 --> 00:00:11,500
+in modern statistics invented by our friend Brad Efron, just
+
+4
+00:00:11,500 --> 00:00:13,560
+across the road from us here.
+
+5
+00:00:13,560 --> 00:00:17,810
+And what it does is it lets you get at the sampling
+
+6
+00:00:17,810 --> 00:00:22,220
+distribution of statistics, for which it&#39;s really hard to
+
+7
+00:00:22,220 --> 00:00:24,840
+develop theoretical versions.
+
+8
+00:00:24,840 --> 00:00:30,050
+So the bootstrap gives us a really easy way of doing
+
+9
+00:00:30,050 --> 00:00:32,820
+statistics when the theory is very hard.
+
+10
+00:00:32,820 --> 00:00:36,160
+And to illustrate it we&#39;ll use the example we used in the
+
+11
+00:00:36,160 --> 00:00:44,370
+book in section 5.2 where we have a particularly non-linear
+
+12
+00:00:44,370 --> 00:00:49,380
+formula for picking an optimal combination of two
+
+13
+00:00:49,380 --> 00:00:50,660
+investments.
+
+14
+00:00:50,660 --> 00:00:50,990
+OK?
+
+15
+00:00:50,990 --> 00:00:53,480
+So let&#39;s have a look at that.
+
+16
+00:00:53,480 --> 00:01:00,410
+OK, so remember you had two investments, x and y.
+
+17
+00:01:00,410 --> 00:01:05,740
+And let&#39;s say they had risk, which we&#39;ll call variance of x
+
+18
+00:01:05,740 --> 00:01:07,250
+and variance of y.
+
+19
+00:01:10,600 --> 00:01:13,320
+This is a guy who cannot distinguish uppercase and
+
+20
+00:01:13,320 --> 00:01:16,580
+lowercase letters.
+
+21
+00:01:16,580 --> 00:01:18,360
+And we saw--
+
+22
+00:01:18,360 --> 00:01:22,880
+well, we told you that the optimal formula for getting a
+
+23
+00:01:22,880 --> 00:01:29,390
+minimum risk investment, if you&#39;re going to use alpha of x
+
+24
+00:01:29,390 --> 00:01:37,360
+and 1 minus alpha of y, is given by the formula variance
+
+25
+00:01:37,360 --> 00:01:46,275
+of y minus covariance of x and y divided by--
+
+26
+00:01:49,540 --> 00:01:52,680
+there we go, lower case a again--
+
+27
+00:01:52,680 --> 00:02:03,940
+plus variance of y minus 2 times covariance of x and y.
+
+28
+00:02:03,940 --> 00:02:04,710
+OK?
+
+29
+00:02:04,710 --> 00:02:08,340
+So that&#39;s a formula which, of course, if we have data on x
+
+30
+00:02:08,340 --> 00:02:10,990
+and y we can just compute those variances and
+
+31
+00:02:10,990 --> 00:02:13,580
+covariances and plug them in and compute
+
+32
+00:02:13,580 --> 00:02:15,422
+our value for alpha.
+
+33
+00:02:15,422 --> 00:02:19,040
+Now that&#39;s fine, but then you might say, well, what is the
+
+34
+00:02:19,040 --> 00:02:21,500
+sampling variability of alpha?
+
+35
+00:02:21,500 --> 00:02:24,924
+What&#39;s the standard error of alpha?
+
+36
+00:02:24,924 --> 00:02:25,341
+Right?
+
+37
+00:02:25,341 --> 00:02:27,550
+How variable is it going to be?
+
+38
+00:02:27,550 --> 00:02:32,900
+Well, that&#39;s a non-linear formula of x and y.
+
+39
+00:02:32,900 --> 00:02:37,930
+And we just wouldn&#39;t know a priori how to do that.
+
+40
+00:02:37,930 --> 00:02:41,590
+This is a case where the bootstrap really helps out.
+
+41
+00:02:41,590 --> 00:02:44,010
+So we&#39;ll write a function for computing that formula.
+
+42
+00:02:44,010 --> 00:02:45,130
+It&#39;s a simple formula.
+
+43
+00:02:45,130 --> 00:02:49,900
+Given two vectors, x and y, of actual data we write our
+
+44
+00:02:49,900 --> 00:02:54,300
+function alpha and inside it we compute variance of x
+
+45
+00:02:54,300 --> 00:02:58,210
+variance of y covariance of x and y and then we just write
+
+46
+00:02:58,210 --> 00:03:00,140
+out that formula.
+
+47
+00:03:00,140 --> 00:03:05,040
+And closed parens, which means that the function will return
+
+48
+00:03:05,040 --> 00:03:07,690
+the last line that was evaluated, which is
+
+49
+00:03:07,690 --> 00:03:09,050
+actually our alpha.
+
+50
+00:03:09,050 --> 00:03:10,390
+OK?
+
+51
+00:03:10,390 --> 00:03:14,720
+And so now we&#39;ve got a data set portfolio, which has x and
+
+52
+00:03:14,720 --> 00:03:19,120
+y in it, and we can run alpha on the x and y
+
+53
+00:03:19,120 --> 00:03:20,600
+in that data frame.
+
+54
+00:03:20,600 --> 00:03:28,380
+And when we do it we see that alpha comes up to 0.5758.
+
+55
+00:03:28,380 --> 00:03:33,280
+OK, so in order to use the bootstrap function we need to
+
+56
+00:03:33,280 --> 00:03:39,620
+make a little wrapper that allows a bootstrap to work.
+
+57
+00:03:39,620 --> 00:03:42,410
+And this is this function we&#39;ll call alpha.fn.
+
+58
+00:03:42,410 --> 00:03:46,950
+And what it does is it takes a data frame and an index, which
+
+59
+00:03:46,950 --> 00:03:50,840
+indexes rows of the data frame, and then computes your
+
+60
+00:03:50,840 --> 00:03:51,620
+statistic--
+
+61
+00:03:51,620 --> 00:03:55,950
+in this case alpha index, for which it wants to compute the
+
+62
+00:03:55,950 --> 00:03:59,180
+variance in this case, the standard error.
+
+63
+00:03:59,180 --> 00:04:03,530
+Now what index does, it&#39;s going to be an index into the
+
+64
+00:04:03,530 --> 00:04:08,740
+numbers 1 to n, it&#39;ll have values of 1 to n, and there
+
+65
+00:04:08,740 --> 00:04:11,570
+will be n of them, and they can be repeats of course.
+
+66
+00:04:11,570 --> 00:04:14,380
+Because the bootstrap, what the bootstrap does is does a
+
+67
+00:04:14,380 --> 00:04:17,519
+re-sample of your training observations and some
+
+68
+00:04:17,519 --> 00:04:19,790
+observations can be represented more than once and
+
+69
+00:04:19,790 --> 00:04:21,240
+some not at all.
+
+70
+00:04:21,240 --> 00:04:24,800
+And index will say which observations get represented
+
+71
+00:04:24,800 --> 00:04:30,260
+and if they&#39;re repeated that&#39;ll be fine, because
+
+72
+00:04:30,260 --> 00:04:32,330
+that&#39;s what the bootstrap does.
+
+73
+00:04:32,330 --> 00:04:34,470
+And so what this function does is--
+
+74
+00:04:34,470 --> 00:04:38,200
+let&#39;s just enter the function.
+
+75
+00:04:38,200 --> 00:04:39,190
+OK?
+
+76
+00:04:39,190 --> 00:04:44,060
+It uses the function, &quot;with,&quot; which is very handy function.
+
+77
+00:04:44,060 --> 00:04:47,100
+With takes first argument of data frame
+
+78
+00:04:47,100 --> 00:04:48,620
+and then some commands.
+
+79
+00:04:48,620 --> 00:04:53,010
+And what it says is, using the data in the data frame,
+
+80
+00:04:53,010 --> 00:04:54,620
+execute the commands.
+
+81
+00:04:54,620 --> 00:04:58,680
+So in this case, we use with data of index, so that gets
+
+82
+00:04:58,680 --> 00:05:00,770
+the right observations for this
+
+83
+00:05:00,770 --> 00:05:02,770
+particular bootstrap sample.
+
+84
+00:05:02,770 --> 00:05:04,830
+Compute alpha of x and y.
+
+85
+00:05:04,830 --> 00:05:07,620
+And the main value of with is that you can use the named
+
+86
+00:05:07,620 --> 00:05:10,510
+variables x and y that are in the data frame.
+
+87
+00:05:10,510 --> 00:05:11,270
+OK?
+
+88
+00:05:11,270 --> 00:05:13,690
+Very handy.
+
+89
+00:05:13,690 --> 00:05:15,570
+All right, let&#39;s see if this works.
+
+90
+00:05:15,570 --> 00:05:18,930
+We&#39;ll run our function just once using the original index
+
+91
+00:05:18,930 --> 00:05:23,010
+of the data, portfolio 1 to n, and we see we get the same
+
+92
+00:05:23,010 --> 00:05:24,570
+value as we got before.
+
+93
+00:05:24,570 --> 00:05:25,980
+So that works.
+
+94
+00:05:25,980 --> 00:05:28,510
+And so now we&#39;ll run the bootstrap.
+
+95
+00:05:28,510 --> 00:05:33,610
+And since a bootstrap involves random sampling, and if we
+
+96
+00:05:33,610 --> 00:05:36,400
+want to get reproducible results just for purpose of
+
+97
+00:05:36,400 --> 00:05:39,150
+demonstration, it&#39;s good to set the random number seed.
+
+98
+00:05:39,150 --> 00:05:41,990
+So there we set seed 1.
+
+99
+00:05:41,990 --> 00:05:48,240
+And now we run alpha.fn one more time, but we take a
+
+100
+00:05:48,240 --> 00:05:51,420
+random sample instead of giving an index 1 to n.
+
+101
+00:05:51,420 --> 00:05:57,685
+So here we&#39;ve sampled the numbers 1 to 100, sample of
+
+102
+00:05:57,685 --> 00:05:59,830
+size 100, with replace equals 2.
+
+103
+00:05:59,830 --> 00:06:01,490
+This is the kind of thing the bootstrap&#39;s going
+
+104
+00:06:01,490 --> 00:06:02,580
+to do over and over.
+
+105
+00:06:02,580 --> 00:06:04,210
+Here we just do it once.
+
+106
+00:06:04,210 --> 00:06:04,680
+OK?
+
+107
+00:06:04,680 --> 00:06:06,810
+So we get a different value of index.
+
+108
+00:06:06,810 --> 00:06:09,820
+That&#39;s like a bootstrap sample of size 1.
+
+109
+00:06:09,820 --> 00:06:12,730
+Well, we&#39;ll let the bootstrap do the work for us.
+
+110
+00:06:12,730 --> 00:06:15,470
+And so we call the function boot, we give it the data
+
+111
+00:06:15,470 --> 00:06:20,420
+frame portfolio, we give it our little function alpha.fn,
+
+112
+00:06:20,420 --> 00:06:24,590
+and we tell it to do 1,000 bootstraps.
+
+113
+00:06:24,590 --> 00:06:25,440
+Look how fast that was.
+
+114
+00:06:25,440 --> 00:06:27,770
+It&#39;s come back already.
+
+115
+00:06:27,770 --> 00:06:30,440
+If we type boot.out it gives a little summary of the
+
+116
+00:06:30,440 --> 00:06:37,210
+bootstrap and it tells us our original statistic was 0.575--
+
+117
+00:06:37,210 --> 00:06:39,230
+the estimate--
+
+118
+00:06:39,230 --> 00:06:42,040
+and it gives us the estimate of bias and standard error.
+
+119
+00:06:42,040 --> 00:06:44,010
+We were interested in the standard error.
+
+120
+00:06:44,010 --> 00:06:46,380
+The bias is negligible.
+
+121
+00:06:46,380 --> 00:06:50,920
+The standard error in this case is 0.08.
+
+122
+00:06:50,920 --> 00:06:53,410
+And that&#39;s computed by the bootstrap.
+
+123
+00:06:53,410 --> 00:06:55,080
+And you can also plot the bootstrap.
+
+124
+00:06:55,080 --> 00:06:58,400
+It&#39;s nice to see what the distribution looks like.
+
+125
+00:06:58,400 --> 00:07:01,660
+And you get a two paddle plot.
+
+126
+00:07:01,660 --> 00:07:06,600
+One is a histogram and it looks like a pretty nice
+
+127
+00:07:06,600 --> 00:07:09,980
+symmetric distribution, maybe Gaussian.
+
+128
+00:07:09,980 --> 00:07:15,880
+And in fact the second plot is a qqplot, which plots the
+
+129
+00:07:15,880 --> 00:07:17,690
+ordered values against the ordered
+
+130
+00:07:17,690 --> 00:07:19,440
+statistics of a Gaussian.
+
+131
+00:07:19,440 --> 00:07:22,370
+And if it lines up on a straight line like it pretty
+
+132
+00:07:22,370 --> 00:07:27,250
+much does here, you may say it looks close to Gaussian, maybe
+
+133
+00:07:27,250 --> 00:07:30,290
+a slightly bigger tail on the right.
+
+134
+00:07:30,290 --> 00:07:31,310
+So there&#39;s a bootstrap.
+
+135
+00:07:31,310 --> 00:07:35,120
+Very handy way of getting very good reliable estimates of
+
+136
+00:07:35,120 --> 00:07:38,650
+standard error for nasty statistics.
+

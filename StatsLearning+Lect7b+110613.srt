@@ -1,0 +1,1280 @@
+0
+00:00:00,980 --> 00:00:02,540
+Welcome back.
+
+1
+00:00:02,540 --> 00:00:04,730
+In the last section, we talked about validation, and we saw
+
+2
+00:00:04,730 --> 00:00:05,896
+some drawbacks with that method.
+
+3
+00:00:05,896 --> 00:00:08,530
+Now we&#39;re going to talk about K-fold cross-validation, which
+
+4
+00:00:08,530 --> 00:00:11,070
+will solve some of these problems.
+
+5
+00:00:11,070 --> 00:00:12,680
+This is actually a very important technique that we&#39;re
+
+6
+00:00:12,680 --> 00:00:15,170
+going to use throughout the course in various sections,
+
+7
+00:00:15,170 --> 00:00:18,420
+and also something we use in our work all the time.
+
+8
+00:00:18,420 --> 00:00:20,330
+So it&#39;s really important to understand K-fold
+
+9
+00:00:20,330 --> 00:00:21,490
+cross-validation.
+
+10
+00:00:21,490 --> 00:00:24,210
+It&#39;s used for a lot of methods.
+
+11
+00:00:24,210 --> 00:00:27,780
+It&#39;s an extremely flexible and powerful technique for
+
+12
+00:00:27,780 --> 00:00:29,520
+estimating prediction error and to get an idea of model
+
+13
+00:00:29,520 --> 00:00:30,930
+complexity.
+
+14
+00:00:30,930 --> 00:00:34,060
+So what&#39;s the idea of K-fold cross-validation?
+
+15
+00:00:34,060 --> 00:00:36,190
+Well, it&#39;s really in the name.
+
+16
+00:00:36,190 --> 00:00:39,660
+It&#39;s validation, as we&#39;ve seen, but done sort
+
+17
+00:00:39,660 --> 00:00:41,440
+of like K part play.
+
+18
+00:00:41,440 --> 00:00:45,700
+It&#39;s done K times, with each part, again, playing the role
+
+19
+00:00:45,700 --> 00:00:47,580
+of the validation set.
+
+20
+00:00:47,580 --> 00:00:51,110
+And you have the K minus 1 parts playing the role of the
+
+21
+00:00:51,110 --> 00:00:52,450
+training set.
+
+22
+00:00:52,450 --> 00:00:53,040
+Which I say here.
+
+23
+00:00:53,040 --> 00:00:57,120
+But let me go to the picture here, and I&#39;ll sort of point
+
+24
+00:00:57,120 --> 00:00:57,900
+to the pictures as I say it.
+
+25
+00:00:57,900 --> 00:01:00,940
+So here, you&#39;re doing 5-fold cross-validation.
+
+26
+00:01:00,940 --> 00:01:03,260
+As we&#39;ll talk about in more detail, the best choices for
+
+27
+00:01:03,260 --> 00:01:07,270
+K, the number of folds, is usually about 5 or 10.
+
+28
+00:01:07,270 --> 00:01:10,550
+And we&#39;ll talk about that in a few minutes, about why those
+
+29
+00:01:10,550 --> 00:01:11,230
+are good choices.
+
+30
+00:01:11,230 --> 00:01:13,780
+But let&#39;s fix here K equals 5.
+
+31
+00:01:13,780 --> 00:01:14,720
+So I&#39;ve taken the data set.
+
+32
+00:01:14,720 --> 00:01:18,100
+I&#39;ve divided at random the samples into five parts.
+
+33
+00:01:18,100 --> 00:01:20,542
+Again, a size about the same.
+
+34
+00:01:20,542 --> 00:01:23,790
+The first box looks a bit bigger, huh?
+
+35
+00:01:23,790 --> 00:01:28,730
+OK, well, that&#39;s my lack of drawing ability.
+
+36
+00:01:28,730 --> 00:01:29,930
+But anyway, it&#39;s supposed to be the same.
+
+37
+00:01:29,930 --> 00:01:31,750
+I was trying to squish the word validation in.
+
+38
+00:01:31,750 --> 00:01:33,830
+So the boxes are supposed to be about the same size and
+
+39
+00:01:33,830 --> 00:01:35,910
+number of observations.
+
+40
+00:01:35,910 --> 00:01:38,640
+But in this case, the first part&#39;s the validation set.
+
+41
+00:01:38,640 --> 00:01:40,480
+The other four are the training parts.
+
+42
+00:01:40,480 --> 00:01:44,200
+So what we&#39;re going, what cross-validation does, it
+
+43
+00:01:44,200 --> 00:01:47,160
+forms these five parts.
+
+44
+00:01:47,160 --> 00:01:50,430
+We&#39;re going to train the model on the four training parts put
+
+45
+00:01:50,430 --> 00:01:54,680
+together as one big block, take the third model, and then
+
+46
+00:01:54,680 --> 00:01:57,800
+predict on the validation part, and record the error.
+
+47
+00:01:57,800 --> 00:01:59,700
+And then, that&#39;s phase one.
+
+48
+00:01:59,700 --> 00:02:04,310
+Phase two, the validation set will be part two.
+
+49
+00:02:04,310 --> 00:02:05,260
+This block.
+
+50
+00:02:05,260 --> 00:02:07,930
+All the other four parts will be the training set.
+
+51
+00:02:07,930 --> 00:02:10,300
+We fit them all to the training set, and then apply
+
+52
+00:02:10,300 --> 00:02:12,540
+it to this validation part.
+
+53
+00:02:12,540 --> 00:02:13,760
+And the third stage, this is the
+
+54
+00:02:13,760 --> 00:02:14,930
+validation piece, et cetera.
+
+55
+00:02:14,930 --> 00:02:17,000
+So we have five stages.
+
+56
+00:02:17,000 --> 00:02:20,040
+In each stage, one part gets to play the
+
+57
+00:02:20,040 --> 00:02:21,570
+role validation set.
+
+58
+00:02:21,570 --> 00:02:24,010
+The other four parts are the training set.
+
+59
+00:02:24,010 --> 00:02:26,940
+We take all the prediction errors from all five parts, we
+
+60
+00:02:26,940 --> 00:02:28,460
+add them together, and that gives us what&#39;s called the
+
+61
+00:02:28,460 --> 00:02:29,710
+cross-validation error.
+
+62
+00:02:32,320 --> 00:02:35,130
+Now, in algebra, I&#39;ll just basically give you the details
+
+63
+00:02:35,130 --> 00:02:36,640
+of what I said in words.
+
+64
+00:02:36,640 --> 00:02:42,170
+So let the K parts of the data be C1 through CK.
+
+65
+00:02:42,170 --> 00:02:43,670
+So these are the observations that are in
+
+66
+00:02:43,670 --> 00:02:45,020
+each of the five parts.
+
+67
+00:02:45,020 --> 00:02:47,090
+K was 5 in our example.
+
+68
+00:02:47,090 --> 00:02:48,850
+And we&#39;ll try to make the number of observations about
+
+69
+00:02:48,850 --> 00:02:52,110
+the same in every part, versus if N&#39;s not a multiple of K or
+
+70
+00:02:52,110 --> 00:02:55,210
+5, we can&#39;t do that exactly, but we&#39;ll do it approximately.
+
+71
+00:02:55,210 --> 00:02:57,580
+So we&#39;ll let n sub K be the number of
+
+72
+00:02:57,580 --> 00:03:00,760
+observations in the K-th part.
+
+73
+00:03:00,760 --> 00:03:04,120
+So here&#39;s the cross validation error rate.
+
+74
+00:03:04,120 --> 00:03:07,370
+Basically, this is the mean square error we get by
+
+75
+00:03:07,370 --> 00:03:15,570
+applying the fit to the K minus 1 parts that don&#39;t
+
+76
+00:03:15,570 --> 00:03:20,010
+involve part number K. That gives us our fit yi hat for
+
+77
+00:03:20,010 --> 00:03:21,230
+observation i.
+
+78
+00:03:21,230 --> 00:03:22,990
+4/5 of the data in this case.
+
+79
+00:03:22,990 --> 00:03:23,750
+Right.
+
+80
+00:03:23,750 --> 00:03:25,320
+And then we add up the error.
+
+81
+00:03:25,320 --> 00:03:27,170
+This is the mean square error that we obtain now on the
+
+82
+00:03:27,170 --> 00:03:29,500
+validation part using that model.
+
+83
+00:03:29,500 --> 00:03:32,400
+So this is for the K-th part.
+
+84
+00:03:32,400 --> 00:03:34,660
+And now we do this for all five parts in turn.
+
+85
+00:03:34,660 --> 00:03:36,170
+The five acts of the play.
+
+86
+00:03:36,170 --> 00:03:38,030
+And then we get the cross-validation error rate.
+
+87
+00:03:42,890 --> 00:03:44,710
+And a special case of this is leave-one out
+
+88
+00:03:44,710 --> 00:03:46,950
+cross-validation, where the number of folds is the same
+
+89
+00:03:46,950 --> 00:03:48,420
+number of observations.
+
+90
+00:03:48,420 --> 00:03:54,220
+So that means in this picture, that actually would be one box
+
+91
+00:03:54,220 --> 00:03:55,880
+per observation.
+
+92
+00:03:55,880 --> 00:03:58,190
+And in leave-one out cross-validation, each
+
+93
+00:03:58,190 --> 00:04:00,560
+observation by itself gets to play the role of the
+
+94
+00:04:00,560 --> 00:04:01,260
+validation set.
+
+95
+00:04:01,260 --> 00:04:03,480
+The other n minus 1 are the training set.
+
+96
+00:04:08,200 --> 00:04:11,300
+Now, actually, leave-one out cross-validation is a nice
+
+97
+00:04:11,300 --> 00:04:13,110
+special case of that.
+
+98
+00:04:13,110 --> 00:04:15,760
+It represents a nice special case in the sense that this
+
+99
+00:04:15,760 --> 00:04:18,310
+cross-validation can be done without actually having to
+
+100
+00:04:18,310 --> 00:04:20,200
+refit the model at all.
+
+101
+00:04:20,200 --> 00:04:24,130
+So leave-one out cross-validation, at least for
+
+102
+00:04:24,130 --> 00:04:30,410
+a least squares model, or a polynomial model, the
+
+103
+00:04:30,410 --> 00:04:34,170
+leave-one out cross-validation has the following form.
+
+104
+00:04:34,170 --> 00:04:37,910
+So the yi hat is now just to fit on the full data set.
+
+105
+00:04:37,910 --> 00:04:43,350
+Each i is the diagonal of the hat matrix.
+
+106
+00:04:43,350 --> 00:04:45,090
+So have a look in the book for details.
+
+107
+00:04:45,090 --> 00:04:48,150
+But the hat matrix is the projection matrix that
+
+108
+00:04:48,150 --> 00:04:50,620
+projects y onto the column space of x to
+
+109
+00:04:50,620 --> 00:04:51,595
+give you the fit.
+
+110
+00:04:51,595 --> 00:04:54,380
+This is something that can get computed easily when you fit
+
+111
+00:04:54,380 --> 00:04:55,690
+your mean squares model.
+
+112
+00:04:55,690 --> 00:04:58,160
+So [INAUDIBLE].
+
+113
+00:04:58,160 --> 00:05:01,370
+We haven&#39;t emphasized it, but it&#39;s available.
+
+114
+00:05:01,370 --> 00:05:03,580
+It&#39;s one of the things that&#39;s available when you fit your
+
+115
+00:05:03,580 --> 00:05:05,420
+least squares model.
+
+116
+00:05:05,420 --> 00:05:07,110
+So the overall point of this is that to do a leave-one out
+
+117
+00:05:07,110 --> 00:05:09,000
+cross-validation for these particular models, you don&#39;t
+
+118
+00:05:09,000 --> 00:05:10,060
+actually have to leave anything out.
+
+119
+00:05:10,060 --> 00:05:12,570
+You can do the fit on the overall data set, and then
+
+120
+00:05:12,570 --> 00:05:14,810
+extract the information you need to get the
+
+121
+00:05:14,810 --> 00:05:16,660
+cross-validation sum of squares.
+
+122
+00:05:16,660 --> 00:05:17,340
+And it&#39;s interesting.
+
+123
+00:05:17,340 --> 00:05:20,620
+Because the hi tells you how much influence an observation
+
+124
+00:05:20,620 --> 00:05:21,960
+has on its own fact.
+
+125
+00:05:21,960 --> 00:05:24,500
+It&#39;s a number between 0 and 1.
+
+126
+00:05:24,500 --> 00:05:26,260
+And so as an observation, it&#39;s very
+
+127
+00:05:26,260 --> 00:05:28,340
+influential on its own fit.
+
+128
+00:05:28,340 --> 00:05:31,330
+You can see it punishes the residual, because it divides
+
+129
+00:05:31,330 --> 00:05:34,520
+by a number that&#39;s small, and it inflates the residual.
+
+130
+00:05:34,520 --> 00:05:37,650
+So, it sort of does the right thing there.
+
+131
+00:05:37,650 --> 00:05:38,900
+OK.
+
+132
+00:05:41,260 --> 00:05:42,960
+Although leave-one out cross-validation does have
+
+133
+00:05:42,960 --> 00:05:44,450
+this nice computation formula.
+
+134
+00:05:44,450 --> 00:05:46,860
+For most of the methods we talk about in this book and
+
+135
+00:05:46,860 --> 00:05:49,380
+most statistical learning methods, it&#39;s better to choose
+
+136
+00:05:49,380 --> 00:05:52,750
+K to be 5 or 10, rather than have a leave-one out
+
+137
+00:05:52,750 --> 00:05:54,550
+cross-validation.
+
+138
+00:05:54,550 --> 00:05:55,180
+And why is that?
+
+139
+00:05:55,180 --> 00:05:59,100
+Well, one problem with the leave-one out cross-validation
+
+140
+00:05:59,100 --> 00:06:01,800
+is that each of the training sets look very much like the
+
+141
+00:06:01,800 --> 00:06:02,170
+other ones.
+
+142
+00:06:02,170 --> 00:06:02,400
+Right?
+
+143
+00:06:02,400 --> 00:06:04,820
+They only differ by one observation.
+
+144
+00:06:04,820 --> 00:06:06,920
+So when you take the average--
+
+145
+00:06:06,920 --> 00:06:09,300
+cross-validation is you take the average of
+
+146
+00:06:09,300 --> 00:06:12,430
+errors over the n folds.
+
+147
+00:06:12,430 --> 00:06:15,060
+And in leave-one out cross-validation, the n folds
+
+148
+00:06:15,060 --> 00:06:17,070
+look very similar to each other, because the training
+
+149
+00:06:17,070 --> 00:06:18,040
+sets are almost the same.
+
+150
+00:06:18,040 --> 00:06:20,130
+They only differ by one observation.
+
+151
+00:06:20,130 --> 00:06:22,420
+So as a result, that average has a high variance, because
+
+152
+00:06:22,420 --> 00:06:24,720
+the ingredients are highly correlated.
+
+153
+00:06:24,720 --> 00:06:29,700
+So that&#39;s the main reason why it&#39;s thought, and we also
+
+154
+00:06:29,700 --> 00:06:31,820
+agree, that a better choice for K in
+
+155
+00:06:31,820 --> 00:06:33,980
+cross-validation is 5 or 10.
+
+156
+00:06:33,980 --> 00:06:37,580
+On the other hand, the leave-one out cross-validation
+
+157
+00:06:37,580 --> 00:06:40,830
+is actually trying to estimate the error rate for the
+
+158
+00:06:40,830 --> 00:06:44,080
+training sample of almost the same size as what you have.
+
+159
+00:06:44,080 --> 00:06:45,560
+So it&#39;s got low bias.
+
+160
+00:06:45,560 --> 00:06:47,320
+But as Rob said, high variance.
+
+161
+00:06:47,320 --> 00:06:52,180
+So actually, picking K is also a bias variance trade-off for
+
+162
+00:06:52,180 --> 00:06:53,220
+prediction error.
+
+163
+00:06:53,220 --> 00:06:58,840
+And as Rob said, K equals 5 or 10 tend to be a good choice.
+
+164
+00:06:58,840 --> 00:07:01,110
+So the next slide I&#39;ve got a comparison of a leave-one out
+
+165
+00:07:01,110 --> 00:07:05,480
+cross-validation and 10-fold CV for the auto data.
+
+166
+00:07:05,480 --> 00:07:08,026
+Remember, before we started 2-fold validation, we started
+
+167
+00:07:08,026 --> 00:07:11,400
+with just validation into two parts, we&#39;ve got a lot of
+
+168
+00:07:11,400 --> 00:07:16,830
+variability between when we change the sample, the half
+
+169
+00:07:16,830 --> 00:07:18,450
+sample, that we took.
+
+170
+00:07:18,450 --> 00:07:19,940
+Now let&#39;s see what happens with leave-one out
+
+171
+00:07:19,940 --> 00:07:20,750
+cross-validation.
+
+172
+00:07:20,750 --> 00:07:23,420
+We get a curve that&#39;s, again, got the minimum around the
+
+173
+00:07:23,420 --> 00:07:25,530
+same place, as we saw before.
+
+174
+00:07:25,530 --> 00:07:27,810
+And it&#39;s pretty flat after that.
+
+175
+00:07:27,810 --> 00:07:31,000
+A 10-fold cross-validation, now again, it&#39;s also showing
+
+176
+00:07:31,000 --> 00:07:34,390
+the minimum around 2, but there&#39;s not the--
+
+177
+00:07:34,390 --> 00:07:39,050
+what we&#39;re seeing here is the 10-fold cross-validation as we
+
+178
+00:07:39,050 --> 00:07:43,830
+take different partitions into 10 parts of the data.
+
+179
+00:07:43,830 --> 00:07:45,520
+And we see there&#39;s not much variability.
+
+180
+00:07:45,520 --> 00:07:47,190
+They&#39;re pretty consistent.
+
+181
+00:07:47,190 --> 00:07:50,800
+In contrast to when you divide it into two parts, we got much
+
+182
+00:07:50,800 --> 00:07:53,780
+more variability.
+
+183
+00:07:53,780 --> 00:07:55,260
+And those get averaged as well, those
+
+184
+00:07:55,260 --> 00:07:55,830
+curves on the right.
+
+185
+00:07:55,830 --> 00:07:56,115
+Right.
+
+186
+00:07:56,115 --> 00:07:56,400
+Exactly.
+
+187
+00:07:56,400 --> 00:08:01,360
+So they&#39;re averaged together, which we saw here.
+
+188
+00:08:01,360 --> 00:08:03,320
+They&#39;re averaged together to give us the overall estimate
+
+189
+00:08:03,320 --> 00:08:05,560
+of cross-validation.
+
+190
+00:08:05,560 --> 00:08:10,060
+Which the overall cross-validation curve will
+
+191
+00:08:10,060 --> 00:08:13,210
+look very much like this, with its minimum around 2.
+
+192
+00:08:16,700 --> 00:08:17,570
+OK.
+
+193
+00:08:17,570 --> 00:08:22,490
+This is figure 5.6 from the textbook.
+
+194
+00:08:22,490 --> 00:08:26,520
+And this is the simulated example, which is from figure
+
+195
+00:08:26,520 --> 00:08:28,900
+2.9 of the book.
+
+196
+00:08:28,900 --> 00:08:31,610
+Just recall that this is smoothing splines in three
+
+197
+00:08:31,610 --> 00:08:32,470
+different situations.
+
+198
+00:08:32,470 --> 00:08:37,370
+In this case, the true error curve is the blue curve.
+
+199
+00:08:37,370 --> 00:08:38,590
+And again, there&#39;s three different
+
+200
+00:08:38,590 --> 00:08:40,909
+functions that we&#39;re examining.
+
+201
+00:08:40,909 --> 00:08:43,159
+It says mean square error simulated data.
+
+202
+00:08:43,159 --> 00:08:44,120
+The true error curve.
+
+203
+00:08:44,120 --> 00:08:45,580
+How did we get that, Rob?
+
+204
+00:08:45,580 --> 00:08:47,060
+Well, it&#39;s simulated diagram.
+
+205
+00:08:47,060 --> 00:08:48,210
+So we just--
+
+206
+00:08:48,210 --> 00:08:48,670
+Oh.
+
+207
+00:08:48,670 --> 00:08:52,150
+So we can get a very big test set and
+
+208
+00:08:52,150 --> 00:08:54,330
+estimate the error exactly.
+
+209
+00:08:54,330 --> 00:09:00,570
+Leave-one out cross-validation is the black broken line, and
+
+210
+00:09:00,570 --> 00:09:03,390
+the orange curve is 10-fold cross-validation.
+
+211
+00:09:03,390 --> 00:09:04,410
+So what do we see?
+
+212
+00:09:04,410 --> 00:09:07,990
+Well here, we see that the test error curve is a little
+
+213
+00:09:07,990 --> 00:09:11,560
+higher than the 10-fold and leave-one out
+
+214
+00:09:11,560 --> 00:09:13,400
+cross-validation.
+
+215
+00:09:13,400 --> 00:09:17,900
+The minimum&#39;s fairly close, but the minimum of
+
+216
+00:09:17,900 --> 00:09:21,490
+cross-validation is around 8, whereas the true curve minimum
+
+217
+00:09:21,490 --> 00:09:23,080
+is around 6.
+
+218
+00:09:23,080 --> 00:09:25,600
+In this case, the two cross-validation methods are
+
+219
+00:09:25,600 --> 00:09:27,520
+doing a better job of approximating
+
+220
+00:09:27,520 --> 00:09:29,940
+the test error curve.
+
+221
+00:09:29,940 --> 00:09:31,650
+Well, the minimum&#39;s fairly close.
+
+222
+00:09:31,650 --> 00:09:34,120
+Not exactly on the mark.
+
+223
+00:09:34,120 --> 00:09:36,540
+Black curve is minimized around 6.
+
+224
+00:09:36,540 --> 00:09:38,850
+And the true error curve is minimize around--
+
+225
+00:09:38,850 --> 00:09:40,980
+it&#39;s maybe 3.
+
+226
+00:09:40,980 --> 00:09:43,300
+Although those error curves are fairly flat.
+
+227
+00:09:43,300 --> 00:09:46,330
+So there&#39;s obviously a high variance in where the
+
+228
+00:09:46,330 --> 00:09:47,695
+minimum should be.
+
+229
+00:09:47,695 --> 00:09:48,190
+Right.
+
+230
+00:09:48,190 --> 00:09:50,740
+And it doesn&#39;t really matter, really.
+
+231
+00:09:50,740 --> 00:09:51,060
+That&#39;s right.
+
+232
+00:09:51,060 --> 00:09:53,455
+It&#39;s not going to matter much if you choose a model with a
+
+233
+00:09:53,455 --> 00:09:55,760
+flexibility of 2, or maybe even 10 here, because the
+
+234
+00:09:55,760 --> 00:09:57,710
+error is pretty flat in that region.
+
+235
+00:09:57,710 --> 00:10:00,120
+And then in the third example, the two cross-validation
+
+236
+00:10:00,120 --> 00:10:02,840
+curves do quite a good job of approximating the test error
+
+237
+00:10:02,840 --> 00:10:05,680
+curve, and the minimum&#39;s around 10 in each case.
+
+238
+00:10:12,040 --> 00:10:13,520
+So actually, I said this already,
+
+239
+00:10:13,520 --> 00:10:14,540
+but I&#39;ll say it again.
+
+240
+00:10:14,540 --> 00:10:17,080
+One issue with cross-validation is that since
+
+241
+00:10:17,080 --> 00:10:20,320
+the training set is not as big as the original training set,
+
+242
+00:10:20,320 --> 00:10:23,980
+the essence of prediction will be biased up a little bit,
+
+243
+00:10:23,980 --> 00:10:26,730
+because you have less data that you&#39;re working with.
+
+244
+00:10:29,680 --> 00:10:33,120
+And I also said, and I&#39;ll say again, that leave-one out
+
+245
+00:10:33,120 --> 00:10:37,310
+cross-validation has smaller bias in this sense, because
+
+246
+00:10:37,310 --> 00:10:39,060
+the training set is almost the same in size as
+
+247
+00:10:39,060 --> 00:10:39,670
+the original set.
+
+248
+00:10:39,670 --> 00:10:41,420
+But on the other hand, it&#39;s got higher variance, because
+
+249
+00:10:41,420 --> 00:10:44,580
+the train sets that it&#39;s using are almost the same as the
+
+250
+00:10:44,580 --> 00:10:45,290
+original set.
+
+251
+00:10:45,290 --> 00:10:47,230
+They only differ by one observation.
+
+252
+00:10:47,230 --> 00:10:50,655
+So K equals 5 or 10-fold is a good compromise for this
+
+253
+00:10:50,655 --> 00:10:52,820
+bias-variance trade-off.
+
+254
+00:10:52,820 --> 00:10:53,090
+OK.
+
+255
+00:10:53,090 --> 00:10:57,255
+So we talked cross-validation for a quantitative response,
+
+256
+00:10:57,255 --> 00:10:59,050
+and we used mean square error.
+
+257
+00:10:59,050 --> 00:11:01,580
+The classification problems, that is exactly the same.
+
+258
+00:11:01,580 --> 00:11:04,510
+The only thing that changes is the measure of error.
+
+259
+00:11:04,510 --> 00:11:06,150
+Of course, no longer square error, but a
+
+260
+00:11:06,150 --> 00:11:07,810
+misclassification error.
+
+261
+00:11:07,810 --> 00:11:11,040
+Otherwise, cross-validation process is exactly the same.
+
+262
+00:11:11,040 --> 00:11:13,070
+Divide the data up into K parts.
+
+263
+00:11:13,070 --> 00:11:15,340
+We train on K minus 1 parts.
+
+264
+00:11:15,340 --> 00:11:18,050
+We record the error on the K-th part, and we add things
+
+265
+00:11:18,050 --> 00:11:20,830
+up together to get the overall cross-validation error.
+
+266
+00:11:20,830 --> 00:11:24,210
+It looks like a weighted average formula, right?
+
+267
+00:11:24,210 --> 00:11:26,070
+With nk over n?
+
+268
+00:11:26,070 --> 00:11:28,670
+Do you want to explain that?
+
+269
+00:11:28,670 --> 00:11:31,650
+Each of the folds might not be exactly the same size.
+
+270
+00:11:31,650 --> 00:11:36,950
+So, we actually compute a weight which is the relative
+
+271
+00:11:36,950 --> 00:11:41,610
+size of the fold, and then use a weighted average.
+
+272
+00:11:41,610 --> 00:11:41,730
+Right.
+
+273
+00:11:41,730 --> 00:11:45,450
+And if we are lucky that the n divides by k exactly, then
+
+274
+00:11:45,450 --> 00:11:47,090
+that weight will just be 1/k.
+
+275
+00:11:47,090 --> 00:11:47,470
+Right.
+
+276
+00:11:47,470 --> 00:11:48,720
+1/k.
+
+277
+00:11:50,320 --> 00:11:53,410
+One other thing to add is that since this cross-validation
+
+278
+00:11:53,410 --> 00:11:57,000
+error is just an average, the standard error of that average
+
+279
+00:11:57,000 --> 00:11:59,070
+also gives us a standard error of the
+
+280
+00:11:59,070 --> 00:11:59,860
+cross-validation estimate.
+
+281
+00:11:59,860 --> 00:12:02,150
+So we take the error rates from each of the folds.
+
+282
+00:12:02,150 --> 00:12:05,110
+Their average is the cross-validation error rate.
+
+283
+00:12:05,110 --> 00:12:08,720
+The standard error is the standard deviation of the
+
+284
+00:12:08,720 --> 00:12:10,050
+cross-validation estimate.
+
+285
+00:12:10,050 --> 00:12:11,590
+So here&#39;s the formula for that.
+
+286
+00:12:11,590 --> 00:12:14,200
+So this is a useful quantity.
+
+287
+00:12:14,200 --> 00:12:16,240
+When we would draw a CV curve, we should always put a
+
+288
+00:12:16,240 --> 00:12:18,660
+standard air band around the curve [INAUDIBLE]
+
+289
+00:12:18,660 --> 00:12:19,640
+the variability.
+
+290
+00:12:19,640 --> 00:12:22,060
+So in these previous pictures, we should&#39;ve had a standard
+
+291
+00:12:22,060 --> 00:12:25,630
+error band around the curves to give us an idea of how
+
+292
+00:12:25,630 --> 00:12:28,330
+variable they are.
+
+293
+00:12:28,330 --> 00:12:32,890
+I say here is a useful estimate, but not quite valid.
+
+294
+00:12:32,890 --> 00:12:34,340
+Why is that?
+
+295
+00:12:34,340 --> 00:12:35,700
+Dr. [INAUDIBLE]?
+
+296
+00:12:35,700 --> 00:12:37,610
+Well, I wonder why.
+
+297
+00:12:37,610 --> 00:12:40,650
+Well, the thing is, we&#39;re computing the standard error
+
+298
+00:12:40,650 --> 00:12:42,670
+if these were independent observations.
+
+299
+00:12:42,670 --> 00:12:44,750
+But they&#39;re not strictly independent.
+
+300
+00:12:44,750 --> 00:12:51,150
+Error sub k overlaps with, Error sub j because they share
+
+301
+00:12:51,150 --> 00:12:53,190
+some training samples.
+
+302
+00:12:53,190 --> 00:12:55,170
+So there&#39;s some correlation between them.
+
+303
+00:12:55,170 --> 00:12:56,620
+But we use this anyway.
+
+304
+00:12:56,620 --> 00:12:57,980
+We use it, and it&#39;s actually quite a good estimate.
+
+305
+00:12:57,980 --> 00:13:00,910
+And people have shown this mathematically.
+
+306
+00:13:00,910 --> 00:13:03,940
+An important point being that is that the cross-validation
+
+307
+00:13:03,940 --> 00:13:06,230
+separates the training part of the data from
+
+308
+00:13:06,230 --> 00:13:07,690
+the validation part.
+
+309
+00:13:07,690 --> 00:13:10,110
+When we talk about bootstrap method in the next part of
+
+310
+00:13:10,110 --> 00:13:12,950
+this section, we&#39;ll see that that&#39;s not the case, and
+
+311
+00:13:12,950 --> 00:13:14,080
+that&#39;s going to cause a problem.
+
+312
+00:13:14,080 --> 00:13:17,140
+So cross-validation explicitly separates the training set
+
+313
+00:13:17,140 --> 00:13:19,390
+from the validation set in order to get a good idea of
+
+314
+00:13:19,390 --> 00:13:21,410
+test error.
+
+315
+00:13:21,410 --> 00:13:21,700
+OK.
+
+316
+00:13:21,700 --> 00:13:25,160
+So this again, I&#39;ll reemphasize that
+
+317
+00:13:25,160 --> 00:13:26,900
+cross-validation is a very important technique to
+
+318
+00:13:26,900 --> 00:13:31,940
+understand, both for quantitative responses and
+
+319
+00:13:31,940 --> 00:13:33,190
+classification.
+

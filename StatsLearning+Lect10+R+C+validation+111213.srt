@@ -1,0 +1,908 @@
+0
+00:00:01,260 --> 00:00:01,830
+OK.
+
+1
+00:00:01,830 --> 00:00:04,250
+Well, we can have another on session.
+
+2
+00:00:04,250 --> 00:00:06,940
+This time, we can look at validation methods,
+
+3
+00:00:06,940 --> 00:00:11,380
+cross-validation and we&#39;ll start off with leave-one-out
+
+4
+00:00:11,380 --> 00:00:12,890
+cross-validation.
+
+5
+00:00:12,890 --> 00:00:17,990
+So we&#39;ll go to our studio session and see what we can do
+
+6
+00:00:17,990 --> 00:00:20,040
+with validation.
+
+7
+00:00:20,040 --> 00:00:24,970
+So here we are, we first of all require ISLR, it is
+
+8
+00:00:24,970 --> 00:00:27,540
+outdated for our session.
+
+9
+00:00:27,540 --> 00:00:34,970
+And this time, we require the boot package, and so requires,
+
+10
+00:00:34,970 --> 00:00:39,460
+just like using library, it will also return a true and
+
+11
+00:00:39,460 --> 00:00:42,870
+false if the package doesn&#39;t exist.
+
+12
+00:00:42,870 --> 00:00:46,940
+So let&#39;s look at the function cv.glm.
+
+13
+00:00:46,940 --> 00:00:48,340
+So that&#39;s a general
+
+14
+00:00:48,340 --> 00:00:51,060
+cross-validation package for glms.
+
+15
+00:00:51,060 --> 00:00:53,110
+And it&#39;ll give you some help on that.
+
+16
+00:00:53,110 --> 00:00:55,940
+And so again, it&#39;s always useful before you use a
+
+17
+00:00:55,940 --> 00:00:59,210
+package or use a function to look at the help file and make
+
+18
+00:00:59,210 --> 00:01:02,730
+sure you&#39;re using it correctly.
+
+19
+00:01:02,730 --> 00:01:04,879
+So we&#39;re gonna use the auto data.
+
+20
+00:01:04,879 --> 00:01:07,530
+And in particular, we look at two variables, miles per
+
+21
+00:01:07,530 --> 00:01:09,810
+gallon and horsepower.
+
+22
+00:01:09,810 --> 00:01:12,230
+So we&#39;ll make a plot of those data.
+
+23
+00:01:12,230 --> 00:01:14,430
+And plot takes a formula.
+
+24
+00:01:14,430 --> 00:01:16,010
+So you can use a formula in plot.
+
+25
+00:01:16,010 --> 00:01:18,520
+And tell it where to evaluate the formula in
+
+26
+00:01:18,520 --> 00:01:20,030
+the data set auto.
+
+27
+00:01:20,030 --> 00:01:21,550
+So we make that plot.
+
+28
+00:01:21,550 --> 00:01:25,840
+And we see, as we might expect, miles per gallon drops
+
+29
+00:01:25,840 --> 00:01:31,270
+down quite substantially as horsepower increases.
+
+30
+00:01:31,270 --> 00:01:37,580
+And now we can use this data set to investigate
+
+31
+00:01:37,580 --> 00:01:39,680
+cross-validation.
+
+32
+00:01:39,680 --> 00:01:41,610
+So the first thing we&#39;ll do is leave-one-out
+
+33
+00:01:41,610 --> 00:01:43,670
+cross-validation.
+
+34
+00:01:43,670 --> 00:01:44,540
+OK?
+
+35
+00:01:44,540 --> 00:01:47,550
+And so we&#39;ll fit a linear model.
+
+36
+00:01:47,550 --> 00:01:51,910
+And we&#39;ll use glm to fit this, even though we just fit in a
+
+37
+00:01:51,910 --> 00:01:52,620
+linear model.
+
+38
+00:01:52,620 --> 00:01:57,050
+So glm can fit nonlinear models as well, in particular
+
+39
+00:01:57,050 --> 00:01:58,820
+logistic regression models.
+
+40
+00:01:58,820 --> 00:02:00,430
+But it will also fit linear models.
+
+41
+00:02:00,430 --> 00:02:03,290
+And so if you don&#39;t give the family to glm by default, it
+
+42
+00:02:03,290 --> 00:02:05,060
+just fits a linear model.
+
+43
+00:02:05,060 --> 00:02:06,370
+OK?
+
+44
+00:02:06,370 --> 00:02:12,530
+And then we&#39;ll run cv.glm on that linear model.
+
+45
+00:02:12,530 --> 00:02:18,870
+Now, just to remind you what leave-one-out cross-validation
+
+46
+00:02:18,870 --> 00:02:24,380
+does, it puts the model repeatedly n times, if there&#39;s
+
+47
+00:02:24,380 --> 00:02:25,430
+n observations.
+
+48
+00:02:25,430 --> 00:02:30,770
+Each time, it leaves out one observation, produces a fit on
+
+49
+00:02:30,770 --> 00:02:35,300
+all the other data, and then makes a prediction at the x
+
+50
+00:02:35,300 --> 00:02:37,860
+value for that observation that you lift out.
+
+51
+00:02:37,860 --> 00:02:39,190
+OK?
+
+52
+00:02:39,190 --> 00:02:46,330
+And so cv.glm actually does that by brute force, actually
+
+53
+00:02:46,330 --> 00:02:49,830
+refits the model all those times.
+
+54
+00:02:49,830 --> 00:02:50,680
+It&#39;s a little slow.
+
+55
+00:02:50,680 --> 00:02:52,630
+You may have noticed it took a while before the
+
+56
+00:02:52,630 --> 00:02:54,270
+results came up.
+
+57
+00:02:54,270 --> 00:02:57,840
+And eventually it came up and produced two numbers.
+
+58
+00:02:57,840 --> 00:02:59,600
+We see them on the screen here.
+
+59
+00:02:59,600 --> 00:03:00,980
+Well, it produced quite a lot, actually.
+
+60
+00:03:00,980 --> 00:03:03,830
+But we just looked at the delta, which is the
+
+61
+00:03:03,830 --> 00:03:06,080
+cross-validated prediction error.
+
+62
+00:03:06,080 --> 00:03:08,240
+And even there it gives two numbers, and if you look on
+
+63
+00:03:08,240 --> 00:03:09,870
+the help file, you&#39;ll see why.
+
+64
+00:03:09,870 --> 00:03:14,140
+The first number is the raw leave-one-out, or lieu
+
+65
+00:03:14,140 --> 00:03:16,060
+cross-validation result.
+
+66
+00:03:16,060 --> 00:03:19,190
+And the second one is a bias-corrected version of it.
+
+67
+00:03:19,190 --> 00:03:21,760
+And the bias correction has to do with the fact that the data
+
+68
+00:03:21,760 --> 00:03:27,960
+set that we train it on is slightly smaller than the one
+
+69
+00:03:27,960 --> 00:03:30,050
+that we actually would like to get the error for, which is
+
+70
+00:03:30,050 --> 00:03:32,310
+the full data set of size n.
+
+71
+00:03:32,310 --> 00:03:34,630
+Turns out that has more of an effect for k-fold
+
+72
+00:03:34,630 --> 00:03:36,860
+cross-validation.
+
+73
+00:03:36,860 --> 00:03:40,560
+Now the thing is, for leave-one-out cross-validation
+
+74
+00:03:40,560 --> 00:03:44,840
+and for linear models, this function doesn&#39;t exploit the
+
+75
+00:03:44,840 --> 00:03:48,800
+nice simple formula we saw in the chapter.
+
+76
+00:03:48,800 --> 00:03:54,540
+So let me just remind you what that nice simple formula is.
+
+77
+00:03:54,540 --> 00:03:57,450
+And it goes like follows.
+
+78
+00:03:57,450 --> 00:04:02,640
+We want to do this classification error for each
+
+79
+00:04:02,640 --> 00:04:12,480
+observation yi minus our right y hat i minus i.
+
+80
+00:04:12,480 --> 00:04:14,670
+So this is what we&#39;d like to compute.
+
+81
+00:04:14,670 --> 00:04:20,110
+And we call that the leave-one-out
+
+82
+00:04:20,110 --> 00:04:21,810
+sum of squared errors.
+
+83
+00:04:21,810 --> 00:04:25,760
+And this notation, y hat minus i, what it means is
+
+84
+00:04:25,760 --> 00:04:26,800
+just what we said.
+
+85
+00:04:26,800 --> 00:04:32,110
+For each observation, the i-th observation you leave it out.
+
+86
+00:04:32,110 --> 00:04:34,180
+You compute the fit using all of the other data.
+
+87
+00:04:34,180 --> 00:04:36,360
+And then you make a prediction at that point.
+
+88
+00:04:36,360 --> 00:04:39,380
+So that&#39;s what this notation refers to.
+
+89
+00:04:39,380 --> 00:04:42,140
+And we have this really nice formula that says that this is
+
+90
+00:04:42,140 --> 00:04:44,850
+equal to 1/n summation.
+
+91
+00:04:47,560 --> 00:04:50,980
+I&#39;ll make this explicit here, i going from 1 to n.
+
+92
+00:04:50,980 --> 00:04:55,160
+It&#39;s the ordinary residuals, which I&#39;ll just write as yi
+
+93
+00:04:55,160 --> 00:05:00,230
+hat squared.
+
+94
+00:05:00,230 --> 00:05:01,280
+OK.
+
+95
+00:05:01,280 --> 00:05:04,790
+So these would be the ordinary residuals if you didn&#39;t leave
+
+96
+00:05:04,790 --> 00:05:05,915
+the observations out.
+
+97
+00:05:05,915 --> 00:05:08,600
+So that just comes from the least squares fit.
+
+98
+00:05:08,600 --> 00:05:18,970
+But now we have to divide them by 1 minus Hii squared.
+
+99
+00:05:18,970 --> 00:05:21,490
+And so this is like a magic formula.
+
+100
+00:05:21,490 --> 00:05:26,605
+The Hii that we have there is the diagonal element of the
+
+101
+00:05:26,605 --> 00:05:28,810
+hat matrix.
+
+102
+00:05:28,810 --> 00:05:31,460
+The hat matrix is the operator matrix that produces the least
+
+103
+00:05:31,460 --> 00:05:32,790
+squares fit.
+
+104
+00:05:32,790 --> 00:05:34,990
+This is also known as the self influence.
+
+105
+00:05:34,990 --> 00:05:38,850
+It&#39;s a measure of how much observation i contributes to
+
+106
+00:05:38,850 --> 00:05:40,310
+it&#39;s own fit.
+
+107
+00:05:40,310 --> 00:05:44,810
+And you notice, what happens if these values Hii vary
+
+108
+00:05:44,810 --> 00:05:46,880
+between 0 and 1.
+
+109
+00:05:46,880 --> 00:05:50,370
+And if Hii is close to 1-- in other words observation i
+
+110
+00:05:50,370 --> 00:05:52,950
+really contributes a lot to its own fit--
+
+111
+00:05:52,950 --> 00:05:55,080
+1 minus Hii is small.
+
+112
+00:05:55,080 --> 00:05:58,720
+And that will inflate that particular residual.
+
+113
+00:05:58,720 --> 00:06:01,380
+So this is like a magic formula.
+
+114
+00:06:01,380 --> 00:06:04,830
+It tells you that you can get your cross-validated fit by
+
+115
+00:06:04,830 --> 00:06:09,430
+the simple modification of the residuals from the full fit.
+
+116
+00:06:09,430 --> 00:06:12,430
+And that&#39;s much more efficient,
+
+117
+00:06:12,430 --> 00:06:14,980
+and cheaper to compute.
+
+118
+00:06:14,980 --> 00:06:17,740
+OK, so that&#39;s a slight detour.
+
+119
+00:06:17,740 --> 00:06:20,250
+Now we&#39;re going to write our own function to do that.
+
+120
+00:06:20,250 --> 00:06:21,500
+OK?
+
+121
+00:06:23,150 --> 00:06:26,310
+And that&#39;s formula 5.2 in the book.
+
+122
+00:06:26,310 --> 00:06:28,240
+So here we write our function.
+
+123
+00:06:28,240 --> 00:06:34,570
+We&#39;ll call it LOOCV, LOO-CV, takes the fit as an argument.
+
+124
+00:06:34,570 --> 00:06:37,370
+And it uses a function called ln.influence.
+
+125
+00:06:37,370 --> 00:06:40,340
+And that&#39;s a post-processor for ln fit.
+
+126
+00:06:40,340 --> 00:06:44,140
+And it&#39;ll extract the element h from that, which gives you
+
+127
+00:06:44,140 --> 00:06:46,920
+those diagonal elements Hii, right?
+
+128
+00:06:46,920 --> 00:06:50,705
+So we&#39;ll put that in a vector H. And then right on the fly,
+
+129
+00:06:50,705 --> 00:06:54,300
+we&#39;ll compute that quantity on the right hand side of our
+
+130
+00:06:54,300 --> 00:06:55,750
+panel over there.
+
+131
+00:06:55,750 --> 00:06:58,990
+First of all, the residuals of the fit give you the residuals
+
+132
+00:06:58,990 --> 00:07:00,400
+from the full fit.
+
+133
+00:07:00,400 --> 00:07:03,020
+So those are the terms in the numerator.
+
+134
+00:07:03,020 --> 00:07:11,380
+And then we divide by 1 minus h squared.
+
+135
+00:07:11,380 --> 00:07:14,350
+And the residuals of fit is a vector.
+
+136
+00:07:14,350 --> 00:07:16,640
+And 1 minus h is a vector.
+
+137
+00:07:16,640 --> 00:07:20,240
+And the divide, now, does element by element division in
+
+138
+00:07:20,240 --> 00:07:20,860
+that vector.
+
+139
+00:07:20,860 --> 00:07:22,760
+And we take the whole lot, square them, and
+
+140
+00:07:22,760 --> 00:07:24,260
+take the mean of that.
+
+141
+00:07:24,260 --> 00:07:26,620
+And so that&#39;s going to be computing this
+
+142
+00:07:26,620 --> 00:07:28,590
+formula over here.
+
+143
+00:07:28,590 --> 00:07:28,960
+OK?
+
+144
+00:07:28,960 --> 00:07:32,240
+So that we just build into our function.
+
+145
+00:07:32,240 --> 00:07:34,740
+And then end off our function.
+
+146
+00:07:34,740 --> 00:07:38,200
+And since that was the last quantity computed, that&#39;s will
+
+147
+00:07:38,200 --> 00:07:39,950
+be what&#39;s returned.
+
+148
+00:07:39,950 --> 00:07:41,060
+OK?
+
+149
+00:07:41,060 --> 00:07:43,186
+So let&#39;s see if that works.
+
+150
+00:07:43,186 --> 00:07:45,470
+We&#39;ll do LOOCV.
+
+151
+00:07:45,470 --> 00:07:49,900
+And lo and behold, very quickly it produced the 24.23
+
+152
+00:07:49,900 --> 00:07:53,420
+that we saw above for the first element of
+
+153
+00:07:53,420 --> 00:07:56,330
+the results of cv.glm.
+
+154
+00:07:56,330 --> 00:07:58,410
+So our function works.
+
+155
+00:07:58,410 --> 00:08:00,110
+OK, great.
+
+156
+00:08:00,110 --> 00:08:02,000
+So now we&#39;re going to use it.
+
+157
+00:08:02,000 --> 00:08:06,810
+And the way we&#39;re going to use it is we can fit polynomials
+
+158
+00:08:06,810 --> 00:08:11,680
+of different degrees to our data.
+
+159
+00:08:11,680 --> 00:08:14,600
+Remember what the data looked like?
+
+160
+00:08:14,600 --> 00:08:17,820
+Let&#39;s just go up here and plot it again.
+
+161
+00:08:17,820 --> 00:08:20,510
+The data looks very nonlinear.
+
+162
+00:08:20,510 --> 00:08:21,780
+So we plotted it again.
+
+163
+00:08:21,780 --> 00:08:24,770
+And now we&#39;re going to fit some polynomials of
+
+164
+00:08:24,770 --> 00:08:26,620
+degrees 1 up to 5.
+
+165
+00:08:26,620 --> 00:08:26,900
+Right?
+
+166
+00:08:26,900 --> 00:08:28,220
+And so we set ourselves up.
+
+167
+00:08:28,220 --> 00:08:31,472
+We&#39;ve got a vector for collecting the errors.
+
+168
+00:08:31,472 --> 00:08:33,789
+OK?
+
+169
+00:08:33,789 --> 00:08:37,600
+And now we create the variable degree, which
+
+170
+00:08:37,600 --> 00:08:40,210
+takes values 1 to 5.
+
+171
+00:08:40,210 --> 00:08:44,710
+And then we go into a loop for d in degree.
+
+172
+00:08:44,710 --> 00:08:49,280
+Fit the glm using the polynomial of that degree, so
+
+173
+00:08:49,280 --> 00:08:51,740
+we use the poly function, the function of
+
+174
+00:08:51,740 --> 00:08:54,630
+horsepower and degree.
+
+175
+00:08:54,630 --> 00:08:57,670
+And then we use our little function to compute the error,
+
+176
+00:08:57,670 --> 00:09:00,660
+the leave-one-out cross-validation error, and
+
+177
+00:09:00,660 --> 00:09:03,210
+put it in our error vector.
+
+178
+00:09:03,210 --> 00:09:05,790
+OK?
+
+179
+00:09:05,790 --> 00:09:07,230
+And look, it&#39;s finished already.
+
+180
+00:09:07,230 --> 00:09:08,290
+It&#39;s done all of them.
+
+181
+00:09:08,290 --> 00:09:14,210
+And if we plot this error against degree, we see that
+
+182
+00:09:14,210 --> 00:09:16,550
+degree 1 does pretty poorly.
+
+183
+00:09:16,550 --> 00:09:20,420
+Degree 2 jumps down from 24 down to just above 19.
+
+184
+00:09:20,420 --> 00:09:23,620
+And then higher degrees really don&#39;t make much difference.
+
+185
+00:09:23,620 --> 00:09:26,010
+And we might have guessed that, looking at the plot of
+
+186
+00:09:26,010 --> 00:09:31,300
+the data, that a quadratic would do a good job.
+
+187
+00:09:31,300 --> 00:09:31,900
+OK.
+
+188
+00:09:31,900 --> 00:09:34,340
+Well that was leave-one-out cross-validation.
+
+189
+00:09:34,340 --> 00:09:36,590
+Let&#39;s try 10-fold cross-validation out.
+
+190
+00:09:36,590 --> 00:09:40,180
+So recall with 10-fold cross-validation, you do
+
+191
+00:09:40,180 --> 00:09:42,100
+actually much less work.
+
+192
+00:09:42,100 --> 00:09:47,820
+What you do here is you divide the data up into 10 pieces,
+
+193
+00:09:47,820 --> 00:09:50,000
+and each 1/10 is a test set.
+
+194
+00:09:50,000 --> 00:09:53,690
+And the 9/10 acts as a training set.
+
+195
+00:09:53,690 --> 00:09:55,960
+So for 10-fall cross-validation, you don&#39;t
+
+196
+00:09:55,960 --> 00:09:58,460
+have to fit the model 10 times.
+
+197
+00:09:58,460 --> 00:10:01,710
+With leave-one-out you have to in principle fit the model n
+
+198
+00:10:01,710 --> 00:10:04,670
+times, where n is the number of training points.
+
+199
+00:10:04,670 --> 00:10:07,190
+Although we did have the shortcut for linear
+
+200
+00:10:07,190 --> 00:10:08,730
+regression.
+
+201
+00:10:08,730 --> 00:10:12,970
+The reason cv.glm doesn&#39;t use that shortcut is that it&#39;s
+
+202
+00:10:12,970 --> 00:10:16,530
+also set up to work on logistic regressions and other
+
+203
+00:10:16,530 --> 00:10:19,210
+models, and there the shortcut doesn&#39;t work.
+
+204
+00:10:19,210 --> 00:10:19,520
+OK.
+
+205
+00:10:19,520 --> 00:10:21,410
+So here we&#39;ll do 10-fold.
+
+206
+00:10:21,410 --> 00:10:26,360
+And we&#39;ll again set up a vector to collect our errors.
+
+207
+00:10:26,360 --> 00:10:29,955
+And the same thing, go through the list, we have a loop, a
+
+208
+00:10:29,955 --> 00:10:32,690
+list of degrees, fit our model.
+
+209
+00:10:32,690 --> 00:10:36,480
+And now we&#39;ll actually use a cv.glm function
+
+210
+00:10:36,480 --> 00:10:38,510
+to compute the errors.
+
+211
+00:10:38,510 --> 00:10:42,710
+And so we call cv.glm, and we tell it k is 10.
+
+212
+00:10:42,710 --> 00:10:45,140
+So that tells the number of folds.
+
+213
+00:10:45,140 --> 00:10:46,440
+OK?
+
+214
+00:10:46,440 --> 00:10:48,900
+And that&#39;s pretty quick, because it&#39;s only fitting the
+
+215
+00:10:48,900 --> 00:10:50,950
+model 10 times each time.
+
+216
+00:10:50,950 --> 00:10:54,670
+And now we&#39;ll include the errors on our plot.
+
+217
+00:10:54,670 --> 00:10:56,680
+We&#39;ll color them in red.
+
+218
+00:10:56,680 --> 00:10:59,400
+And so we use the function lines.
+
+219
+00:10:59,400 --> 00:11:01,380
+And it&#39;s not much difference.
+
+220
+00:11:01,380 --> 00:11:03,960
+In this case, 10-fold and leave-one-out cross-validation
+
+221
+00:11:03,960 --> 00:11:06,650
+pretty much told us the same story.
+
+222
+00:11:06,650 --> 00:11:09,520
+In general we favor 10-fold cross-validation
+
+223
+00:11:09,520 --> 00:11:11,730
+for computing errors.
+
+224
+00:11:11,730 --> 00:11:14,970
+It tends to be a more stable measure than leave-one-out
+
+225
+00:11:14,970 --> 00:11:16,200
+cross-validation.
+
+226
+00:11:16,200 --> 00:11:19,620
+And for the most time, it&#39;s cheaper to compute.
+

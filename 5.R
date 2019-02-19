@@ -44,7 +44,6 @@ alpha=function(x,y){
   cxy=cov(x,y)
   (vy-cxy)/(vx+vy-2*cxy)
 }
-alpha(Portfolio$X,Portfolio$Y)
 
 ## What is the standard error of alpha?
 

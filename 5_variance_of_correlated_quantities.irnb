@@ -1,0 +1,111 @@
+{
+  "cells": [
+    {
+      "metadata": {
+        "_uuid": "04ba1b016892b1f3ed0d82f5fda1de8256d80aa6",
+        "_execution_state": "idle",
+        "trusted": true
+      },
+      "cell_type": "code",
+      "source": " ## Importing packages\n\n# This R environment comes with all of CRAN and many other helpful packages preinstalled.\n# You can see which packages are installed by checking out the kaggle/rstats docker image: \n# https://github.com/kaggle/docker-rstats\n\nlibrary(tidyverse) # metapackage with lots of helpful functions\n\n## Running code\n\n# In a notebook, you can run a single code cell by clicking in the cell and then hitting \n# the blue arrow to the left, or by clicking in the cell and pressing Shift+Enter. In a script, \n# you can run code by highlighting the code you want to run and then clicking the blue arrow\n# at the bottom of this window.\n\n## Reading in files\n\n# You can access files from datasets you've added to this kernel in the \"../input/\" directory.\n# You can see the files added to this kernel by running the code below. \n\nlist.files(path = \"../input\")\n\n## Saving data\n\n# If you save any files or images, these will be put in the \"output\" directory. You \n# can see the output directory by committing and running your kernel (using the \n# Commit & Run button) and then checking out the compiled version of your kernel.",
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": "character(0)",
+            "text/latex": "",
+            "text/markdown": "",
+            "text/html": ""
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "_uuid": "02f0779ba73fa201c59e9c2c2502d52fb2595c7e"
+      },
+      "cell_type": "code",
+      "source": "#\n# https://stats.stackexchange.com/questions/223446/variance-of-the-mean-of-correlated-and-uncorrelated-data\n# To demonstrate the concept in An Introduction to Statistical Learning, \n# p183-184 : \n# Since the mean of many highly correlated quantities has higher variance than \n# does the mean of many quantities that are not as highly correlated, \n# the test error estimate resulting from LOOCV tends to have higher variance \n# than does the test error estimate resulting from k-fold CV. \n# \nversion=20190204",
+      "execution_count": 10,
+      "outputs": []
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "_uuid": "e0d2b8ecf3fc3194e5d92f6544829b1625171308"
+      },
+      "cell_type": "code",
+      "source": "# n = 2 : 2 dimensional, x1 and x2\n# rho : correlation\n# n.sim : number of (x1, x2) pairs\nn <- 2\nrho1 <- 0.45\nrho2 <- 0.99\nn.sim <- 5e3\n\n#\n# Create a data structure for making correlated variables.\n#\nSigma1 <- outer(1:n, 1:n, function(i,j) rho1^abs(i-j))\nSigma2 <- outer(1:n, 1:n, function(i,j) rho2^abs(i-j))\n                \nS1 <- svd(Sigma1)\nS2 <- svd(Sigma2)\n\nQ1 <- S1$v %*% diag(sqrt(S1$d))\nQ2 <- S2$v %*% diag(sqrt(S2$d))\n#\n# Generate two sets of sample means, one uncorrelated (x) and the other correlated (y1), (y2).\n#\nZ0 <- matrix(rnorm(n*n.sim), nrow=n)\nZ1<- Q1 %*% Z0\nZ2<- Q2 %*% Z0\n                \nmeanZ0 <- colMeans(Z0)\nmeanZ1 <- colMeans(Z1)\nmeanZ2 <- colMeans(Z2)\n                \nvar0 <- var(meanZ0)\nvar1 <- var(meanZ1)\nvar2 <- var(meanZ2)\n\nZ0[1:2,1:8]\nZ1[1:2,1:8]\nZ2[1:2,1:8]\n                \npar(mfrow=c(2,3))\n                \n#\n# Show scatterplots of the samples.\n# t() : transpose\n#\nplot(t(Z0)[, 1:2],main=paste(\"Uncorrelated (Z0)\"),\n     pch=19, col=\"#00000010\", xlab=\"x.1\", ylab=\"x.2\", asp=1)\nplot(t(Z1)[, 1:2], main=paste(\"Correlated (Z1),\\n rho=\",rho1),\n     pch=19, col=\"#00000010\", xlab=\"x.1\", ylab=\"x.2\", asp=1)\nplot(t(Z2)[, 1:2], main=paste(\"Correlated (Z2),\\n rho=\",rho2),\n     pch=19, col=\"#00000010\", xlab=\"x.1\", ylab=\"x.2\", asp=1)                \n\n#\n# Display the histograms of both.\n#\nh.mean1 <- hist(meanZ1, breaks=30, plot=FALSE)\nh.mean2 <- hist(meanZ2, breaks=30, plot=FALSE)\n#h.yo <- hist(x, breaks=h.y1$breaks, plot=FALSE)\nh.mean0 <- hist(meanZ0, breaks=30, plot=FALSE)\n                \nylim <- c(0, max(h.mean0$density))\n#ylim<-c(0,10)                \nhist(meanZ0, xlab = \"mean0\", main=paste(\"Histogram,\\n var=\", var0),\n     freq=FALSE, breaks=h.mean0$breaks, ylim=ylim)\nhist(meanZ1, xlab = \"mean1\", main=paste(\"Histogram,\\n var=\", var1),\n     freq=FALSE, breaks=h.mean1$breaks, ylim=ylim)\nhist(meanZ2, xlab = \"mean2\", main=paste(\"Histogram,\\n var=\", var2),\n     freq=FALSE, breaks=h.mean2$breaks, ylim=ylim)\n\n#?t              ",
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": "     [,1]      [,2]       [,3]       [,4]      [,5]       [,6]      [,7]      \n[1,] 0.3361367 -1.0180470 -0.1944533 -1.102179 -0.1482573 0.8452272  0.1562605\n[2,] 0.7720881  0.8459182 -1.0289131 -1.061520 -0.9390530 1.3170451 -0.6587195\n     [,8]       \n[1,]  0.04992798\n[2,] -1.48435782",
+            "text/latex": "\\begin{tabular}{llllllll}\n\t 0.3361367   & -1.0180470  & -0.1944533  & -1.102179   & -0.1482573  & 0.8452272   &  0.1562605  &  0.04992798\\\\\n\t 0.7720881   &  0.8459182  & -1.0289131  & -1.061520   & -0.9390530  & 1.3170451   & -0.6587195  & -1.48435782\\\\\n\\end{tabular}\n",
+            "text/markdown": "\n| 0.3361367   | -1.0180470  | -0.1944533  | -1.102179   | -0.1482573  | 0.8452272   |  0.1562605  |  0.04992798 | \n| 0.7720881   |  0.8459182  | -1.0289131  | -1.061520   | -0.9390530  | 1.3170451   | -0.6587195  | -1.48435782 | \n\n\n",
+            "text/html": "<table>\n<tbody>\n\t<tr><td>0.3361367  </td><td>-1.0180470 </td><td>-0.1944533 </td><td>-1.102179  </td><td>-0.1482573 </td><td>0.8452272  </td><td> 0.1562605 </td><td> 0.04992798</td></tr>\n\t<tr><td>0.7720881  </td><td> 0.8459182 </td><td>-1.0289131 </td><td>-1.061520  </td><td>-0.9390530 </td><td>1.3170451  </td><td>-0.6587195 </td><td>-1.48435782</td></tr>\n</tbody>\n</table>\n"
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": "     [,1]       [,2]      [,3]       [,4]      [,5]       [,6]       \n[1,] -0.6910965 0.4232325  0.7051376 1.4951376  0.6186801 -1.41034929\n[2,]  0.1186763 1.3104390 -0.3739956 0.3818062 -0.3662070 -0.02902068\n     [,7]       [,8]      \n[1,]  0.2123844  0.7358917\n[2,] -0.4784864 -0.8209159",
+            "text/latex": "\\begin{tabular}{llllllll}\n\t -0.6910965  & 0.4232325   &  0.7051376  & 1.4951376   &  0.6186801  & -1.41034929 &  0.2123844  &  0.7358917 \\\\\n\t  0.1186763  & 1.3104390   & -0.3739956  & 0.3818062   & -0.3662070  & -0.02902068 & -0.4784864  & -0.8209159 \\\\\n\\end{tabular}\n",
+            "text/markdown": "\n| -0.6910965  | 0.4232325   |  0.7051376  | 1.4951376   |  0.6186801  | -1.41034929 |  0.2123844  |  0.7358917  | \n|  0.1186763  | 1.3104390   | -0.3739956  | 0.3818062   | -0.3662070  | -0.02902068 | -0.4784864  | -0.8209159  | \n\n\n",
+            "text/html": "<table>\n<tbody>\n\t<tr><td>-0.6910965 </td><td>0.4232325  </td><td> 0.7051376 </td><td>1.4951376  </td><td> 0.6186801 </td><td>-1.41034929</td><td> 0.2123844 </td><td> 0.7358917 </td></tr>\n\t<tr><td> 0.1186763 </td><td>1.3104390  </td><td>-0.3739956 </td><td>0.3818062  </td><td>-0.3662070 </td><td>-0.02902068</td><td>-0.4784864 </td><td>-0.8209159 </td></tr>\n</tbody>\n</table>\n"
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": "     [,1]       [,2]      [,3]      [,4]     [,5]       [,6]       [,7]      \n[1,] -0.3898902 0.9556832 0.2667217 1.174481 0.21428729 -0.9362406 -0.1092908\n[2,] -0.2807005 1.0753141 0.1212114 1.024360 0.08148515 -0.7499823 -0.2024478\n     [,8]       \n[1,]  0.05515695\n[2,] -0.15476295",
+            "text/latex": "\\begin{tabular}{llllllll}\n\t -0.3898902  & 0.9556832   & 0.2667217   & 1.174481    & 0.21428729  & -0.9362406  & -0.1092908  &  0.05515695\\\\\n\t -0.2807005  & 1.0753141   & 0.1212114   & 1.024360    & 0.08148515  & -0.7499823  & -0.2024478  & -0.15476295\\\\\n\\end{tabular}\n",
+            "text/markdown": "\n| -0.3898902  | 0.9556832   | 0.2667217   | 1.174481    | 0.21428729  | -0.9362406  | -0.1092908  |  0.05515695 | \n| -0.2807005  | 1.0753141   | 0.1212114   | 1.024360    | 0.08148515  | -0.7499823  | -0.2024478  | -0.15476295 | \n\n\n",
+            "text/html": "<table>\n<tbody>\n\t<tr><td>-0.3898902 </td><td>0.9556832  </td><td>0.2667217  </td><td>1.174481   </td><td>0.21428729 </td><td>-0.9362406 </td><td>-0.1092908 </td><td> 0.05515695</td></tr>\n\t<tr><td>-0.2807005 </td><td>1.0753141  </td><td>0.1212114  </td><td>1.024360   </td><td>0.08148515 </td><td>-0.7499823 </td><td>-0.2024478 </td><td>-0.15476295</td></tr>\n</tbody>\n</table>\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "_uuid": "a5037d5d54780620f64ef846f91ee1e4f1c7ff05"
+      },
+      "cell_type": "markdown",
+      "source": "Z0 = (x1,x2) where x1 and x2 are uncorrelated\n\nZ1 = (x1,x2) where x1 and x2 are correlated, degree of correlation = 0.45\n\nZ2 = (x1,x2) where x1 and x2 are correlated, degree of correlation = 0.99\n\nZ0, Z1 and Z2 have 5000 pairs of (x1,x2) \n\ndimension:\n\nZ0[1:2,1:5000]\n\nZ1[1:2,1:5000]\n\nZ2[1:2,1:5000]\n\nmeanZ0[1:5000] = mean of Z0\n\nmeanZ1[1:5000] = mean of Z1 \n\nmeanZ2[1:5000] = mean of Z2 \n\nMean of highly correlated data pair Z2 has highest variation.   "
+    },
+    {
+      "metadata": {
+        "trusted": true,
+        "_uuid": "2f1df5b68d893a0fda34290674b9ab30bb0f086b"
+      },
+      "cell_type": "code",
+      "source": "",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "R",
+      "language": "R",
+      "name": "ir"
+    },
+    "language_info": {
+      "mimetype": "text/x-r-source",
+      "name": "R",
+      "pygments_lexer": "r",
+      "version": "3.4.2",
+      "file_extension": ".r",
+      "codemirror_mode": "r"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 1
+}

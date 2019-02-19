@@ -1,0 +1,1352 @@
+0
+00:00:00,740 --> 00:00:01,510
+OK.
+
+1
+00:00:01,510 --> 00:00:03,420
+We&#39;ve learned about methods for regression and for
+
+2
+00:00:03,420 --> 00:00:07,640
+classification involving predictors and for making
+
+3
+00:00:07,640 --> 00:00:09,650
+predictions from our data.
+
+4
+00:00:09,650 --> 00:00:11,060
+How do we test these out?
+
+5
+00:00:11,060 --> 00:00:13,480
+Well, ideally, we&#39;d like to get a new sample from the
+
+6
+00:00:13,480 --> 00:00:16,960
+population and see how well our predictions do.
+
+7
+00:00:16,960 --> 00:00:18,710
+Well, we don&#39;t always have new data.
+
+8
+00:00:18,710 --> 00:00:19,980
+So what do we do?
+
+9
+00:00:19,980 --> 00:00:22,690
+And we can&#39;t use our training data just straight off,
+
+10
+00:00:22,690 --> 00:00:26,090
+because it&#39;s going to be a little bit optimistic.
+
+11
+00:00:26,090 --> 00:00:29,140
+So we&#39;re going to tell you about cross-validation.
+
+12
+00:00:29,140 --> 00:00:31,390
+Rob&#39;s going to tell you about cross-validation, which is a
+
+13
+00:00:31,390 --> 00:00:34,620
+very clever device for using the same training data to tell
+
+14
+00:00:34,620 --> 00:00:38,350
+you how well your prediction method works.
+
+15
+00:00:38,350 --> 00:00:39,390
+The other thing--
+
+16
+00:00:39,390 --> 00:00:40,890
+You&#39;re going to give my entire lecture?
+
+17
+00:00:40,890 --> 00:00:42,210
+Oh, I&#39;ll try not to, Rob.
+
+18
+00:00:42,210 --> 00:00:45,150
+Just in case you miss out some of the salient points.
+
+19
+00:00:45,150 --> 00:00:48,080
+The other thing we&#39;re going to look at is standard errors of
+
+20
+00:00:48,080 --> 00:00:49,300
+estimators.
+
+21
+00:00:49,300 --> 00:00:52,740
+Sometimes our estimators are quite complex and we&#39;d like to
+
+22
+00:00:52,740 --> 00:00:55,370
+know the standard error, which means what happens if we got
+
+23
+00:00:55,370 --> 00:00:57,660
+new samples from the population over and over
+
+24
+00:00:57,660 --> 00:01:00,390
+again, and we&#39;d recomputed our estimate?
+
+25
+00:01:00,390 --> 00:01:03,430
+And the standard error is the standard deviation of those
+
+26
+00:01:03,430 --> 00:01:05,560
+estimates under resampling.
+
+27
+00:01:05,560 --> 00:01:08,230
+Well, of course, we can&#39;t resample from the population.
+
+28
+00:01:08,230 --> 00:01:09,930
+We only have one sample.
+
+29
+00:01:09,930 --> 00:01:12,260
+Again, Rob&#39;s going to tell you about the bootstrap, which is
+
+30
+00:01:12,260 --> 00:01:15,510
+a very clever device for using the one, single training
+
+31
+00:01:15,510 --> 00:01:18,800
+sample you have to estimate things like standard
+
+32
+00:01:18,800 --> 00:01:20,160
+deviations.
+
+33
+00:01:20,160 --> 00:01:20,420
+Rob?
+
+34
+00:01:20,420 --> 00:01:20,580
+OK.
+
+35
+00:01:20,580 --> 00:01:23,830
+Well, thanks for that great introduction.
+
+36
+00:01:23,830 --> 00:01:24,390
+Good overview.
+
+37
+00:01:24,390 --> 00:01:25,970
+So we&#39;re going to talk about cross-validation and the
+
+38
+00:01:25,970 --> 00:01:27,340
+bootstrap as Trevor mentioned.
+
+39
+00:01:27,340 --> 00:01:29,680
+And these are resampling methods.
+
+40
+00:01:29,680 --> 00:01:33,070
+So the word resampling, our original data is a sample.
+
+41
+00:01:33,070 --> 00:01:34,330
+We&#39;re going to resample.
+
+42
+00:01:34,330 --> 00:01:37,080
+We&#39;re actually going to sample from a data set in order to
+
+43
+00:01:37,080 --> 00:01:39,940
+learn about the quantity of interest.
+
+44
+00:01:39,940 --> 00:01:42,090
+And the cross-validation and the bootstrap are both ways of
+
+45
+00:01:42,090 --> 00:01:45,400
+resampling from the data.
+
+46
+00:01:45,400 --> 00:01:48,160
+And the purpose of it is to get information, additional
+
+47
+00:01:48,160 --> 00:01:49,400
+information, about the fitted model.
+
+48
+00:01:49,400 --> 00:01:53,160
+For example, the main thing we use cross-validation for is to
+
+49
+00:01:53,160 --> 00:01:58,130
+get an idea of the test set error of our model.
+
+50
+00:01:58,130 --> 00:02:00,040
+We&#39;re going to review that concept of training error.
+
+51
+00:02:00,040 --> 00:02:02,390
+And we&#39;ll see, as we&#39;ve talked about before, the training
+
+52
+00:02:02,390 --> 00:02:04,210
+error is too optimistic.
+
+53
+00:02:04,210 --> 00:02:06,650
+The more we fit to the data, the lower the training error.
+
+54
+00:02:06,650 --> 00:02:08,970
+But the test error can get higher if we over fit.
+
+55
+00:02:08,970 --> 00:02:10,100
+It often will.
+
+56
+00:02:10,100 --> 00:02:13,190
+So cross-validation is a very important tool that we&#39;re
+
+57
+00:02:13,190 --> 00:02:14,620
+going to talk about in this section.
+
+58
+00:02:14,620 --> 00:02:17,480
+And we&#39;ll use, throughout the course, to get a good idea of
+
+59
+00:02:17,480 --> 00:02:21,020
+the test set error of a model.
+
+60
+00:02:21,020 --> 00:02:23,690
+Bootstrap, on the other hand, is most useful to get an idea
+
+61
+00:02:23,690 --> 00:02:25,570
+of the variability or standard deviation of an
+
+62
+00:02:25,570 --> 00:02:27,500
+estimate and its bias.
+
+63
+00:02:27,500 --> 00:02:29,320
+So we&#39;ll talk about first cross-validation validation,
+
+64
+00:02:29,320 --> 00:02:32,060
+and then bootstrap.
+
+65
+00:02:32,060 --> 00:02:35,020
+But let&#39;s, before we get into those, let&#39;s review the idea
+
+66
+00:02:35,020 --> 00:02:38,620
+of the concept of training error versus test error.
+
+67
+00:02:38,620 --> 00:02:40,190
+Remember, test error is the error that we
+
+68
+00:02:40,190 --> 00:02:41,650
+incur on new data.
+
+69
+00:02:41,650 --> 00:02:43,870
+So we fit our model to the training set.
+
+70
+00:02:43,870 --> 00:02:46,410
+We take our model, and then we apply it to new data that the
+
+71
+00:02:46,410 --> 00:02:48,030
+model hasn&#39;t seen.
+
+72
+00:02:48,030 --> 00:02:51,330
+The test error is actually how well we&#39;ll do on future data
+
+73
+00:02:51,330 --> 00:02:53,120
+the model hasn&#39;t seen.
+
+74
+00:02:53,120 --> 00:02:55,700
+Training error is much easier to compute.
+
+75
+00:02:55,700 --> 00:02:56,930
+We can do it in the same data set.
+
+76
+00:02:56,930 --> 00:02:57,650
+What is it?
+
+77
+00:02:57,650 --> 00:03:01,430
+It&#39;s the error we get applying the model to the same data
+
+78
+00:03:01,430 --> 00:03:03,840
+from which we trained.
+
+79
+00:03:03,840 --> 00:03:07,800
+And as you can imagine, train error is often
+
+80
+00:03:07,800 --> 00:03:08,820
+lower than test error.
+
+81
+00:03:08,820 --> 00:03:10,780
+The model has already seen the training set.
+
+82
+00:03:10,780 --> 00:03:14,680
+So it&#39;s going to fit the training set with lower error
+
+83
+00:03:14,680 --> 00:03:16,860
+than it was going to occur on the test set.
+
+84
+00:03:16,860 --> 00:03:19,420
+And the more we over fit, the harder we fit the data, the
+
+85
+00:03:19,420 --> 00:03:21,390
+lower the training error looks.
+
+86
+00:03:21,390 --> 00:03:22,620
+On the other hand, the test error can
+
+87
+00:03:22,620 --> 00:03:23,900
+be quite a bit higher.
+
+88
+00:03:23,900 --> 00:03:27,270
+So training error is not a good surrogate for test error.
+
+89
+00:03:27,270 --> 00:03:31,980
+And this picture is a good one to look at to summarize the
+
+90
+00:03:31,980 --> 00:03:33,060
+concepts here.
+
+91
+00:03:33,060 --> 00:03:34,440
+So what do we have here?
+
+92
+00:03:34,440 --> 00:03:38,150
+Well, first of all, along the horizontal axis is the model
+
+93
+00:03:38,150 --> 00:03:40,600
+complexity, from low to high.
+
+94
+00:03:40,600 --> 00:03:45,040
+For example, in a linear model, the model complexity is
+
+95
+00:03:45,040 --> 00:03:47,920
+the number of features, or the number of coefficients that we
+
+96
+00:03:47,920 --> 00:03:48,970
+fit in the model.
+
+97
+00:03:48,970 --> 00:03:51,780
+So low means a few number of features or coefficients or
+
+98
+00:03:51,780 --> 00:03:52,710
+predictors.
+
+99
+00:03:52,710 --> 00:03:55,650
+High means a large number.
+
+100
+00:03:55,650 --> 00:03:58,310
+Think about fitting a polynomial with the higher and
+
+101
+00:03:58,310 --> 00:03:59,400
+higher degree.
+
+102
+00:03:59,400 --> 00:04:01,330
+You can see how model complexity
+
+103
+00:04:01,330 --> 00:04:02,460
+increases with degree.
+
+104
+00:04:02,460 --> 00:04:04,095
+So if we move to the right, we&#39;d have a higher complexity,
+
+105
+00:04:04,095 --> 00:04:06,290
+a higher order of polynomial.
+
+106
+00:04:06,290 --> 00:04:08,320
+The predictor error is on the vertical axis.
+
+107
+00:04:08,320 --> 00:04:09,960
+And we have two curves here--
+
+108
+00:04:09,960 --> 00:04:13,680
+the training error in blue, and test error in red.
+
+109
+00:04:13,680 --> 00:04:14,730
+So what do we see?
+
+110
+00:04:14,730 --> 00:04:16,149
+Let&#39;s first look at the blue curve.
+
+111
+00:04:16,149 --> 00:04:19,570
+On the left, the model complexity is low.
+
+112
+00:04:19,570 --> 00:04:21,930
+For example, we&#39;re fitting a small number of parameters,
+
+113
+00:04:21,930 --> 00:04:24,940
+maybe just a single constant.
+
+114
+00:04:24,940 --> 00:04:26,880
+The training error is high.
+
+115
+00:04:26,880 --> 00:04:29,130
+Now, as we increase the model complexity, we fit more and
+
+116
+00:04:29,130 --> 00:04:32,500
+more features in the model or higher complexity or higher
+
+117
+00:04:32,500 --> 00:04:35,640
+order polynomial, the training error goes down.
+
+118
+00:04:35,640 --> 00:04:37,850
+And actually in this picture, it continues to go down a
+
+119
+00:04:37,850 --> 00:04:38,680
+consistent way.
+
+120
+00:04:38,680 --> 00:04:42,180
+In most cases, for most models, the more complex the
+
+121
+00:04:42,180 --> 00:04:46,180
+model, the training error will go down as it
+
+122
+00:04:46,180 --> 00:04:48,190
+does in this case.
+
+123
+00:04:48,190 --> 00:04:50,990
+On the other hand, the test error is the red curve.
+
+124
+00:04:50,990 --> 00:04:52,800
+It does not consistently go down.
+
+125
+00:04:52,800 --> 00:04:54,820
+It starts off high like the training error.
+
+126
+00:04:54,820 --> 00:04:56,390
+It comes down for a while, but then it
+
+127
+00:04:56,390 --> 00:04:57,740
+starts to come up again.
+
+128
+00:04:57,740 --> 00:04:59,530
+It has a minimum, looks like around the middle here.
+
+129
+00:04:59,530 --> 00:05:04,240
+But after this point, the more complex the model, the higher
+
+130
+00:05:04,240 --> 00:05:05,410
+the test error.
+
+131
+00:05:05,410 --> 00:05:06,190
+What&#39;s happened there?
+
+132
+00:05:06,190 --> 00:05:11,110
+Well, that is an example of over fitting, right?
+
+133
+00:05:11,110 --> 00:05:14,530
+On the left, we&#39;ve added complexity, some features that
+
+134
+00:05:14,530 --> 00:05:16,380
+actually are important for predicting the response.
+
+135
+00:05:16,380 --> 00:05:18,250
+So they reduce the test error.
+
+136
+00:05:18,250 --> 00:05:21,150
+But at that point, we seem to have fit all
+
+137
+00:05:21,150 --> 00:05:21,930
+the important features.
+
+138
+00:05:21,930 --> 00:05:24,820
+And now we&#39;re putting in things which are just noise.
+
+139
+00:05:24,820 --> 00:05:27,472
+The trainer error goes down as it has to, but the test error
+
+140
+00:05:27,472 --> 00:05:28,630
+is starting to go up.
+
+141
+00:05:28,630 --> 00:05:30,030
+That&#39;s over fitting.
+
+142
+00:05:30,030 --> 00:05:31,950
+So we don&#39;t want to over fit, because we&#39;ll increase the
+
+143
+00:05:31,950 --> 00:05:33,140
+test error.
+
+144
+00:05:33,140 --> 00:05:35,075
+The training error has not told us anything about over
+
+145
+00:05:35,075 --> 00:05:36,540
+fitting, because it&#39;s using the same
+
+146
+00:05:36,540 --> 00:05:39,100
+data to measure error.
+
+147
+00:05:39,100 --> 00:05:42,260
+The more parameters, the better it looks.
+
+148
+00:05:42,260 --> 00:05:46,960
+So it does not give us a good idea of the test error.
+
+149
+00:05:46,960 --> 00:05:49,260
+The test error curve, on the other hand, is minimized
+
+150
+00:05:49,260 --> 00:05:51,680
+around this level, at this complexity.
+
+151
+00:05:51,680 --> 00:05:54,790
+And beyond that is over fitting.
+
+152
+00:05:54,790 --> 00:05:56,700
+The ingredients of prediction error are
+
+153
+00:05:56,700 --> 00:05:59,280
+actually bias and variance.
+
+154
+00:05:59,280 --> 00:06:01,870
+So the bias is how far off on the average the
+
+155
+00:06:01,870 --> 00:06:03,680
+model is from the truth.
+
+156
+00:06:03,680 --> 00:06:06,780
+The variance is how much that the estimate
+
+157
+00:06:06,780 --> 00:06:08,700
+varies around its average.
+
+158
+00:06:08,700 --> 00:06:12,550
+When we don&#39;t fit very hard, the bias is high.
+
+159
+00:06:12,550 --> 00:06:13,980
+The variance is low, because there are few
+
+160
+00:06:13,980 --> 00:06:15,430
+parameters being fit.
+
+161
+00:06:15,430 --> 00:06:17,190
+As we increase the amount of complexity moving to the
+
+162
+00:06:17,190 --> 00:06:20,600
+right, the bias goes down because the model can adapt to
+
+163
+00:06:20,600 --> 00:06:25,140
+more and more subtleties in the data.
+
+164
+00:06:25,140 --> 00:06:27,170
+But the variance goes up, because we have more and more
+
+165
+00:06:27,170 --> 00:06:29,630
+parameters to estimate from the same amount of data.
+
+166
+00:06:29,630 --> 00:06:32,420
+So bias and variance together give us prediction error.
+
+167
+00:06:32,420 --> 00:06:33,610
+And there&#39;s a trade off.
+
+168
+00:06:33,610 --> 00:06:34,980
+They sum together to get protection error.
+
+169
+00:06:34,980 --> 00:06:37,660
+And the trade off is minimized, in this case,
+
+170
+00:06:37,660 --> 00:06:40,860
+around a model complexity in the middle here.
+
+171
+00:06:40,860 --> 00:06:44,580
+So bias and variance together give us test error.
+
+172
+00:06:44,580 --> 00:06:47,530
+We want to find the model complex given the smallest
+
+173
+00:06:47,530 --> 00:06:50,370
+test error, and training error does not give us a good idea
+
+174
+00:06:50,370 --> 00:06:52,260
+of test error.
+
+175
+00:06:52,260 --> 00:06:56,070
+They refer to it as the bias-variance trade off.
+
+176
+00:06:56,070 --> 00:07:01,550
+OK, so we can&#39;t use training error to estimate test error,
+
+177
+00:07:01,550 --> 00:07:03,130
+as the previous picture shows us.
+
+178
+00:07:03,130 --> 00:07:04,330
+So what do we do?
+
+179
+00:07:04,330 --> 00:07:07,260
+Well, the best solution, if we have a large test
+
+180
+00:07:07,260 --> 00:07:08,430
+set, we can use that.
+
+181
+00:07:08,430 --> 00:07:11,500
+So we typically take our model that we&#39;ve applied to fit on
+
+182
+00:07:11,500 --> 00:07:14,390
+the training set applied to test set.
+
+183
+00:07:14,390 --> 00:07:18,320
+But very often, we don&#39;t have a large test set.
+
+184
+00:07:18,320 --> 00:07:19,480
+We if we can&#39;t do that, what we do?
+
+185
+00:07:19,480 --> 00:07:24,300
+Well, there are some ways too get an idea of test error
+
+186
+00:07:24,300 --> 00:07:26,240
+using an adjustment to training error.
+
+187
+00:07:26,240 --> 00:07:28,620
+Basically, training error can be too small, as we&#39;ve see in
+
+188
+00:07:28,620 --> 00:07:29,790
+the previous picture.
+
+189
+00:07:29,790 --> 00:07:35,060
+So these methods adjust the training error by increasing
+
+190
+00:07:35,060 --> 00:07:38,830
+it by a factor that involves the amount of fitting that
+
+191
+00:07:38,830 --> 00:07:41,090
+we&#39;ve done to the data and the variance.
+
+192
+00:07:41,090 --> 00:07:43,615
+And these methods could the Cp statistic,
+
+193
+00:07:43,615 --> 00:07:45,870
+the AIC and the BIC.
+
+194
+00:07:45,870 --> 00:07:47,610
+We&#39;ll talk about these later on in the
+
+195
+00:07:47,610 --> 00:07:49,240
+course, not in this section.
+
+196
+00:07:49,240 --> 00:07:51,200
+Here instead, we&#39;re going to talk about cross-validation,
+
+197
+00:07:51,200 --> 00:07:53,200
+validation and cross-validation.
+
+198
+00:07:53,200 --> 00:07:55,510
+And these involve removing part of the data, the holding
+
+199
+00:07:55,510 --> 00:08:00,360
+it out, fitting the model to the remaining part, and then
+
+200
+00:08:00,360 --> 00:08:05,250
+applying the fitted model to the data that we&#39;ve held out.
+
+201
+00:08:05,250 --> 00:08:07,400
+And this is called validation, or
+
+202
+00:08:07,400 --> 00:08:10,550
+cross-validation, as we&#39;ll see.
+
+203
+00:08:10,550 --> 00:08:13,240
+So let&#39;s first of all talk about the validation approach.
+
+204
+00:08:13,240 --> 00:08:16,362
+So here, the simple idea is basically we&#39;re going to
+
+205
+00:08:16,362 --> 00:08:19,720
+divide the data into two parts at random, approximately of
+
+206
+00:08:19,720 --> 00:08:21,130
+equal size.
+
+207
+00:08:21,130 --> 00:08:22,850
+We&#39;ll call the first part a training set and the second
+
+208
+00:08:22,850 --> 00:08:25,080
+part the validation or hold-out set.
+
+209
+00:08:25,080 --> 00:08:25,960
+So the idea is simple.
+
+210
+00:08:25,960 --> 00:08:26,980
+We take the model.
+
+211
+00:08:26,980 --> 00:08:29,080
+We fit it on the training half.
+
+212
+00:08:29,080 --> 00:08:31,740
+And then we apply the fitted model to the other half, the
+
+213
+00:08:31,740 --> 00:08:33,640
+validation or hold-out set.
+
+214
+00:08:33,640 --> 00:08:36,700
+And we record the error that we get on hold-out set.
+
+215
+00:08:36,700 --> 00:08:39,970
+And that error, the validation set error, provides us a good
+
+216
+00:08:39,970 --> 00:08:41,850
+idea of the test error.
+
+217
+00:08:41,850 --> 00:08:45,540
+Well, at least some idea of the test error.
+
+218
+00:08:45,540 --> 00:08:47,680
+And the error we&#39;ll measure by mean squared error in the case
+
+219
+00:08:47,680 --> 00:08:52,380
+of quantitative response, or misclassification error rate
+
+220
+00:08:52,380 --> 00:08:54,590
+in the case of a qualitative or a discrete response
+
+221
+00:08:54,590 --> 00:08:56,260
+classification.
+
+222
+00:08:56,260 --> 00:08:58,950
+So just to make that clear, let&#39;s look at the next slide.
+
+223
+00:08:58,950 --> 00:09:00,530
+We have our data set here.
+
+224
+00:09:00,530 --> 00:09:03,320
+I&#39;ve divided it in two at random.
+
+225
+00:09:03,320 --> 00:09:05,210
+The blue part on the left is the training set.
+
+226
+00:09:05,210 --> 00:09:08,710
+And the orange part or pink part on the right is the
+
+227
+00:09:08,710 --> 00:09:10,310
+validation or hold-out set.
+
+228
+00:09:10,310 --> 00:09:13,425
+These observations, for example, 7, 22, 13 and more of
+
+229
+00:09:13,425 --> 00:09:17,630
+them were at random chosen to be in the training set.
+
+230
+00:09:17,630 --> 00:09:19,670
+Observation 91 was at random chosen to be in
+
+231
+00:09:19,670 --> 00:09:21,100
+the hold-out set.
+
+232
+00:09:21,100 --> 00:09:22,890
+We fit the model to the blue part.
+
+233
+00:09:22,890 --> 00:09:25,490
+And then we apply it and predict the observations in
+
+234
+00:09:25,490 --> 00:09:27,370
+the pink part.
+
+235
+00:09:27,370 --> 00:09:29,390
+And that&#39;s validation.
+
+236
+00:09:29,390 --> 00:09:32,010
+Or we might call that twofold validation, where we--
+
+237
+00:09:32,010 --> 00:09:34,000
+well, maybe I shouldn&#39;t call it twofold, because as we&#39;ll
+
+238
+00:09:34,000 --> 00:09:35,670
+see, we don&#39;t cross over.
+
+239
+00:09:35,670 --> 00:09:37,680
+This is simply a one-stage process.
+
+240
+00:09:37,680 --> 00:09:41,010
+We divide it in half, train on one half and predict on the
+
+241
+00:09:41,010 --> 00:09:42,420
+other half.
+
+242
+00:09:42,420 --> 00:09:44,790
+It seems a little wasteful if you&#39;ve got a very
+
+243
+00:09:44,790 --> 00:09:45,940
+small data set, Rob.
+
+244
+00:09:45,940 --> 00:09:46,240
+Yeah.
+
+245
+00:09:46,240 --> 00:09:47,790
+That as wasteful.
+
+246
+00:09:47,790 --> 00:09:51,410
+And as we&#39;ll see, cross-validation will remove
+
+247
+00:09:51,410 --> 00:09:52,790
+that waste and be more efficient.
+
+248
+00:09:52,790 --> 00:09:59,850
+But let&#39;s first see how this works in the auto data.
+
+249
+00:09:59,850 --> 00:10:03,040
+Recall, we&#39;re comparing the linear model to high-order
+
+250
+00:10:03,040 --> 00:10:04,950
+polynomials in regression.
+
+251
+00:10:04,950 --> 00:10:09,380
+And we have 392 observations divided up into two parts at
+
+252
+00:10:09,380 --> 00:10:14,520
+random, 196 in one part and 196 in the other part.
+
+253
+00:10:14,520 --> 00:10:17,290
+The first part being the training set, and the other
+
+254
+00:10:17,290 --> 00:10:18,780
+part being the validation set.
+
+255
+00:10:21,930 --> 00:10:25,850
+If we do this once, do a single split, and we record
+
+256
+00:10:25,850 --> 00:10:30,240
+the mean squared error, we get this red curve as a function
+
+257
+00:10:30,240 --> 00:10:31,610
+of the degree of the polynomial.
+
+258
+00:10:31,610 --> 00:10:35,130
+So a linear fits on the left, and quadrant is here, et
+
+259
+00:10:35,130 --> 00:10:37,470
+cetera, as we increase the polynomial order.
+
+260
+00:10:37,470 --> 00:10:41,010
+And we see the minimum seems to occur maybe around 2.
+
+261
+00:10:41,010 --> 00:10:44,100
+Well, it&#39;s rising a bit and coming down a bit after that.
+
+262
+00:10:44,100 --> 00:10:45,750
+It&#39;s pretty flat after about 2.
+
+263
+00:10:45,750 --> 00:10:47,910
+So it looks like a linear model.
+
+264
+00:10:47,910 --> 00:10:50,040
+Or actually, a quadratic model, excuse me, is
+
+265
+00:10:50,040 --> 00:10:51,300
+probably the best.
+
+266
+00:10:51,300 --> 00:10:52,500
+And after that, we&#39;re not getting much
+
+267
+00:10:52,500 --> 00:10:54,470
+gain, if any at all.
+
+268
+00:10:54,470 --> 00:10:56,680
+But look what happens when we repeat this process with more
+
+269
+00:10:56,680 --> 00:10:59,490
+and more splits at random into two parts.
+
+270
+00:10:59,490 --> 00:11:02,590
+We get a lot of variability.
+
+271
+00:11:02,590 --> 00:11:08,120
+The minimum does tend to occur around 2 generally.
+
+272
+00:11:08,120 --> 00:11:08,830
+But look at the error.
+
+273
+00:11:08,830 --> 00:11:12,980
+It&#39;s varying from about 16 up to 24, depending on the split.
+
+274
+00:11:12,980 --> 00:11:17,350
+So this is a consequence part of the fact that we divided up
+
+275
+00:11:17,350 --> 00:11:18,110
+into two parts.
+
+276
+00:11:18,110 --> 00:11:21,920
+And when you divide data in two, you get a lot of
+
+277
+00:11:21,920 --> 00:11:23,720
+variability depending on the split.
+
+278
+00:11:23,720 --> 00:11:26,180
+The training set, for example, is half as big as it was
+
+279
+00:11:26,180 --> 00:11:28,230
+originally.
+
+280
+00:11:28,230 --> 00:11:30,490
+It&#39;s interesting, Rob, that even though you get that
+
+281
+00:11:30,490 --> 00:11:33,390
+variability, it seems to often have this pattern where the
+
+282
+00:11:33,390 --> 00:11:35,370
+shape of the curves are much the same.
+
+283
+00:11:35,370 --> 00:11:39,350
+But the height, the level, hops around.
+
+284
+00:11:39,350 --> 00:11:40,390
+So that&#39;s a good point.
+
+285
+00:11:40,390 --> 00:11:42,700
+And it actually reminds me to say there&#39;s two things you
+
+286
+00:11:42,700 --> 00:11:45,610
+want to use validation for, cross-validation.
+
+287
+00:11:45,610 --> 00:11:48,300
+Both to pick the best size of the model-- and in this case,
+
+288
+00:11:48,300 --> 00:11:49,600
+the degree of polynomial.
+
+289
+00:11:49,600 --> 00:11:51,855
+And also to give us an idea of how good the error is, because
+
+290
+00:11:51,855 --> 00:11:55,220
+of the idea of the actual test error at the end of the
+
+291
+00:11:55,220 --> 00:11:55,940
+fitting process.
+
+292
+00:11:55,940 --> 00:12:01,300
+So a twofold, this breaking up into two parts, is successful
+
+293
+00:12:01,300 --> 00:12:03,320
+at the first thing as Trevor just mentioned.
+
+294
+00:12:03,320 --> 00:12:06,480
+The minimum&#39;s around 2 pretty consistently.
+
+295
+00:12:06,480 --> 00:12:07,900
+So that seems to be OK.
+
+296
+00:12:07,900 --> 00:12:10,340
+But the actual level of the curve is varying a lot.
+
+297
+00:12:10,340 --> 00:12:12,490
+So it wouldn&#39;t be so good at telling an idea of the error,
+
+298
+00:12:12,490 --> 00:12:15,270
+because we get a very wide range here in error.
+
+299
+00:12:18,880 --> 00:12:23,530
+So I&#39;ve said a little bit of this first point already, that
+
+300
+00:12:23,530 --> 00:12:25,400
+this method is highly variable because we&#39;re
+
+301
+00:12:25,400 --> 00:12:26,790
+splitting into two parts.
+
+302
+00:12:26,790 --> 00:12:30,220
+And there&#39;s lots of ways of splitting into two parts.
+
+303
+00:12:30,220 --> 00:12:34,270
+And because we&#39;re splitting in two, we&#39;re losing a lot of the
+
+304
+00:12:34,270 --> 00:12:35,140
+power of the training set.
+
+305
+00:12:35,140 --> 00:12:37,860
+We&#39;re throwing away half the data each time in training.
+
+306
+00:12:42,100 --> 00:12:47,710
+And another consequence of that that, remember, one of
+
+307
+00:12:47,710 --> 00:12:51,310
+our original questions was, well, what&#39;s the best size
+
+308
+00:12:51,310 --> 00:12:52,090
+model to pick?
+
+309
+00:12:52,090 --> 00:12:53,960
+Second of all, how well does that model do in
+
+310
+00:12:53,960 --> 00:12:55,530
+terms of test error?
+
+311
+00:12:55,530 --> 00:12:57,610
+Our training sets here are half as big as our original
+
+312
+00:12:57,610 --> 00:12:58,570
+training set.
+
+313
+00:12:58,570 --> 00:13:01,970
+And if we go back to this previous slide, we split the
+
+314
+00:13:01,970 --> 00:13:03,450
+data in half.
+
+315
+00:13:03,450 --> 00:13:05,010
+We actually want the test error for a
+
+316
+00:13:05,010 --> 00:13:07,070
+training set of size n.
+
+317
+00:13:07,070 --> 00:13:08,650
+We&#39;re getting an idea of test error for a
+
+318
+00:13:08,650 --> 00:13:09,900
+training set of size n/2.
+
+319
+00:13:12,680 --> 00:13:18,310
+And that&#39;s likely to be quite a bit higher than the error
+
+320
+00:13:18,310 --> 00:13:22,140
+for a training set of size n.
+
+321
+00:13:22,140 --> 00:13:22,920
+Why, Rob?
+
+322
+00:13:22,920 --> 00:13:23,922
+Why?
+
+323
+00:13:23,922 --> 00:13:26,020
+That was my question.
+
+324
+00:13:26,020 --> 00:13:28,260
+Well, that&#39;s because in general, the more data one,
+
+325
+00:13:28,260 --> 00:13:30,590
+the lower the error.
+
+326
+00:13:30,590 --> 00:13:32,100
+If I offer you a choice of, would you rather have 100
+
+327
+00:13:32,100 --> 00:13:34,480
+observations or 200 observations, you&#39;d generate
+
+328
+00:13:34,480 --> 00:13:36,170
+like 200 observations to train on.
+
+329
+00:13:36,170 --> 00:13:39,110
+Because the more data, the more information you have, and
+
+330
+00:13:39,110 --> 00:13:40,900
+in general, the lower your error is.
+
+331
+00:13:40,900 --> 00:13:43,400
+So if your training sets only half as big as your original
+
+332
+00:13:43,400 --> 00:13:48,640
+training set, as it is in this situation, the error that it
+
+333
+00:13:48,640 --> 00:13:50,515
+yields is probably be higher n the actual
+
+334
+00:13:50,515 --> 00:13:52,900
+error you want to get.
+
+335
+00:13:52,900 --> 00:13:56,460
+So as we can see, there are some drawbacks of validation.
+
+336
+00:13:56,460 --> 00:13:58,720
+In the next section, we&#39;ll talk more cross-validation,
+
+337
+00:13:58,720 --> 00:14:00,100
+which will help to remove some of these drawbacks.
+

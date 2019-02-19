@@ -1,0 +1,1072 @@
+0
+00:00:00,710 --> 00:00:01,790
+Welcome back.
+
+1
+00:00:01,790 --> 00:00:05,830
+In the last session, we talked about cross validation for the
+
+2
+00:00:05,830 --> 00:00:08,560
+estimation of test air for supervised learning.
+
+3
+00:00:08,560 --> 00:00:09,920
+Now we&#39;ll talk about a closely related
+
+4
+00:00:09,920 --> 00:00:12,300
+idea called the bootstrap.
+
+5
+00:00:12,300 --> 00:00:14,860
+It&#39;s a powerful method for assessing
+
+6
+00:00:14,860 --> 00:00:16,500
+uncertainty in estimates.
+
+7
+00:00:16,500 --> 00:00:18,860
+And particularly good for getting standard errors of an
+
+8
+00:00:18,860 --> 00:00:22,130
+estimate, and getting confidence limits.
+
+9
+00:00:22,130 --> 00:00:23,820
+It sounds like a powerful technique, Rob.
+
+10
+00:00:23,820 --> 00:00:26,260
+Are there any good books on the topic?
+
+11
+00:00:26,260 --> 00:00:28,010
+As a matter of fact--
+
+12
+00:00:28,010 --> 00:00:30,900
+Rob has got a very famous book with Brad
+
+13
+00:00:30,900 --> 00:00:33,000
+Efron on the bootstrap.
+
+14
+00:00:33,000 --> 00:00:36,250
+Actually, speaking of famous, my supervisor was Brad Efron,
+
+15
+00:00:36,250 --> 00:00:37,830
+who is now our colleague.
+
+16
+00:00:37,830 --> 00:00:39,960
+And he&#39;s the inventor of the bootstrap.
+
+17
+00:00:39,960 --> 00:00:43,305
+And there&#39;s a conversation with Brad in this course, in
+
+18
+00:00:43,305 --> 00:00:46,620
+which he talks about how he came to
+
+19
+00:00:46,620 --> 00:00:47,820
+think of the bootstrap.
+
+20
+00:00:47,820 --> 00:00:50,520
+The bootstrap was something he thought of in 1979, and it&#39;s
+
+21
+00:00:50,520 --> 00:00:52,100
+become one of the most important techniques in
+
+22
+00:00:52,100 --> 00:00:55,900
+statistics in the last 30 years.
+
+23
+00:00:55,900 --> 00:00:57,470
+So where does the name come from?
+
+24
+00:00:57,470 --> 00:01:00,040
+Well, it&#39;s the idea of pulling yourself up by your
+
+25
+00:01:00,040 --> 00:01:05,840
+bootstraps, which is from a fable by Rudolph Erich Raspe,
+
+26
+00:01:05,840 --> 00:01:10,820
+&quot;The Adventures of Baron Munchausen.&quot; The Baron had
+
+27
+00:01:10,820 --> 00:01:14,440
+fallen to the bottom of a deep lake and couldn&#39;t get out.
+
+28
+00:01:14,440 --> 00:01:15,330
+So he had an idea.
+
+29
+00:01:15,330 --> 00:01:17,400
+He thought he&#39;d pull himself up by his bootstraps, his own
+
+30
+00:01:17,400 --> 00:01:18,240
+bootstraps.
+
+31
+00:01:18,240 --> 00:01:20,180
+And in the fable, he managed to pull himself out of the
+
+32
+00:01:20,180 --> 00:01:23,130
+lake and save his life.
+
+33
+00:01:23,130 --> 00:01:26,620
+So that&#39;s thought where the term bootstrap came from.
+
+34
+00:01:26,620 --> 00:01:28,740
+And that&#39;s the term we&#39;re using here.
+
+35
+00:01:28,740 --> 00:01:30,820
+It&#39;s not the same as the term bootstrap that one uses in
+
+36
+00:01:30,820 --> 00:01:32,320
+computer science to boot a computer.
+
+37
+00:01:32,320 --> 00:01:33,540
+But it&#39;s the same idea.
+
+38
+00:01:33,540 --> 00:01:36,210
+You&#39;re trying to pull yourself up from what you&#39;ve got.
+
+39
+00:01:36,210 --> 00:01:39,300
+In this case, we&#39;ll see the bootstrap-- the bootstrap, is
+
+40
+00:01:39,300 --> 00:01:41,590
+we&#39;re going use the data itself to try to get more
+
+41
+00:01:41,590 --> 00:01:44,480
+information about our estimator.
+
+42
+00:01:44,480 --> 00:01:48,370
+So let&#39;s start with a simple example.
+
+43
+00:01:48,370 --> 00:01:53,860
+Suppose we have a fixed sum of money which we want to invest,
+
+44
+00:01:53,860 --> 00:01:57,355
+in two assets that yield returns x and y, where x and y
+
+45
+00:01:57,355 --> 00:01:58,660
+are round quantities, depending on
+
+46
+00:01:58,660 --> 00:02:00,190
+how the assets do.
+
+47
+00:02:00,190 --> 00:02:03,690
+And we want to invest a fraction alpha of our money in
+
+48
+00:02:03,690 --> 00:02:06,580
+x, and the remaining 1 minus alpha in y.
+
+49
+00:02:06,580 --> 00:02:09,120
+You want to choose the fraction alpha to minimize the
+
+50
+00:02:09,120 --> 00:02:12,000
+total risk or the variance of our investment.
+
+51
+00:02:12,000 --> 00:02:13,850
+So we have random variables x and y.
+
+52
+00:02:13,850 --> 00:02:17,740
+We want to choose the alpha to minimize the variance of alpha
+
+53
+00:02:17,740 --> 00:02:21,330
+x plus 1 minus alpha times y.
+
+54
+00:02:21,330 --> 00:02:25,670
+Now in this population model, you can show that the best
+
+55
+00:02:25,670 --> 00:02:29,270
+fraction alpha is given by this formula.
+
+56
+00:02:29,270 --> 00:02:31,720
+Sigma squared y, that&#39;s the difference of y, there&#39;s the
+
+57
+00:02:31,720 --> 00:02:32,350
+variance of x.
+
+58
+00:02:32,350 --> 00:02:35,440
+This is the covariance between x and y.
+
+59
+00:02:35,440 --> 00:02:36,970
+And they&#39;re defined here.
+
+60
+00:02:36,970 --> 00:02:38,602
+So in other words, if we know the variance of x, the
+
+61
+00:02:38,602 --> 00:02:42,410
+variance of y, and their covariance, then this is the
+
+62
+00:02:42,410 --> 00:02:47,740
+best amount proportion to put into x, and the remaining goes
+
+63
+00:02:47,740 --> 00:02:49,585
+into y, to minimize the total variance.
+
+64
+00:02:52,110 --> 00:02:53,740
+Those are population quantities, aren&#39;t they?
+
+65
+00:02:53,740 --> 00:02:55,470
+Those are population quantities.
+
+66
+00:02:55,470 --> 00:02:59,300
+So since they&#39;re population quantities, they&#39;re are not
+
+67
+00:02:59,300 --> 00:03:02,470
+known to us in general.
+
+68
+00:03:02,470 --> 00:03:08,420
+But if we have a data set from the population under study
+
+69
+00:03:08,420 --> 00:03:11,890
+here, we can get an idea of these quantities, the
+
+70
+00:03:11,890 --> 00:03:16,480
+variances and the covariances, from the sample values from
+
+71
+00:03:16,480 --> 00:03:17,540
+the data set.
+
+72
+00:03:17,540 --> 00:03:21,700
+And then plug them into the formula to get the alpha hat,
+
+73
+00:03:21,700 --> 00:03:26,830
+which is the proportion that we should invest in x.
+
+74
+00:03:26,830 --> 00:03:32,050
+So again, if we have a sample of x and y, we can get the
+
+75
+00:03:32,050 --> 00:03:34,050
+empirical estimates of the variances and covariances,
+
+76
+00:03:34,050 --> 00:03:37,870
+plug them in, and get an estimate of alpha.
+
+77
+00:03:37,870 --> 00:03:42,440
+So in this next slide, we see we&#39;ve created a simulated
+
+78
+00:03:42,440 --> 00:03:43,020
+population.
+
+79
+00:03:43,020 --> 00:03:47,170
+We&#39;ve simulated investments x and y.
+
+80
+00:03:47,170 --> 00:03:49,380
+There are four different simulations here, each one
+
+81
+00:03:49,380 --> 00:03:51,550
+containing 100 pairs of x and y.
+
+82
+00:03:51,550 --> 00:03:53,420
+And for each one, we take that data.
+
+83
+00:03:53,420 --> 00:03:55,510
+We compute the variances and covariances.
+
+84
+00:03:55,510 --> 00:03:58,160
+And we plug it into the formula to get an
+
+85
+00:03:58,160 --> 00:03:59,630
+estimate for alpha.
+
+86
+00:03:59,630 --> 00:04:01,540
+And here, we see the four estimates of alpha for the
+
+87
+00:04:01,540 --> 00:04:02,760
+four panels.
+
+88
+00:04:02,760 --> 00:04:05,660
+0.576 et cetera to 0.651.
+
+89
+00:04:05,660 --> 00:04:11,570
+So they&#39;re averaging around 0.6.
+
+90
+00:04:11,570 --> 00:04:13,740
+So if we want to get an idea of the standard deviation of
+
+91
+00:04:13,740 --> 00:04:17,110
+alpha hat, we can just repeat this process lots of times.
+
+92
+00:04:17,110 --> 00:04:19,350
+Let&#39;s say 1,000 times.
+
+93
+00:04:19,350 --> 00:04:22,410
+So we would get 1,000 pounds like this.
+
+94
+00:04:22,410 --> 00:04:25,460
+Each one gives us an alpha hat from the formula on the
+
+95
+00:04:25,460 --> 00:04:27,520
+previous slide.
+
+96
+00:04:27,520 --> 00:04:29,390
+And we do this 1,000 times.
+
+97
+00:04:29,390 --> 00:04:31,930
+We take the standard error of those--
+
+98
+00:04:31,930 --> 00:04:33,930
+well, actually, let&#39;s.
+
+99
+00:04:33,930 --> 00:04:37,100
+If it&#39;s 1,000 times, we&#39;ll go to look at the histogram in a
+
+100
+00:04:37,100 --> 00:04:38,980
+couple of slides.
+
+101
+00:04:38,980 --> 00:04:41,940
+This histogram on the left shows the 1,000 values over
+
+102
+00:04:41,940 --> 00:04:45,020
+1,000 simulations from this experiment.
+
+103
+00:04:45,020 --> 00:04:47,410
+Each one is a value of alpha hat, and they
+
+104
+00:04:47,410 --> 00:04:49,260
+average around 0.6.
+
+105
+00:04:49,260 --> 00:04:50,520
+It&#39;s called the sampling
+
+106
+00:04:50,520 --> 00:04:52,543
+distribution of that estimator.
+
+107
+00:04:52,543 --> 00:04:53,430
+Right.
+
+108
+00:04:53,430 --> 00:04:55,960
+And the true value, actually, since we know in this case--
+
+109
+00:04:55,960 --> 00:04:58,430
+we&#39;re playing God, right?-- we know the true variances and
+
+110
+00:04:58,430 --> 00:04:59,450
+covariances.
+
+111
+00:04:59,450 --> 00:05:00,490
+We know the true alpha.
+
+112
+00:05:00,490 --> 00:05:01,620
+And it&#39;s about 0.6.
+
+113
+00:05:01,620 --> 00:05:05,660
+So I&#39;ve indicated here with a purple line the 0.6.
+
+114
+00:05:05,660 --> 00:05:09,820
+And the sampling distribution is averaging around 0.6, as we
+
+115
+00:05:09,820 --> 00:05:11,070
+think it should.
+
+116
+00:05:17,610 --> 00:05:18,310
+I should say--
+
+117
+00:05:18,310 --> 00:05:21,350
+I&#39;ve said this already--
+
+118
+00:05:21,350 --> 00:05:24,420
+here&#39;s the histogram we&#39;ve seen.
+
+119
+00:05:24,420 --> 00:05:26,530
+For the simulations actually, these were the values, the
+
+120
+00:05:26,530 --> 00:05:28,100
+parameters, that we set.
+
+121
+00:05:28,100 --> 00:05:31,100
+And that implied a true of alpha of 0.6, which was that
+
+122
+00:05:31,100 --> 00:05:32,825
+middle value in the histogram.
+
+123
+00:05:32,825 --> 00:05:34,075
+That&#39;s the true value of alpha.
+
+124
+00:05:37,540 --> 00:05:40,830
+And now we can also use this histogram to get the standard
+
+125
+00:05:40,830 --> 00:05:42,830
+deviation of the estimates, just by picking the standard
+
+126
+00:05:42,830 --> 00:05:45,460
+deviation of those 1,000 values of alpha hat.
+
+127
+00:05:45,460 --> 00:05:49,080
+And here we&#39;ve done that, and that&#39;s 0.083.
+
+128
+00:05:49,080 --> 00:05:52,970
+So the standard error of alpha hat is roughly 0.083.
+
+129
+00:05:52,970 --> 00:05:56,050
+The standard error of an estimator is the standard
+
+130
+00:05:56,050 --> 00:05:58,250
+deviation in that sampling distribution.
+
+131
+00:05:58,250 --> 00:06:01,550
+So if you&#39;re able to recompute the estimator many, many times
+
+132
+00:06:01,550 --> 00:06:04,820
+from your samples, the standard deviation is called
+
+133
+00:06:04,820 --> 00:06:05,580
+the standard error.
+
+134
+00:06:05,580 --> 00:06:06,060
+Right.
+
+135
+00:06:06,060 --> 00:06:09,660
+So if we repeat this experiment, we expect each
+
+136
+00:06:09,660 --> 00:06:13,400
+time that, on average, alpha hat will be about 0.6, and
+
+137
+00:06:13,400 --> 00:06:16,690
+would vary by a standard deviation of 0.0.83.
+
+138
+00:06:16,690 --> 00:06:19,350
+Which we&#39;re seeing in this histogram, right?
+
+139
+00:06:19,350 --> 00:06:22,090
+It&#39;s averaging about 0.08, and the standard deviation is
+
+140
+00:06:22,090 --> 00:06:25,310
+about 0.08 of this histogram.
+
+141
+00:06:25,310 --> 00:06:26,660
+OK.
+
+142
+00:06:26,660 --> 00:06:30,530
+So that&#39;s all fine, except we can actually apply
+
+143
+00:06:30,530 --> 00:06:31,250
+this with real data.
+
+144
+00:06:31,250 --> 00:06:33,530
+If we had a sample of investments, x and y, we don&#39;t
+
+145
+00:06:33,530 --> 00:06:36,880
+actually have the ability to sample from the population.
+
+146
+00:06:36,880 --> 00:06:38,110
+We don&#39;t have the population.
+
+147
+00:06:38,110 --> 00:06:39,630
+We have a single sample.
+
+148
+00:06:39,630 --> 00:06:41,500
+So most of statistics, we don&#39;t have access to the
+
+149
+00:06:41,500 --> 00:06:43,350
+population.
+
+150
+00:06:43,350 --> 00:06:45,580
+All we have is a sample.
+
+151
+00:06:45,580 --> 00:06:47,410
+If we had access to the population, we actually
+
+152
+00:06:47,410 --> 00:06:49,130
+wouldn&#39;t need statistics at all, for the most part.
+
+153
+00:06:49,130 --> 00:06:51,770
+We could learn all we wanted to know from the population.
+
+154
+00:06:51,770 --> 00:06:54,320
+But in the real world, we have data.
+
+155
+00:06:54,320 --> 00:06:56,450
+We don&#39;t actually know the populations from which that
+
+156
+00:06:56,450 --> 00:06:57,360
+data arose.
+
+157
+00:06:57,360 --> 00:07:00,190
+We have an idea of what it might look like, but we can&#39;t
+
+158
+00:07:00,190 --> 00:07:01,790
+generate more data.
+
+159
+00:07:01,790 --> 00:07:03,770
+So we can&#39;t actually.
+
+160
+00:07:03,770 --> 00:07:06,080
+We can&#39;t produce the histogram on the left because we don&#39;t
+
+161
+00:07:06,080 --> 00:07:09,260
+have the ability to generate more data.
+
+162
+00:07:09,260 --> 00:07:10,980
+But the bootstrap is going to try.
+
+163
+00:07:10,980 --> 00:07:14,130
+It&#39;s going to mimic this process by sampling not from
+
+164
+00:07:14,130 --> 00:07:17,380
+the population, but from the data itself.
+
+165
+00:07:17,380 --> 00:07:20,530
+So the data itself is going to act as the population.
+
+166
+00:07:20,530 --> 00:07:23,245
+So instead of obtaining independent data sets from the
+
+167
+00:07:23,245 --> 00:07:26,240
+population, which we can do without access to the
+
+168
+00:07:26,240 --> 00:07:28,970
+population, we&#39;re going to sample from the data itself
+
+169
+00:07:28,970 --> 00:07:30,670
+with replacement.
+
+170
+00:07:30,670 --> 00:07:34,030
+And I&#39;ll remind you in a minute what that means.
+
+171
+00:07:34,030 --> 00:07:36,520
+But basically, we&#39;re going to sample from the data set
+
+172
+00:07:36,520 --> 00:07:39,820
+itself, and then use those samples to get an idea of the
+
+173
+00:07:39,820 --> 00:07:41,910
+variability, in the same way that we use the samples from
+
+174
+00:07:41,910 --> 00:07:45,410
+the population to produce this histogram.
+
+175
+00:07:45,410 --> 00:07:48,550
+We&#39;re going to sample from the data, the data itself as a
+
+176
+00:07:48,550 --> 00:07:49,800
+population.
+
+177
+00:07:51,430 --> 00:07:55,360
+So here&#39;s an idea.
+
+178
+00:07:55,360 --> 00:07:58,890
+This is an illustration of bootstrap sampling, which is
+
+179
+00:07:58,890 --> 00:08:00,295
+sampling with replacement.
+
+180
+00:08:00,295 --> 00:08:03,540
+I&#39;ve created a data set here just with three observations,
+
+181
+00:08:03,540 --> 00:08:06,040
+just so we could draw it on a single slide.
+
+182
+00:08:06,040 --> 00:08:07,260
+Here&#39;s our original data.
+
+183
+00:08:07,260 --> 00:08:09,560
+Here&#39;s our three observations.
+
+184
+00:08:09,560 --> 00:08:11,310
+And now, each of these is a bootstrap sample.
+
+185
+00:08:11,310 --> 00:08:16,050
+A bootstrap sample is drawn with replacement of the same
+
+186
+00:08:16,050 --> 00:08:17,180
+size as original data.
+
+187
+00:08:17,180 --> 00:08:18,780
+So the original data here&#39;s about three observations.
+
+188
+00:08:18,780 --> 00:08:21,450
+So we&#39;re going to draw three observations with replacement.
+
+189
+00:08:21,450 --> 00:08:22,680
+What does that mean?
+
+190
+00:08:22,680 --> 00:08:24,850
+It means that the chance of each observation being sampled
+
+191
+00:08:24,850 --> 00:08:26,600
+is the same, 1/3.
+
+192
+00:08:26,600 --> 00:08:28,300
+But it&#39;s done with replacement.
+
+193
+00:08:28,300 --> 00:08:32,520
+So imagine you put three balls into a bag, say,
+
+194
+00:08:32,520 --> 00:08:33,539
+numbered 1, 2, and 3.
+
+195
+00:08:33,539 --> 00:08:35,440
+We put our hand in the bag.
+
+196
+00:08:35,440 --> 00:08:36,450
+We pull out one at random.
+
+197
+00:08:36,450 --> 00:08:38,309
+Maybe we&#39;ll get number 1.
+
+198
+00:08:38,308 --> 00:08:39,740
+That&#39;s our first observation.
+
+199
+00:08:39,740 --> 00:08:41,280
+Now to get our second observation, we put the ball
+
+200
+00:08:41,280 --> 00:08:42,720
+back in the bag.
+
+201
+00:08:42,720 --> 00:08:43,820
+That&#39;s why it&#39;s called with replacement.
+
+202
+00:08:43,820 --> 00:08:45,980
+And we sample again, from all three balls.
+
+203
+00:08:45,980 --> 00:08:49,102
+So at every stage, each ball has the same probability of
+
+204
+00:08:49,102 --> 00:08:49,585
+being sampled.
+
+205
+00:08:49,585 --> 00:08:52,680
+And it can be sampled more than once, from
+
+206
+00:08:52,680 --> 00:08:53,610
+stage one to end.
+
+207
+00:08:53,610 --> 00:08:59,100
+So here, for example, we&#39;ve got observation 3 twice,
+
+208
+00:08:59,100 --> 00:09:00,660
+conservation 1 once.
+
+209
+00:09:00,660 --> 00:09:03,460
+Observation 2 didn&#39;t get sampled at all.
+
+210
+00:09:03,460 --> 00:09:05,475
+In this second bootstrap sample--
+
+211
+00:09:05,475 --> 00:09:07,580
+and we&#39;re drawing three samples from these three
+
+212
+00:09:07,580 --> 00:09:08,590
+observations--
+
+213
+00:09:08,590 --> 00:09:10,830
+we happen to get to 2, 3, and 1.
+
+214
+00:09:10,830 --> 00:09:13,680
+So each observation actually occurred once.
+
+215
+00:09:13,680 --> 00:09:16,850
+This next sample, we&#39;ve got observation 2 twice, and then
+
+216
+00:09:16,850 --> 00:09:18,570
+observation 1.
+
+217
+00:09:18,570 --> 00:09:22,070
+So just to summarize, we sampled the same number of
+
+218
+00:09:22,070 --> 00:09:24,110
+observations as in our original sample, with
+
+219
+00:09:24,110 --> 00:09:24,600
+replacement.
+
+220
+00:09:24,600 --> 00:09:27,140
+Meaning, each observation can appear more than once, or
+
+221
+00:09:27,140 --> 00:09:29,700
+maybe not at all, depending on what happens
+
+222
+00:09:29,700 --> 00:09:32,550
+as we draw the samples.
+
+223
+00:09:32,550 --> 00:09:35,060
+So these are called bootstrap samples, or
+
+224
+00:09:35,060 --> 00:09:37,080
+bootstrap data sets.
+
+225
+00:09:37,080 --> 00:09:40,610
+And then to each bootstrap data set, we apply the
+
+226
+00:09:40,610 --> 00:09:42,370
+estimator-- in this case, the alpha.
+
+227
+00:09:42,370 --> 00:09:45,350
+This is the proportion of investment x.
+
+228
+00:09:45,350 --> 00:09:47,582
+We compute it from this sample just as we computed it from
+
+229
+00:09:47,582 --> 00:09:49,230
+the original sample.
+
+230
+00:09:49,230 --> 00:09:52,290
+And we use the standard deviation of these numbers to
+
+231
+00:09:52,290 --> 00:09:54,130
+give us an idea of the standard error, the standard
+
+232
+00:09:54,130 --> 00:09:57,140
+deviation of alpha hat.
+
+233
+00:09:57,140 --> 00:09:59,600
+So having drawn 1,000 bootstrap samples and got our
+
+234
+00:09:59,600 --> 00:10:01,070
+estimates of alpha hat, we can draw the
+
+235
+00:10:01,070 --> 00:10:03,320
+histogram as we did before.
+
+236
+00:10:03,320 --> 00:10:04,390
+Let&#39;s go back to the slide.
+
+237
+00:10:04,390 --> 00:10:10,010
+So now, back on slide 29, remember on the left is the
+
+238
+00:10:10,010 --> 00:10:13,140
+histogram, the one we sampled from the population, the
+
+239
+00:10:13,140 --> 00:10:15,590
+histogram of alpha hat values.
+
+240
+00:10:15,590 --> 00:10:17,250
+We can&#39;t sample from the population because we don&#39;t
+
+241
+00:10:17,250 --> 00:10:18,100
+have the population.
+
+242
+00:10:18,100 --> 00:10:19,380
+So we did bootstrap sampling.
+
+243
+00:10:19,380 --> 00:10:22,040
+Look at the histogram in the middle, the blue histogram.
+
+244
+00:10:22,040 --> 00:10:24,960
+It looks very much like the one on the left.
+
+245
+00:10:24,960 --> 00:10:28,090
+It&#39;s averaging around 0.6, and its variability is about the
+
+246
+00:10:28,090 --> 00:10:31,720
+same as we got sampled from the population.
+
+247
+00:10:31,720 --> 00:10:37,910
+As a matter of fact, over here we&#39;ve got the box plots of the
+
+248
+00:10:37,910 --> 00:10:44,350
+alpha hat values, the true ones from the sample from the
+
+249
+00:10:44,350 --> 00:10:45,750
+population and the bootstrap ones.
+
+250
+00:10:45,750 --> 00:10:47,450
+And they&#39;re looking pretty similar.
+
+251
+00:10:47,450 --> 00:10:50,170
+They&#39;re averaging around 0.6, although the bootstrap&#39;s a
+
+252
+00:10:50,170 --> 00:10:52,700
+little lower in this case.
+
+253
+00:10:52,700 --> 00:10:55,940
+But in general, this gives you a pretty good idea of what we
+
+254
+00:10:55,940 --> 00:10:57,710
+get if we could sample from the population.
+
+255
+00:10:57,710 --> 00:10:59,580
+In the standard error estimate--
+
+256
+00:10:59,580 --> 00:11:02,345
+let&#39;s see, we have back here?
+
+257
+00:11:02,345 --> 00:11:08,370
+Yeah, the standard error estimate is 0.087.
+
+258
+00:11:08,370 --> 00:11:11,650
+Which is similar, we got 0.083 before when we used a sample
+
+259
+00:11:11,650 --> 00:11:12,360
+from the population.
+
+260
+00:11:12,360 --> 00:11:16,930
+So the bootstrap has use the data itself as the population
+
+261
+00:11:16,930 --> 00:11:19,260
+and got us a good estimate the standard error, very similar
+
+262
+00:11:19,260 --> 00:11:20,500
+to the one we&#39;d get if we could sample from the
+
+263
+00:11:20,500 --> 00:11:22,880
+population.
+
+264
+00:11:22,880 --> 00:11:24,190
+So we&#39;ve seen some examples of the
+
+265
+00:11:24,190 --> 00:11:25,510
+bootstrap in simple problems.
+
+266
+00:11:25,510 --> 00:11:27,370
+In the next session, we&#39;ll talk about the method in more
+
+267
+00:11:27,370 --> 00:11:28,620
+generality.
+

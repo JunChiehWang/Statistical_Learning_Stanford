@@ -1,0 +1,964 @@
+0
+00:00:00,630 --> 00:00:02,890
+OK, so we just talked about cross-validation, which is an
+
+1
+00:00:02,890 --> 00:00:06,770
+important technique for both regression classification for
+
+2
+00:00:06,770 --> 00:00:10,840
+getting an idea of test error and for assessing how complex
+
+3
+00:00:10,840 --> 00:00:11,680
+a model to fit.
+
+4
+00:00:11,680 --> 00:00:14,250
+For example, how many features to include in a model or the
+
+5
+00:00:14,250 --> 00:00:16,500
+order of the polynomial.
+
+6
+00:00:16,500 --> 00:00:18,020
+And it&#39;s a very important technique.
+
+7
+00:00:18,020 --> 00:00:20,010
+And sometimes with important techniques like this, it&#39;s a
+
+8
+00:00:20,010 --> 00:00:23,550
+good idea to see how one might do it wrong.
+
+9
+00:00:23,550 --> 00:00:25,780
+And this is actually an area that we&#39;ve seen people--
+
+10
+00:00:25,780 --> 00:00:28,320
+a way in which people use cross-validation
+
+11
+00:00:28,320 --> 00:00:29,250
+in the wrong fashion.
+
+12
+00:00:29,250 --> 00:00:31,480
+Which can have actually very serious consequences.
+
+13
+00:00:31,480 --> 00:00:34,000
+Especially these days, when you get very wide data sets.
+
+14
+00:00:34,000 --> 00:00:37,400
+And this next example is going to show you such a case.
+
+15
+00:00:37,400 --> 00:00:40,370
+So we&#39;ll go into detail of how one could do it wrong, and how
+
+16
+00:00:40,370 --> 00:00:41,580
+people use it wrong.
+
+17
+00:00:41,580 --> 00:00:44,790
+And we&#39;ll try to avoid that error, and help you to avoid
+
+18
+00:00:44,790 --> 00:00:45,710
+that error.
+
+19
+00:00:45,710 --> 00:00:48,550
+So let&#39;s think of a simple thought experiment.
+
+20
+00:00:48,550 --> 00:00:51,980
+We&#39;ve got 5,000 predictors, for example, and 50 samples.
+
+21
+00:00:51,980 --> 00:00:54,820
+This is, again, a more and more commonly occurring case,
+
+22
+00:00:54,820 --> 00:00:57,010
+we have more predictors than samples.
+
+23
+00:00:57,010 --> 00:00:59,240
+And we have two classes we&#39;re trying to predict.
+
+24
+00:00:59,240 --> 00:01:00,970
+OK?
+
+25
+00:01:00,970 --> 00:01:02,550
+And suppose we did the following.
+
+26
+00:01:02,550 --> 00:01:05,390
+We built a simple classifier in the following way.
+
+27
+00:01:05,390 --> 00:01:08,690
+First of all we filtered the predictors, find the 100
+
+28
+00:01:08,690 --> 00:01:10,960
+predictors having the largest correlation on their own with
+
+29
+00:01:10,960 --> 00:01:12,620
+the class labels.
+
+30
+00:01:12,620 --> 00:01:13,920
+So we&#39;re going to cherry pick here.
+
+31
+00:01:13,920 --> 00:01:16,160
+We pick the top 100 predictors.
+
+32
+00:01:16,160 --> 00:01:17,810
+Keep them--
+
+33
+00:01:17,810 --> 00:01:20,220
+and again, they&#39;re chosen on the basis of their correlation
+
+34
+00:01:20,220 --> 00:01:22,660
+with the class labels on their own.
+
+35
+00:01:22,660 --> 00:01:26,090
+And we throw away the remaining 4,900 predictors.
+
+36
+00:01:26,090 --> 00:01:31,500
+And then we use 100 predictors, we use them in a
+
+37
+00:01:31,500 --> 00:01:35,240
+classifier such as a [INAUDIBLE] model using only
+
+38
+00:01:35,240 --> 00:01:36,150
+these 100 predictors.
+
+39
+00:01:36,150 --> 00:01:38,460
+And we omit the other 4,900.
+
+40
+00:01:38,460 --> 00:01:41,780
+So that&#39;s not unreasonable with building a classifier.
+
+41
+00:01:41,780 --> 00:01:43,790
+For example, maybe we don&#39;t have to deal with 5,000
+
+42
+00:01:43,790 --> 00:01:44,250
+predictors.
+
+43
+00:01:44,250 --> 00:01:46,250
+We just want a small number of them.
+
+44
+00:01:46,250 --> 00:01:48,730
+The question we address here is, how do we get an idea of
+
+45
+00:01:48,730 --> 00:01:50,670
+the test set error of this classifier?
+
+46
+00:01:50,670 --> 00:01:52,810
+Cross-validation.
+
+47
+00:01:52,810 --> 00:01:54,060
+OK, thank you.
+
+48
+00:01:56,390 --> 00:01:58,340
+But how?
+
+49
+00:01:58,340 --> 00:02:00,340
+What&#39;s tempting is to say, well, let&#39;s just forget the
+
+50
+00:02:00,340 --> 00:02:03,060
+fact that we filtered the predictors in step one.
+
+51
+00:02:03,060 --> 00:02:06,880
+That we chose the 100 best among the 5,000.
+
+52
+00:02:06,880 --> 00:02:09,110
+Let&#39;s just pretend like we started in step two.
+
+53
+00:02:09,110 --> 00:02:12,080
+That we started with the 100 predictors, and
+
+54
+00:02:12,080 --> 00:02:13,370
+that was our data.
+
+55
+00:02:13,370 --> 00:02:16,240
+Can we apply cross-validation in step two,
+
+56
+00:02:16,240 --> 00:02:18,830
+forgetting about step one?
+
+57
+00:02:18,830 --> 00:02:20,410
+Well, no.
+
+58
+00:02:20,410 --> 00:02:22,550
+This is a serious error.
+
+59
+00:02:22,550 --> 00:02:23,670
+Why is it an error?
+
+60
+00:02:23,670 --> 00:02:26,830
+Well, the problem is that the procedure of the classifier
+
+61
+00:02:26,830 --> 00:02:32,390
+has already seen the labels of the training data in step one.
+
+62
+00:02:32,390 --> 00:02:38,640
+In choosing the best 100 predictors, it&#39;s looked at all
+
+63
+00:02:38,640 --> 00:02:41,280
+the labels of all the samples.
+
+64
+00:02:41,280 --> 00:02:46,060
+So the predictors have already used the full set of
+
+65
+00:02:46,060 --> 00:02:48,310
+observations in the fitting when we chose those
+
+66
+00:02:48,310 --> 00:02:49,240
+predictors.
+
+67
+00:02:49,240 --> 00:02:52,280
+So that&#39;s a form of training.
+
+68
+00:02:52,280 --> 00:02:54,075
+And we can&#39;t ignore it in the validation process.
+
+69
+00:02:56,620 --> 00:02:58,750
+The point is, we&#39;re not allowed to just start in step
+
+70
+00:02:58,750 --> 00:03:01,220
+two and ignore the fact that we applied step one.
+
+71
+00:03:01,220 --> 00:03:02,430
+Why is that?
+
+72
+00:03:02,430 --> 00:03:05,530
+Well, this is something you should try yourself.
+
+73
+00:03:05,530 --> 00:03:08,660
+You can simulate data with class labels having no
+
+74
+00:03:08,660 --> 00:03:10,220
+correlation with the outcome.
+
+75
+00:03:10,220 --> 00:03:11,360
+So [INAUDIBLE]
+
+76
+00:03:11,360 --> 00:03:14,040
+class, the true test error is 50%.
+
+77
+00:03:14,040 --> 00:03:16,960
+But cross-validation, if we ignore step one will give you
+
+78
+00:03:16,960 --> 00:03:18,900
+an error rate of 0.
+
+79
+00:03:18,900 --> 00:03:22,670
+So it&#39;s a serious, serious bias.
+
+80
+00:03:22,670 --> 00:03:24,310
+Cross-validation is telling you your classifier is
+
+81
+00:03:24,310 --> 00:03:26,575
+perfect, when in fact your classifier is the same as
+
+82
+00:03:26,575 --> 00:03:27,825
+flipping a coin.
+
+83
+00:03:30,480 --> 00:03:31,730
+Think about why this happens.
+
+84
+00:03:35,460 --> 00:03:37,720
+It will make the point more clearly if we increase the
+
+85
+00:03:37,720 --> 00:03:40,930
+5,000 to maybe 5 million predictors.
+
+86
+00:03:40,930 --> 00:03:43,800
+Suppose we have 5 million predictors and 50 samples.
+
+87
+00:03:43,800 --> 00:03:45,650
+And again, there&#39;s no correlation in the population
+
+88
+00:03:45,650 --> 00:03:48,230
+between the predictors and the class labels.
+
+89
+00:03:48,230 --> 00:03:51,150
+We go ahead and we pick the best 100 among those 5 million
+
+90
+00:03:51,150 --> 00:03:51,960
+predictors.
+
+91
+00:03:51,960 --> 00:03:54,550
+We&#39;re going to find some very good-looking predictors.
+
+92
+00:03:54,550 --> 00:03:57,380
+Despite the fact in the population no predictor has
+
+93
+00:03:57,380 --> 00:03:58,570
+correlation with the outcome.
+
+94
+00:03:58,570 --> 00:04:02,090
+In the data, if we look at the best among 5 million, we&#39;re
+
+95
+00:04:02,090 --> 00:04:04,840
+going to find some very good predictors that look in the
+
+96
+00:04:04,840 --> 00:04:08,450
+data like they have a lot of power for classifying.
+
+97
+00:04:08,450 --> 00:04:11,280
+If we then pretend like those were the predictors we started
+
+98
+00:04:11,280 --> 00:04:15,130
+with, those 100 cherry picked out of 5 million, they&#39;re
+
+99
+00:04:15,130 --> 00:04:17,730
+going to look very good to cross-validation.
+
+100
+00:04:17,730 --> 00:04:22,940
+So we fooled cross-validation by leaving out the first
+
+101
+00:04:22,940 --> 00:04:26,770
+filtering step and giving it a very cherry-picked set of
+
+102
+00:04:26,770 --> 00:04:30,110
+predictors in the second step.
+
+103
+00:04:30,110 --> 00:04:34,330
+This seems like it was done on purpose here, but actually in
+
+104
+00:04:34,330 --> 00:04:38,430
+some genomic studies researchers are faced with
+
+105
+00:04:38,430 --> 00:04:40,620
+tens of thousands of genes, maybe.
+
+106
+00:04:40,620 --> 00:04:42,130
+And it&#39;s just hard to handle them.
+
+107
+00:04:42,130 --> 00:04:44,780
+So they do some kind of screening in the beginning
+
+108
+00:04:44,780 --> 00:04:46,980
+just to reduce the number of variables down to
+
+109
+00:04:46,980 --> 00:04:48,860
+a manageable set.
+
+110
+00:04:48,860 --> 00:04:52,930
+And then forget about it afterwards, but that leads to
+
+111
+00:04:52,930 --> 00:04:55,590
+this kind of bias.
+
+112
+00:04:55,590 --> 00:04:58,060
+As I said earlier, I think it&#39;s good to understand this
+
+113
+00:04:58,060 --> 00:05:00,230
+by actually trying this yourself.
+
+114
+00:05:00,230 --> 00:05:02,230
+In [INAUDIBLE] you&#39;ve learned some [INAUDIBLE] now, you can
+
+115
+00:05:02,230 --> 00:05:04,770
+simulate a situation just like this where the true
+
+116
+00:05:04,770 --> 00:05:07,750
+test error is 50%.
+
+117
+00:05:07,750 --> 00:05:09,530
+And simulate a large number of predictors.
+
+118
+00:05:09,530 --> 00:05:11,420
+And apply cross-validation in step two.
+
+119
+00:05:11,420 --> 00:05:13,390
+And you&#39;ll see the error is actually very low.
+
+120
+00:05:13,390 --> 00:05:15,490
+You can see the error is low.
+
+121
+00:05:15,490 --> 00:05:17,340
+And as Trevor mentioned, this is not something we made up.
+
+122
+00:05:17,340 --> 00:05:19,950
+This is actually an error which commonly occurs in
+
+123
+00:05:19,950 --> 00:05:23,880
+genomics in published papers and high profile journals.
+
+124
+00:05:23,880 --> 00:05:28,280
+So we told you the wrong way to do things, applying
+
+125
+00:05:28,280 --> 00:05:29,870
+cross-validation in step two.
+
+126
+00:05:29,870 --> 00:05:30,840
+The right way is to apply
+
+127
+00:05:30,840 --> 00:05:32,420
+cross-validation to both steps.
+
+128
+00:05:35,185 --> 00:05:38,040
+The next few pictures will make this clear.
+
+129
+00:05:38,040 --> 00:05:40,350
+Here I&#39;ve got the wrong way I just described.
+
+130
+00:05:40,350 --> 00:05:43,790
+So I&#39;ve got my samples here and my predictors here.
+
+131
+00:05:43,790 --> 00:05:49,470
+And now in this first approach, we first select the
+
+132
+00:05:49,470 --> 00:05:51,740
+best set of predictors based on the correlation with the
+
+133
+00:05:51,740 --> 00:05:54,630
+outcome, that&#39;s over here.
+
+134
+00:05:54,630 --> 00:05:58,860
+And we keep these predictors and throw the rest away.
+
+135
+00:05:58,860 --> 00:06:01,280
+And now in step two, we&#39;re going to apply
+
+136
+00:06:01,280 --> 00:06:02,000
+cross-validation.
+
+137
+00:06:02,000 --> 00:06:02,510
+What does that mean?
+
+138
+00:06:02,510 --> 00:06:05,500
+We divide the data up into, say, five parts.
+
+139
+00:06:05,500 --> 00:06:07,960
+We apply our classifier to four parts.
+
+140
+00:06:07,960 --> 00:06:12,050
+And we predict the response in the [INAUDIBLE] part.
+
+141
+00:06:12,050 --> 00:06:15,150
+So again, this is wrong because the filtering step
+
+142
+00:06:15,150 --> 00:06:19,490
+which selected these predictors has used the
+
+143
+00:06:19,490 --> 00:06:22,110
+response [INAUDIBLE] for all the samples.
+
+144
+00:06:22,110 --> 00:06:24,250
+So this is the wrong way to do things.
+
+145
+00:06:24,250 --> 00:06:26,760
+The right way is as follows.
+
+146
+00:06:26,760 --> 00:06:31,380
+We first define our folds, five folds cross-validation.
+
+147
+00:06:31,380 --> 00:06:34,980
+Before we do any fitting, we remove one of the folds.
+
+148
+00:06:34,980 --> 00:06:37,810
+All the data for that fold, the predictors and the
+
+149
+00:06:37,810 --> 00:06:39,250
+response variable.
+
+150
+00:06:39,250 --> 00:06:41,480
+And now we can do whatever we want on the other four parts.
+
+151
+00:06:41,480 --> 00:06:43,970
+We can filter and fit however we want.
+
+152
+00:06:47,630 --> 00:06:48,860
+When we&#39;ve finished our fitting, we then take the
+
+153
+00:06:48,860 --> 00:06:51,390
+model and we predict the response for the [INAUDIBLE]
+
+154
+00:06:51,390 --> 00:06:52,370
+part.
+
+155
+00:06:52,370 --> 00:06:55,890
+Key point being, though, that we form the folds before we
+
+156
+00:06:55,890 --> 00:06:57,690
+filter or fit to the data.
+
+157
+00:07:00,360 --> 00:07:02,170
+So that we&#39;re applying cross-validation to the entire
+
+158
+00:07:02,170 --> 00:07:04,540
+process, not just the second step.
+
+159
+00:07:04,540 --> 00:07:06,020
+So that&#39;s the right way to do it.
+
+160
+00:07:06,020 --> 00:07:09,090
+So in each of the 4/5ths folds, we might screen off a
+
+161
+00:07:09,090 --> 00:07:10,780
+different set of predictors each time.
+
+162
+00:07:10,780 --> 00:07:12,960
+And we probably will.
+
+163
+00:07:12,960 --> 00:07:15,452
+And so that variability is going to get taken into
+
+164
+00:07:15,452 --> 00:07:16,180
+account here.
+
+165
+00:07:16,180 --> 00:07:18,326
+So this wrong way of doing cross-validation is not
+
+166
+00:07:18,326 --> 00:07:19,150
+something that we&#39;ve made up.
+
+167
+00:07:19,150 --> 00:07:21,930
+It&#39;s actually something which I mentioned occurs in a lot of
+
+168
+00:07:21,930 --> 00:07:22,660
+published papers.
+
+169
+00:07:22,660 --> 00:07:26,550
+I&#39;ve actually experienced it a number of times myself.
+
+170
+00:07:26,550 --> 00:07:29,500
+A few years ago I was at a Ph.D. oral in engineering here
+
+171
+00:07:29,500 --> 00:07:30,720
+at Stanford.
+
+172
+00:07:30,720 --> 00:07:32,340
+And a lot of people engineering are doing
+
+173
+00:07:32,340 --> 00:07:34,210
+statistics as part of their work.
+
+174
+00:07:34,210 --> 00:07:40,410
+This particular student was trying to predict heart
+
+175
+00:07:40,410 --> 00:07:41,870
+disease from SNPs.
+
+176
+00:07:41,870 --> 00:07:45,000
+SNPs are single-base changes in the genome.
+
+177
+00:07:45,000 --> 00:07:47,810
+So basically had a classification problem with I
+
+178
+00:07:47,810 --> 00:07:51,970
+think about 100,000 predictors and to a class response.
+
+179
+00:07:51,970 --> 00:07:54,020
+We get done something very much like this.
+
+180
+00:07:54,020 --> 00:07:55,750
+He had so many predictors he wanted to filter them.
+
+181
+00:07:55,750 --> 00:07:59,740
+So he applied a filtering of some sort to the data set to
+
+182
+00:07:59,740 --> 00:08:03,260
+reduce the 100,000 predictors I think down to 1,000.
+
+183
+00:08:03,260 --> 00:08:05,790
+And then he fit some sort of a model to the 1,000 predictors.
+
+184
+00:08:05,790 --> 00:08:09,540
+And he got an error rate of about 35%, I think.
+
+185
+00:08:09,540 --> 00:08:11,690
+Which doesn&#39;t sound that impressive, but for this
+
+186
+00:08:11,690 --> 00:08:14,330
+particular area it was actually
+
+187
+00:08:14,330 --> 00:08:15,580
+quite a low error rate.
+
+188
+00:08:17,550 --> 00:08:19,500
+And during the oral, he presented this.
+
+189
+00:08:19,500 --> 00:08:21,670
+And I said, actually, I think there&#39;s a problem with this.
+
+190
+00:08:21,670 --> 00:08:24,670
+And I pointed out the point you&#39;ve just seen.
+
+191
+00:08:24,670 --> 00:08:28,100
+That he actually had filtered the data--
+
+192
+00:08:28,100 --> 00:08:29,760
+oh, sorry, I didn&#39;t say--
+
+193
+00:08:29,760 --> 00:08:30,840
+[INAUDIBLE] detail.
+
+194
+00:08:30,840 --> 00:08:32,400
+He had applied cross-validation
+
+195
+00:08:32,400 --> 00:08:33,650
+in the second step.
+
+196
+00:08:33,650 --> 00:08:36,980
+So he had filtered the data down to 1,000 predictors.
+
+197
+00:08:36,980 --> 00:08:38,210
+He applied cross-validation.
+
+198
+00:08:38,210 --> 00:08:40,890
+And the cross-validation error rate was about 35%.
+
+199
+00:08:40,890 --> 00:08:42,460
+And he was quite happy, and this was part of this
+
+200
+00:08:42,460 --> 00:08:43,220
+presentation.
+
+201
+00:08:43,220 --> 00:08:44,980
+And I mentioned, well, that doesn&#39;t look right to me.
+
+202
+00:08:44,980 --> 00:08:48,066
+Because you have done cross-validation wrong in the
+
+203
+00:08:48,066 --> 00:08:49,500
+way I just described.
+
+204
+00:08:49,500 --> 00:08:52,980
+He didn&#39;t agree, and his supervisor didn&#39;t even agree.
+
+205
+00:08:52,980 --> 00:08:54,260
+I will not name the person.
+
+206
+00:08:54,260 --> 00:08:54,910
+Wasn&#39;t me.
+
+207
+00:08:54,910 --> 00:08:56,710
+Wasn&#39;t you.
+
+208
+00:08:56,710 --> 00:08:58,560
+The supervisor said, well, maybe you&#39;re right.
+
+209
+00:08:58,560 --> 00:09:00,760
+But you&#39;re really being picky, you&#39;re splitting hairs here.
+
+210
+00:09:00,760 --> 00:09:01,800
+It&#39;s not going to make much difference.
+
+211
+00:09:01,800 --> 00:09:03,690
+And I said, well, I think it might make a difference.
+
+212
+00:09:03,690 --> 00:09:05,680
+You really have to go back and do it.
+
+213
+00:09:05,680 --> 00:09:07,350
+So a few months later, the student knocked
+
+214
+00:09:07,350 --> 00:09:08,420
+on my door, my office.
+
+215
+00:09:08,420 --> 00:09:09,490
+Did he pass?
+
+216
+00:09:09,490 --> 00:09:11,630
+He did pass, because he had other things in the thesis
+
+217
+00:09:11,630 --> 00:09:13,940
+which were reasonable.
+
+218
+00:09:13,940 --> 00:09:15,910
+But a few months later, he knocked on my door, came to my
+
+219
+00:09:15,910 --> 00:09:18,700
+office, said I redid the experiment.
+
+220
+00:09:18,700 --> 00:09:20,720
+And the error rate is now 50%.
+
+221
+00:09:20,720 --> 00:09:23,890
+He was quite surprised, and a bit upset.
+
+222
+00:09:23,890 --> 00:09:26,970
+But basically, it was I told you so.
+
+223
+00:09:26,970 --> 00:09:30,460
+That with a large number of predictors, if you filter them
+
+224
+00:09:30,460 --> 00:09:32,720
+you&#39;ve got to include that in your cross-validation.
+
+225
+00:09:32,720 --> 00:09:36,930
+And if you don&#39;t, you can incur a serious error in your
+
+226
+00:09:36,930 --> 00:09:38,310
+cross-validation estimate.
+
+227
+00:09:38,310 --> 00:09:42,750
+So that was again, it happens, and Trevor and I talk about
+
+228
+00:09:42,750 --> 00:09:43,120
+this a lot.
+
+229
+00:09:43,120 --> 00:09:44,900
+And other people have written papers about this error.
+
+230
+00:09:44,900 --> 00:09:46,600
+But people continue to make this error in
+
+231
+00:09:46,600 --> 00:09:47,560
+cross-validation.
+
+232
+00:09:47,560 --> 00:09:49,190
+So that&#39;s a big heads up.
+
+233
+00:09:49,190 --> 00:09:51,280
+And of course, another heads up is not [INAUDIBLE].
+
+234
+00:09:54,210 --> 00:09:56,150
+OK, so that completes our discussion of
+
+235
+00:09:56,150 --> 00:09:56,940
+cross-validation.
+
+236
+00:09:56,940 --> 00:09:59,100
+We spent quite a bit of time on that topic, because it&#39;s a
+
+237
+00:09:59,100 --> 00:10:01,410
+very important technique for all the methods we&#39;ll see in
+
+238
+00:10:01,410 --> 00:10:02,930
+this course.
+
+239
+00:10:02,930 --> 00:10:05,320
+In the next session we&#39;ll talk about a closely related idea,
+
+240
+00:10:05,320 --> 00:10:06,660
+but a different one, called the bootstrap.
+
